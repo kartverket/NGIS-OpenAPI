@@ -20,6 +20,9 @@ servers:
   - url: http://sfkb.kartverket.no/v1
     description: Server hos Kartverket
 
+security:
+  - basicAuth: []  # <-- use the same name here
+  
 tags:
   - name: Metadata
     description: "Informasjon om dataset som brukeren har tilgang til"
@@ -95,17 +98,20 @@ paths:
           required: true
           description: Numeric ID of the dataset to get
         - in: query
-          name: read_write_exclusive
+          name: lock
           schema:
-            type: integer
+            type: object
+            properties:
+              type:
+                type: string
+                enum: [user_lock,lock_id,optimistic_locking]
+              id:
+                type: integer
+                minimum: 1
+            required:
+              - type
           description: |
-            TODO: Pessimistisk låsing. 0 = false, 1 = true, ellers angir det en bestemt låsenøkkel
-        - in: query
-          name: read_write_shared
-          schema:
-            type: boolean
-          description: |
-            TODO: Optimistisk låsing
+            TODO: Beskrive låsing
         - in: query
           name: bbox
           schema:
@@ -180,17 +186,20 @@ paths:
           required: true
           description: Numeric ID of the dataset to get
         - in: query
-          name: read_write_exclusive
+          name: lock
           schema:
-            type: integer
+            type: object
+            properties:
+              type:
+                type: string
+                enum: [user_lock,lock_id,optimistic_locking]
+              id:
+                type: integer
+                minimum: 1
+            required:
+              - type
           description: |
-            TODO: Pessimistisk låsing. 0 = false, 1 = true, ellers angir det en bestemt låsenøkkel
-        - in: query
-          name: read_write_shared
-          schema:
-            type: boolean
-          description: |
-            TODO: Optimistisk låsing
+            TODO: Beskrive låsing
       requestBody:
         description: Optional description in *Markdown*
         required: true
@@ -287,6 +296,10 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  securitySchemes:
+    basicAuth:     # <-- arbitrary name for the security scheme
+      type: http
+      scheme: basic
   responses:
     Unauthorized:
       description: Unauthorized
