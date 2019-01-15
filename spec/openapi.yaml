@@ -20,11 +20,16 @@ servers:
   - url: http://sfkb.kartverket.no/v1
     description: Server hos Kartverket
 
+security:
+  - basicAuth: []  # <-- use the same name here
+  
 tags:
   - name: Metadata
     description: "Informasjon om dataset som brukeren har tilgang til"
   - name: features
     description: "Operasjoner på features i et bestemt dataset"
+  - name: locks
+    description: "Behandling av features som brukeren har låst"
 paths:
   /datasets:
     get:
@@ -56,6 +61,7 @@ paths:
       summary: Hent metadata for et bestemt dataset
       description: >-
         Henter utvidet informasjon om et bestemt dataset. Her ligger all informasjon som kommer ut i listen over dataset, og i tillegg en del ekstra informasjon som enten er unødvendig eller for tung å ha med i listen over dataset.
+      operationId: getDatasetMetadata
       parameters:
         - in: path
           name: datasetId
@@ -92,15 +98,66 @@ paths:
           required: true
           description: Numeric ID of the dataset to get
         - in: query
+          name: lock
+          schema:
+            type: object
+            properties:
+              type:
+                type: string
+                enum: [user_lock,lock_id,optimistic_locking]
+              id:
+                type: integer
+                minimum: 1
+            required:
+              - type
+          description: |
+            TODO: Beskrive låsing
+        - in: query
           name: bbox
           schema:
             $ref: '#/components/schemas/BoundingBox' 
-          description: Bounding Box
+          description: |
+            Henter ut objekter i et bestemt område (angitt med et rektangel)
+            
+            Dette kan være aktuelt for å få ut alle objekter som ikke er direkte knyttet til et objekt, som f.eks mønelinje og takkant til en bygning.
+            
+            Eksempel: Hent ut et 10x10m rektangel
+            
+            **TODO: Usikker på syntaks**
+            
+            ?bbox=(10,10,20,20)
+            
         - in: query
-          name: $filter
+          name: query
           schema:
             type: string
-          description: Filter på egenskaper (eksempel. identifikasjon.lokalid) eller objekttype for å begrense hvilke features som hentes ut
+          description: |
+            Filter på egenskaper og/eller objekttype for å begrense hvilke features som hentes ut.
+            
+            Dersom objekttypen ikke skal begrenses, kan den angis med `*`
+            
+            Eksempel: Hent en bygning med bestemt bygningsnummer
+            
+            `?query=eq(Bygning/bygningsnummer,1234)`
+            
+            Eksempel: Hent et objekt med bestemt lokalid
+            
+            `?query=eq(*/identifikasjon/lokalid,000a7b9b-7088-482f-a3cf-9761b97a54b6)`
+            
+            Merk: Når et objekt hentes ut med lokalid er det normalt ikke nødvendig å filtrere på objekttype, derfor er objekttypen angitt med `*`.
+            
+            Merk: Spørringer er foreløpig begrenset til eksemplene over, nemlig spørringer etter bygningsnummer og lokalid.
+            
+            Generell regel for egenskapsspørringer:
+            
+            For å angi hvilken objekttype og hvilket attributt (full struktur med struct-/liste-egenskaper) det spørres etter, bruker vi
+            
+            > \<objekttypenavn\>/\<attributtnavn\> [ / \<attributtnavn\> …]
+          
+            Hvis vi ikke ønsker å begrense spørringen til en bestemt objekttype, kan vi angi * som <objekttypenavn>.
+
+            
+            
       responses:
         '200':      # Response
           description: OK
@@ -128,6 +185,21 @@ paths:
             type: integer
           required: true
           description: Numeric ID of the dataset to get
+        - in: query
+          name: lock
+          schema:
+            type: object
+            properties:
+              type:
+                type: string
+                enum: [user_lock,lock_id,optimistic_locking]
+              id:
+                type: integer
+                minimum: 1
+            required:
+              - type
+          description: |
+            TODO: Beskrive låsing
       requestBody:
         description: Optional description in *Markdown*
         required: true
@@ -145,7 +217,89 @@ paths:
           $ref: '#/components/responses/Forbidden'
         '404':
           $ref: '#/components/responses/NotFound'
+  /locks:
+    get:
+      tags:
+       - locks
+      summary: Hent liste over alle låser som brukeren har
+      description: >-
+        Henter en liste over alle låser som brukeren har.
+      operationId: getAllLocks
+      responses:
+        '200':      # Response
+          description: OK
+          content:  # Response body
+            application/json:  # Media type
+              schema: 
+                type: array
+                items:
+                  type: object
+                  properties:
+                    dataset:
+                      type: string
+                    locks:
+                      $ref: '#/components/schemas/Dataset'    # Reference to object definition
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /locks/{datasetId}:
+    get:
+      tags:
+       - locks
+      summary: Hent informasjon om brukerens låste features i et bestemt dataset.
+      description: |
+        Henter bl.a. informasjon om hvilke objekter brukeren har låst i et bestemt dataset.
+      operationId: getLocksForDataset
+      parameters:
+        - in: path
+          name: datasetId
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the dataset to get
+      responses:
+        '200':      # Response
+          description: OK
+          content:  # Response body
+            application/json:  # Media type
+             schema: 
+               $ref: '#/components/schemas/Locks'    # Reference to object definition
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      tags:
+        - locks
+      summary: Fjerne alle låser brukeren har i et bestemt dataset
+      description: |
+        Fjerne alle låser brukeren har i et bestemt dataset
+      parameters:
+        - in: path
+          name: datasetId
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the dataset to delete locks in
+      responses:
+        '204': # Success
+          description: No Content
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
 components:
+  securitySchemes:
+    basicAuth:     # <-- arbitrary name for the security scheme
+      type: http
+      scheme: basic
   responses:
     Unauthorized:
       description: Unauthorized
@@ -197,7 +351,21 @@ components:
         - coordinate_reference_system
         - read_only
         - bbox
-        
+    Locks:
+      type: object
+      properties:
+        id:
+          type: integer # TODO: OK å ha en låsenøkkelid som kan brukes som parameter i fremtiden?
+        username:
+          type: string
+        schema:
+          type: array
+          items:
+            type: object
+            properties:
+              lokalid:
+                type: string
+                format: uuid
     BoundingBox:
       type: object
       properties:
