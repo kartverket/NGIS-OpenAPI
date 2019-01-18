@@ -66,7 +66,8 @@ paths:
         - in: path
           name: datasetId
           schema:
-            type: integer
+            type: string
+            format: uuid
           required: true
           description: Numeric ID of the dataset to get
       responses:
@@ -94,7 +95,8 @@ paths:
         - in: path
           name: datasetId
           schema:
-            type: integer
+            type: string
+            format: uuid
           required: true
           description: Numeric ID of the dataset to get
         - in: query
@@ -182,7 +184,8 @@ paths:
         - in: path
           name: datasetId
           schema:
-            type: integer
+            type: string
+            format: uuid
           required: true
           description: Numeric ID of the dataset to get
         - in: query
@@ -257,7 +260,8 @@ paths:
         - in: path
           name: datasetId
           schema:
-            type: integer
+            type: string
+            format: uuid
           required: true
           description: Numeric ID of the dataset to get
       responses:
@@ -283,7 +287,8 @@ paths:
         - in: path
           name: datasetId
           schema:
-            type: integer
+            type: string
+            format: uuid
           required: true
           description: Numeric ID of the dataset to delete locks in
       responses:
