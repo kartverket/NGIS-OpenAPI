@@ -12,7 +12,11 @@ info:
           - egenskapsspørring (begrenset i første versjon til bygningsnummer eller lokalid)
       - Lagre data til et bestemt datasett
         - Operasjoner som håndteres: nytt objekt, endre objekt og slett objekt
-
+  contact:
+    name: API Support
+    url: http://www.example.com/support
+    email: support@example.com
+    
 servers:
 # Added by API Auto Mocking Plugin
   - description: SwaggerHub API Auto Mocking
@@ -283,6 +287,7 @@ paths:
       summary: Fjerne alle låser brukeren har i et bestemt dataset
       description: |
         Fjerne alle låser brukeren har i et bestemt dataset
+      operationId: deleteLocksForDataset        
       parameters:
         - in: path
           name: datasetId
