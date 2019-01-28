@@ -1,20 +1,16 @@
-language: 
-  # - node_js
-  - csharp
-# node_js:
-#   - "node"
-#   - "7"
+language: csharp
 mono: none
 dotnet: 2.1.300
 dist: trusty
 script:
   - nvm install node
   - npm install -g nswag yamljs
-  - git clone https://github.com/jarped/SFKB-API_Client.git
-  - cd SFKB-API_Client
+  # - git clone https://github.com/jarped/SFKB-API_Client.git
+  - cd /home/travis/build/jarped/SFKB-API/examples/dotnet/SFKB-API_clientTests
   - yaml2json /home/travis/build/jarped/SFKB-API/spec/openapi.yaml > openapi.json
   - nswag swagger2csclient /input:openapi.json /classname:Client /namespace:SFKB_API /output:Client.cs
-  - git add Client.cs
-  - git commit -a -m "Updated Client.cs $(date +'%Y%m%d-%H%M%S')"
-  # - git tag "$(date +'%Y%m%d-%H%M%S')-$(git log --format=%h -1)"
-  - git push
+  - dotnet restore
+  - dotnet test
+  # - git add Client.cs
+  # - git commit -m "Updated Client.cs $(date +'%Y%m%d-%H%M%S')"
+  # - git push
