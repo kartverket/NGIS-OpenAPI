@@ -5,12 +5,8 @@ dist: trusty
 script:
   - nvm install node
   - npm install -g nswag yamljs
-  # - git clone https://github.com/jarped/SFKB-API_Client.git
   - cd /home/travis/build/jarped/SFKB-API/examples/dotnet/SFKB-API_clientTests
   - yaml2json /home/travis/build/jarped/SFKB-API/spec/openapi.yaml > openapi.json
   - nswag swagger2csclient /input:openapi.json /classname:Client /namespace:SFKB_API /output:Client.cs
   - dotnet restore
   - dotnet test
-  # - git add Client.cs
-  # - git commit -m "Updated Client.cs $(date +'%Y%m%d-%H%M%S')"
-  # - git push
