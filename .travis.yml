@@ -1,19 +1,20 @@
 language: 
-  - node_js
+  # - node_js
   - csharp
-node_js:
-  - "node"
-  - "7"
+# node_js:
+#   - "node"
+#   - "7"
 mono: none
 dotnet: 2.1.300
 dist: trusty
 script:
+  - nvm install node
   - npm install -g nswag yamljs
   - git clone https://github.com/jarped/SFKB-API_Client.git
-  - cd /home/travis/build/jarped/SFKB-API_Client
+  - cd SFKB-API_Client
   - yaml2json /home/travis/build/jarped/SFKB-API/spec/openapi.yaml > openapi.json
   - nswag swagger2csclient /input:openapi.json /classname:Client /namespace:SFKB_API /output:Client.cs
-  - git tag "$(date +'%Y%m%d-%H%M%S')-$(git log --format=%h -1)"
+  - git add Client.cs
   - git commit -a -m "Updated Client.cs $(date +'%Y%m%d-%H%M%S')"
+  # - git tag "$(date +'%Y%m%d-%H%M%S')-$(git log --format=%h -1)"
   - git push
-
