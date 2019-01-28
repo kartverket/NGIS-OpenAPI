@@ -1,7 +1,11 @@
-language: node_js
+language: 
+  - node_js
+  - csharp
 node_js:
   - "node"
   - "7"
+mono: none
+dotnet: 2.1.300
 dist: trusty
 script:
   - npm install -g nswag yamljs
