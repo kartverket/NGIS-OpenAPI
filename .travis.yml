@@ -5,7 +5,7 @@ dist: trusty
 script:
   - nvm install node
   - npm install -g nswag yamljs
-  - cd ${TRAVIS_BUILD_DIR}/examples/dotnet/SFKB-API_clientTests
+  - cd ${TRAVIS_BUILD_DIR}/examples/dotnet/SFKB_clientTests
   - yaml2json ${TRAVIS_BUILD_DIR}/spec/openapi.yaml > openapi.json
   - nswag swagger2csclient /input:openapi.json /classname:Client /namespace:SFKB_API /output:Client.cs
   - dotnet restore
