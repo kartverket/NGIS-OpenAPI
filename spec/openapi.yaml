@@ -350,17 +350,28 @@ components:
           format: double
         coordinate_reference_system:
           type: string
-          # trenger kanskje å bruke pattern her, for å sikre riktig format
-        read_only:
-          type: boolean
+          pattern: '^EPSG:\d+$'
+        access:
+          type: string
+          enum: [read_only, read_write]
         bbox: 
           $ref: '#/components/schemas/BoundingBox' 
       required:
         - id
         - name
         - coordinate_reference_system
-        - read_only
+        - access
         - bbox
+      example:
+        id: '07b59e3d-a4b6-4bae-ac4c-664d3dc3d778'
+        name: 'AR5'
+        sone: 22
+        resolution: 0.001
+        coordinate_reference_system: 'EPSG:5972'
+        access: read_write
+        bbox:
+          ll: [10.0, 100.0]
+          ur: [20.0, 200.0]
     Locks:
       type: object
       properties:
