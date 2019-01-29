@@ -20,7 +20,7 @@ info:
 servers:
 # Added by API Auto Mocking Plugin
   - description: SwaggerHub API Auto Mocking
-    url: https://virtserver.swaggerhub.com/meastp/sfkb-api/1.0.0
+    url: https://virtserver.swaggerhub.com/meastp/sfkb-update-api-draft/1.0.0
   - url: http://sfkb.kartverket.no/v1
     description: Server hos Kartverket
 
@@ -211,7 +211,7 @@ paths:
         description: Optional description in *Markdown*
         required: true
         content:
-          application/vnd.kartverket.sosi+gml:
+          application/vnd.kartverket.sosi+wfs-t:
            schema:
             type: object
            
@@ -245,7 +245,7 @@ paths:
                     dataset:
                       type: string
                     locks:
-                      $ref: '#/components/schemas/Dataset'    # Reference to object definition
+                      $ref: '#/components/schemas/Locks'    # Reference to object definition
         '401':
           $ref: '#/components/responses/Unauthorized'
         '403':
@@ -350,9 +350,10 @@ components:
           format: double
         coordinate_reference_system:
           type: string
-          # trenger kanskje å bruke pattern her, for å sikre riktig format
-        read_only:
-          type: boolean
+          pattern: '^EPSG:\d+$'
+        access:
+          type: string
+          enum: [read_only, read_write]
         bbox: 
           $ref: '#/components/schemas/BoundingBox' 
       required:
@@ -361,6 +362,16 @@ components:
         - coordinate_reference_system
         - read_only
         - bbox
+      example:
+        id: '07b59e3d-a4b6-4bae-ac4c-664d3dc3d778'
+        name: 'AR5'
+        sone: 22
+        resolution: 0.001
+        coordinate_reference_system: 'EPSG:5972'
+        access: read_write
+        bbox:
+          ll: [10.0, 100.0]
+          ur: [20.0, 200.0]
     Locks:
       type: object
       properties:
@@ -368,7 +379,7 @@ components:
           type: integer # TODO: OK å ha en låsenøkkelid som kan brukes som parameter i fremtiden?
         username:
           type: string
-        schema:
+        features:
           type: array
           items:
             type: object
@@ -376,6 +387,14 @@ components:
               lokalid:
                 type: string
                 format: uuid
+      example:
+        id: 15003
+        username: joeuser
+        features:
+          - lokalid: '933f0223-2598-485b-b886-3c69650b22b0'
+          - lokalid: 'ddb688c3-b2d9-47eb-93d2-cc4704b6394c'
+        
+          
     BoundingBox:
       type: object
       properties:
@@ -393,6 +412,9 @@ components:
           items:
             type: number
             format: double
+      example:
+        ll: [10.0, 100.0]
+        ur: [20.0, 200.0]
     # Schema for error response body
     Error:
       type: object
@@ -410,3 +432,4 @@ components:
       required:
         - type
         - title
+       
