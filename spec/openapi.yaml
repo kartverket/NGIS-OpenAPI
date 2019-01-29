@@ -393,6 +393,9 @@ components:
           items:
             type: number
             format: double
+      example:
+        ll: [10.0, 100.0]
+        ur: [20.0, 200.0]
     # Schema for error response body
     Error:
       type: object
