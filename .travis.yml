@@ -10,4 +10,3 @@ script:
   - nswag swagger2csclient /input:openapi.json /classname:Client /namespace:SFKB_API /output:Client.cs
   - dotnet restore
   - dotnet test
-
