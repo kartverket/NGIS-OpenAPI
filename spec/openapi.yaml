@@ -20,7 +20,7 @@ info:
 servers:
 # Added by API Auto Mocking Plugin
   - description: SwaggerHub API Auto Mocking
-    url: https://virtserver.swaggerhub.com/meastp/sfkb-api/1.0.0
+    url: https://virtserver.swaggerhub.com/meastp/sfkb-update-api-draft/1.0.0
   - url: http://sfkb.kartverket.no/v1
     description: Server hos Kartverket
 
@@ -245,7 +245,7 @@ paths:
                     dataset:
                       type: string
                     locks:
-                      $ref: '#/components/schemas/Dataset'    # Reference to object definition
+                      $ref: '#/components/schemas/Locks'    # Reference to object definition
         '401':
           $ref: '#/components/responses/Unauthorized'
         '403':
@@ -360,7 +360,7 @@ components:
         - id
         - name
         - coordinate_reference_system
-        - access
+        - read_only
         - bbox
       example:
         id: '07b59e3d-a4b6-4bae-ac4c-664d3dc3d778'
@@ -379,7 +379,7 @@ components:
           type: integer # TODO: OK å ha en låsenøkkelid som kan brukes som parameter i fremtiden?
         username:
           type: string
-        schema:
+        features:
           type: array
           items:
             type: object
@@ -387,6 +387,14 @@ components:
               lokalid:
                 type: string
                 format: uuid
+      example:
+        id: 15003
+        username: joeuser
+        features:
+          - lokalid: '933f0223-2598-485b-b886-3c69650b22b0'
+          - lokalid: 'ddb688c3-b2d9-47eb-93d2-cc4704b6394c'
+        
+          
     BoundingBox:
       type: object
       properties:
@@ -424,3 +432,4 @@ components:
       required:
         - type
         - title
+       
