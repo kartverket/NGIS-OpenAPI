@@ -9,5 +9,5 @@ script:
   - yaml2json ${TRAVIS_BUILD_DIR}/spec/openapi.yaml > openapi.json
   - nswag swagger2csclient /input:openapi.json /classname:Client /namespace:SFKB_API /output:Client.cs
   - dotnet restore
-  - dotnet test
+  - dotnet test 
 
