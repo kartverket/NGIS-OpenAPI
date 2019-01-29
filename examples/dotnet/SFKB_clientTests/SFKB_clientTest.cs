@@ -30,7 +30,7 @@ namespace SFKB_clientTests
         public void TestGetDatasetWithWrongId()
         {
             var dataset = Client.GetDatasetMetadataAsync(WrongDatasetId).Result;
-            Assert.IsTrue(dataset.Id != DatasetId, $"No dataset found with id {DatasetId}");
+            Assert.IsTrue(dataset.Id != DatasetId, $"Dataset found with wrong id {DatasetId}");
         }
 
         //[TestMethod]
