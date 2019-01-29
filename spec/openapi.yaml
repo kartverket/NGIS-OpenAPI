@@ -211,7 +211,7 @@ paths:
         description: Optional description in *Markdown*
         required: true
         content:
-          application/vnd.kartverket.sosi+gml:
+          application/vnd.kartverket.sosi+wfs-t:
            schema:
             type: object
            
