@@ -9,7 +9,7 @@ namespace SFKB_clientTests
     public class SfkbClientTest
     {
         private static readonly Client Client = new Client(new HttpClient());
-        private static readonly Guid DatasetId = new Guid("3fa85f64-5717-4562-b3fc-2c963f66afa6");
+        private static readonly Guid DatasetId = new Guid("07b59e3d-a4b6-4bae-ac4c-664d3dc3d778");
         private static readonly Guid WrongDatasetId = new Guid("2fa85f64-5717-4562-b3fc-2c963f66afa6");
 
         [TestMethod]
