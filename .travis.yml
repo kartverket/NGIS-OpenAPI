@@ -4,7 +4,6 @@ dotnet: 2.1.300
 dist: trusty
 script:
   - nvm install node
-  - npm install -g nswag yamljs
   - cd ${TRAVIS_BUILD_DIR}/examples/dotnet/SFKB_clientTests
   - sh generateClient.sh
   - dotnet restore
