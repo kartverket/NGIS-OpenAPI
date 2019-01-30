@@ -6,7 +6,7 @@ script:
   - nvm install node
   - npm install -g nswag yamljs
   - cd ${TRAVIS_BUILD_DIR}/examples/dotnet/SFKB_clientTests
-  - generateClient.sh
+  - sh generateClient.sh
   - dotnet restore
   - dotnet test 
 
