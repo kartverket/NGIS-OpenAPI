@@ -1,4 +1,4 @@
-# SFKB-API
+# NGIS-OpenAPI
 Tjenestebasert grensesnitt mot SFKB, basert på OpenAPI og REST.
 
 Spesifikasjonen ligger i `spec`-mappen
