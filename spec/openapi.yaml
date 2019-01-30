@@ -344,6 +344,8 @@ components:
           type: integer
         sone:
           type: integer
+        description:
+          type: string
         #hele_landet som egen metadata?
         resolution:
           type: number
