@@ -1,0 +1,24 @@
+language: csharp
+mono: none
+dotnet: 2.1.300
+dist: trusty
+script:
+  - nvm install node
+  - cd ${TRAVIS_BUILD_DIR}/examples/dotnet/SFKB_clientTests
+  - sh generateClient.sh
+  - dotnet restore
+  - dotnet test
+before_deploy:
+ - git tag "$(date +'%Y%m%d-%H%M%S')-$(git log --format=%h -1)"
+deploy:
+  provider: releases
+  api_key: $GITHUB_TOKEN
+  file_glob: true
+  file:
+   - ${TRAVIS_BUILD_DIR}/examples/dotnet/SFKB_clientTests/Client.cs 
+   - ${TRAVIS_BUILD_DIR}/spec/openapi.yaml
+   - ${TRAVIS_BUILD_DIR}/spec/openapi.json
+  skip_cleanup: true
+  on:
+    branch: master
+
