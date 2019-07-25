@@ -353,6 +353,9 @@ components:
         coordinate_reference_system:
           type: string
           pattern: '^EPSG:\d+$'
+        schema_url:
+          type: string
+          format: uri
         access:
           type: string
           enum: [read_only, read_write]
