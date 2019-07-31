@@ -13,9 +13,8 @@ info:
       - Lagre data til et bestemt datasett
         - Operasjoner som håndteres: nytt objekt, endre objekt og slett objekt
   contact:
-    name: API Support
-    url: http://www.example.com/support
-    email: support@example.com
+    name: SFKB Brukerstøtte
+    url: https://www.kartverket.no/Prosjekter/Sentral-felles-kartdatabase/brukerstotte/
     
 servers:
 # Added by API Auto Mocking Plugin
@@ -224,35 +223,7 @@ paths:
           $ref: '#/components/responses/Forbidden'
         '404':
           $ref: '#/components/responses/NotFound'
-  /locks:
-    get:
-      tags:
-       - locks
-      summary: Hent liste over alle låser som brukeren har
-      description: >-
-        Henter en liste over alle låser som brukeren har.
-      operationId: getAllLocks
-      responses:
-        '200':      # Response
-          description: OK
-          content:  # Response body
-            application/json:  # Media type
-              schema: 
-                type: array
-                items:
-                  type: object
-                  properties:
-                    dataset:
-                      type: string
-                    locks:
-                      $ref: '#/components/schemas/Locks'    # Reference to object definition
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '403':
-          $ref: '#/components/responses/Forbidden'
-        '404':
-          $ref: '#/components/responses/NotFound'
-  /locks/{datasetId}:
+  /datasets/{datasetId}/locks:
     get:
       tags:
        - locks
