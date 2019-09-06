@@ -106,6 +106,8 @@ paths:
           description: UUID of the dataset to get
         - in: query
           name: lock
+          style: deepObject
+          explode: true
           schema:
             type: object
             properties:
@@ -120,7 +122,7 @@ paths:
           description: |
             Låser objektene som hentes ut for oppdatering. Krever skrivetilgang mot dataset'et.
             
-            Foreløpig er det kun brukerlås (user_lock) som støttes. Kallet legger da til objekter i brukerlåsen. 
+            Foreløpig er det kun brukerlås (lock[type]=user_lock) som støttes. Kallet legger da til objekter i brukerlåsen. 
             Låsen vil fjernes neste gang brukeren skriver data til dataset'et, eller dersom låsen slettes.
         - in: query
           name: bbox
@@ -202,6 +204,8 @@ paths:
           description: UUID of the dataset to get
         - in: query
           name: lock
+          style: deepObject
+          explode: true
           schema:
             type: object
             properties:
@@ -214,7 +218,10 @@ paths:
             required:
               - type
           description: |
-            TODO: Beskrive låsing
+            Låser objektene som hentes ut for oppdatering. Krever skrivetilgang mot dataset'et.
+            
+            Foreløpig er det kun brukerlås (lock[type]=user_lock) som støttes. Kallet legger da til objekter i brukerlåsen. 
+            Låsen vil fjernes neste gang brukeren skriver data til dataset'et, eller dersom låsen slettes.
       requestBody:
         description: Optional description in *Markdown*
         required: true
