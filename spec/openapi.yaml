@@ -106,12 +106,12 @@ paths:
           description: UUID of the dataset to get
         - in: query
           name: lock
-          style: deepObject
+          style: form
           explode: true
           schema:
             type: object
             properties:
-              type:
+              locktype:
                 type: string
                 enum: [user_lock,lock_id,optimistic_locking]
               id:
@@ -122,7 +122,7 @@ paths:
           description: |
             Låser objektene som hentes ut for oppdatering. Krever skrivetilgang mot dataset'et.
             
-            Foreløpig er det kun brukerlås (lock[type]=user_lock) som støttes. Kallet legger da til objekter i brukerlåsen. 
+            Foreløpig er det kun brukerlås (locktype=user_lock) som støttes. Kallet legger da til objekter i brukerlåsen. 
             Låsen vil fjernes neste gang brukeren skriver data til dataset'et, eller dersom låsen slettes.
         - in: query
           name: bbox
@@ -204,12 +204,12 @@ paths:
           description: UUID of the dataset to get
         - in: query
           name: lock
-          style: deepObject
+          style: form
           explode: true
           schema:
             type: object
             properties:
-              type:
+              locktype:
                 type: string
                 enum: [user_lock,lock_id,optimistic_locking]
               id:
@@ -220,7 +220,7 @@ paths:
           description: |
             Låser objektene som hentes ut for oppdatering. Krever skrivetilgang mot dataset'et.
             
-            Foreløpig er det kun brukerlås (lock[type]=user_lock) som støttes. Kallet legger da til objekter i brukerlåsen. 
+            Foreløpig er det kun brukerlås (locktype=user_lock) som støttes. Kallet legger da til objekter i brukerlåsen. 
             Låsen vil fjernes neste gang brukeren skriver data til dataset'et, eller dersom låsen slettes.
       requestBody:
         description: Optional description in *Markdown*
