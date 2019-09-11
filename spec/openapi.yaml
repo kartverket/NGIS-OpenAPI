@@ -233,6 +233,17 @@ paths:
       responses: #TODO: valideringsfeil
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  features_created:
+                    type: integer
+                  features_replaced:
+                    type: integer
+                  features_erased:
+                    type: integer
         '401':
           description: Gyldig autentisering av brukeren mangler eller er ugyldig
         '403':
