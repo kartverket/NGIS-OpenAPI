@@ -359,26 +359,28 @@ components:
           ll: [10.0, 100.0]
           ur: [20.0, 200.0]
     Locks:
-      type: object
-      properties:
-        id:
-          type: integer # TODO: OK å ha en låsenøkkelid som kan brukes som parameter i fremtiden?
-        username:
-          type: string
-        features:
-          type: array
-          items:
-            type: object
-            properties:
-              lokalid:
-                type: string
-                format: uuid
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: integer # TODO: Denne brukes ikke for brukerlåser, men trengs for andre låser i fremtiden.
+          username:
+            type: string
+          features:
+            type: array
+            items:
+              type: object
+              properties:
+                lokalid:
+                  type: string
+                  format: uuid
       example:
-        id: 15003
-        username: joeuser
-        features:
-          - lokalid: '933f0223-2598-485b-b886-3c69650b22b0'
-          - lokalid: 'ddb688c3-b2d9-47eb-93d2-cc4704b6394c'
+        - id: 15003
+          username: joeuser
+          features:
+            - lokalid: '933f0223-2598-485b-b886-3c69650b22b0'
+            - lokalid: 'ddb688c3-b2d9-47eb-93d2-cc4704b6394c'
         
           
     BoundingBox:
