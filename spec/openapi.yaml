@@ -309,9 +309,7 @@ components:
       required:
         - id
         - name
-        - coordinate_reference_system
-        - read_only
-        - bbox
+        - access
       example:
         id: '07b59e3d-a4b6-4bae-ac4c-664d3dc3d778'
         name: 'AR5'
