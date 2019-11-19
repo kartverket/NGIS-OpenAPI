@@ -18,8 +18,8 @@ info:
     
 servers:
 # Added by API Auto Mocking Plugin
-  - description: SwaggerHub API Auto Mocking
-    url: https://virtserver.swaggerhub.com/meastp/sfkb-update-api-draft/1.0.0
+  - description: Test-server Norkart
+    url: https://qmsrest.westeurope.cloudapp.azure.com:8080/v1/
   - url: http://sfkb.kartverket.no/v1
     description: Server hos Kartverket
 
