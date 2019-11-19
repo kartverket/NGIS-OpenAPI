@@ -1,16 +1,37 @@
 using System;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SFKB_API;
+using System.IO;
 
 namespace SFKB_clientTests
 {
     [TestClass]
     public class SfkbClientTest
     {
-        private static readonly Client Client = new Client(new HttpClient());
-        private static readonly Guid DatasetId = new Guid("07b59e3d-a4b6-4bae-ac4c-664d3dc3d778");
+        private static Client Client;
+        private static readonly Guid DatasetId = new Guid("0b88534d-c975-4b15-a8f3-da16a2101e29");
         private static readonly Guid WrongDatasetId = new Guid("2fa85f64-5717-4562-b3fc-2c963f66afa6");
+
+        [TestInitialize]
+        public void Init() {
+            var username = Environment.GetEnvironmentVariable("api_user");
+            var password = Environment.GetEnvironmentVariable("api_pass");
+
+            var byteArray = Encoding.ASCII.GetBytes($"{username}:{password}");
+
+            var httpClient = new HttpClient();
+
+            var basicValue = Convert.ToBase64String(byteArray);
+            
+            Console.WriteLine(basicValue);
+
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", basicValue);
+
+            Client = new Client(httpClient);
+        }
 
         [TestMethod]
         public void TestGetDatasets()
