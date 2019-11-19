@@ -4,7 +4,6 @@ using System.Net.Http.Headers;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SFKB_API;
-using System.IO;
 
 namespace SFKB_clientTests
 {
@@ -26,8 +25,6 @@ namespace SFKB_clientTests
 
             var basicValue = Convert.ToBase64String(byteArray);
             
-            Console.WriteLine(basicValue);
-
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", basicValue);
 
             Client = new Client(httpClient);
