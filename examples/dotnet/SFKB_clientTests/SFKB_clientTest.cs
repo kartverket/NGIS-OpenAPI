@@ -15,12 +15,12 @@ namespace SFKB_clientTests
     public class SfkbClientTest
     {
         private const string ConfigLocation = @"../../../config.json";
-        private const string ExampleFeaturePath = @"../../../exampleData/exampleFeature.xml";
         private static Client Client;
         private Guid DatasetId;
         private static readonly Guid WrongDatasetId = new Guid("2fa85f64-5717-4562-b3fc-2c963f66afa6");
         private const string Ar5DatasetName = "ar5_test_23";
-        private const string Ar5FeatureLokalId = "0003f094-b524-4a5a-bb05-d69881df853a";
+        private const string Ar5FlateFeatureLokalId = "20f893f2-5c8c-466f-b25b-d51ae98f1399";
+        private const string Ar5GrenseFeatureLokalId = "0003f094-b524-4a5a-bb05-d69881df853a";
 
         [TestInitialize]
         public void Init()
@@ -97,29 +97,44 @@ namespace SFKB_clientTests
         }
 
         [TestMethod]
-        public void TestUpdateFeatures()
+        public void TestReplacePolygonFeature()
         {
-            var tempFile = LockAndSaveFeatureByLokalId();
-
-            var wfsReplaceFile = Wfs.CreateReplaceWrappingForFeatures(tempFile, Ar5FeatureLokalId);
-
-            using (var featureStream = File.OpenRead(wfsReplaceFile))
-            {
-                var result = Client.UpdateDatasetFeaturesAsync(DatasetId, GetLocking(), featureStream).Result;
-
-                Assert.IsTrue(result.Features_replaced > 0, "No features updated");
-            };
-            
-            Client.DeleteDatasetLocksAsync(DatasetId, GetLocking());
+            ReplaceByLokalId(Ar5FlateFeatureLokalId);
         }
 
         [TestMethod]
-        public string TestGetFeaturesWithBbox()
+        public void TestReplaceReferencedLineFeature()
         {
-            var fileResponse = Client.GetDatasetFeaturesAsync(DatasetId, null, GetExampleBbox(), null).Result;
-
-            return WriteStreamToDisk(fileResponse);
+            ReplaceByLokalId(Ar5GrenseFeatureLokalId);
         }
+
+        private void ReplaceByLokalId(string lokalId)
+        {
+            var locking = GetLocking();
+
+            var tempFile = LockAndSaveFeatureByLokalId(lokalId, locking);
+
+            var lockedLokalIds = Client.GetDatasetLocksAsync(DatasetId, locking).Result.SelectMany(l => l.Features.Select(f => f.Lokalid)).ToList();
+
+            var wfsReplaceFile = Wfs.CreateReplaceWrappingForFeatures(tempFile, lockedLokalIds);
+
+            using (var featureStream = File.OpenRead(wfsReplaceFile))
+            {
+                var result = Client.UpdateDatasetFeaturesAsync(DatasetId, locking, featureStream).Result;
+
+                Assert.IsTrue(result.Features_replaced > 0, "No features updated");
+            };
+
+            Client.DeleteDatasetLocksAsync(DatasetId, locking);
+        }
+
+        //[TestMethod]
+        //public void TestGetFeaturesWithBbox()
+        //{
+        //    var fileResponse = Client.GetDatasetFeaturesAsync(DatasetId, null, GetExampleBbox(), null).Result;
+
+        //    WriteStreamToDisk(fileResponse);
+        //}
 
         private static string WriteStreamToDisk(FileResponse fileResponse)
         {
@@ -139,53 +154,54 @@ namespace SFKB_clientTests
             return tempFile;
         }
 
-        //[TestMethod]
-        //public void TestGetLockedFeaturesByLokalId()
-        //{
-        //    LockAndSaveFeatureByLokalId();
-
-        //    Client.DeleteDatasetLocksAsync(DatasetId, GetLocking());
-
-        //    Client.GetDatasetLocksAsync(DatasetId, GetLocking());
-
-        //}
-
-        private string LockAndSaveFeatureByLokalId()
+        [TestMethod]
+        public void TestGetLockedFeaturesByLokalId()
         {
-            var fileResponse = Client.GetDatasetFeaturesAsync(DatasetId, GetLocking(), null, GetExampleQuery()).Result;
+            var locking = GetLocking();
+
+            LockAndSaveFeatureByLokalId(Ar5FlateFeatureLokalId, locking);
+
+            Client.DeleteDatasetLocksAsync(DatasetId, locking);
+
+            var locks = Client.GetDatasetLocksAsync(DatasetId, locking).Result.FirstOrDefault();
+
+            Assert.IsTrue(locks == null, "Locks not deleted");
+        }
+
+        private string LockAndSaveFeatureByLokalId(string lokalId, Locking locking)
+        {
+            var fileResponse = Client.GetDatasetFeaturesAsync(DatasetId, locking, null, GetExampleQuery(lokalId)).Result;
 
             return WriteStreamToDisk(fileResponse);
         }
 
         [TestMethod]
-        public string TestGetFeaturesByLokalId()
+        public void TestGetFeaturesByLokalId()
         {
-            var fileResponse = Client.GetDatasetFeaturesAsync(DatasetId, null, null, GetExampleQuery()).Result;
-
-            return WriteStreamToDisk(fileResponse);
+            LockAndSaveFeatureByLokalId(Ar5GrenseFeatureLokalId, null);
         }
 
-        private string GetExampleQuery()
+        private string GetExampleQuery(string ar5GrenseFeatureLokalId)
         {
-            return $"eq(*/identifikasjon/lokalid,{Ar5FeatureLokalId})";
+            return $"eq(*/identifikasjon/lokalid,{Ar5FlateFeatureLokalId})";
         }
 
-        private BoundingBox GetExampleBbox()
-        {
-            var ll1 = 365600;
-            var ll2 = 7217500;
-            var ur1 = 366100;
-            var ur2 = 7217850;
+        //private BoundingBox GetExampleBbox()
+        //{
+        //    var ll1 = 365600;
+        //    var ll2 = 7217500;
+        //    var ur1 = 366100;
+        //    var ur2 = 7217850;
 
-            return new BoundingBox { Ll = new List<double> { ll1,  ll2 }, Ur = new List<double> { ur1, ur2 } };
-        }
+        //    return new BoundingBox { Ll = new List<double> { ll1,  ll2 }, Ur = new List<double> { ur1, ur2 } };
+        //}
 
-        private Stream GetExampleFeatureStream(string fileName)
-        {
-            Assert.IsTrue(File.Exists(fileName), $"Example feature not found at {fileName}");
+        //private Stream GetExampleFeatureStream(string fileName)
+        //{
+        //    Assert.IsTrue(File.Exists(fileName), $"Example feature not found at {fileName}");
 
-            return new StreamReader(fileName).BaseStream;
-        }
+        //    return new StreamReader(fileName).BaseStream;
+        //}
 
         private static Locking GetLocking()
         {

@@ -18,7 +18,7 @@ namespace SFKB_clientTests
         private static string activeSchemaLocation;
         private static readonly string chlogfSchemaLocation = "http://skjema.geonorge.no/standard/geosynkronisering/1.1/endringslogg http://skjema.geonorge.no/standard/geosynkronisering/1.1/endringslogg/changelogfile.xsd";
 
-        internal static string CreateReplaceWrappingForFeatures(string tempFile, string ar5FeatureLokalId)
+        internal static string CreateReplaceWrappingForFeatures(string tempFile, List<Guid> lockedLokalIds)
         {
             var newTempFile = Path.GetTempFileName();
 
@@ -26,7 +26,7 @@ namespace SFKB_clientTests
             {
                 var featureXml = XElement.Load(featureStream);
 
-                var replaceXml = GetReplaceXml(featureXml, ar5FeatureLokalId);
+                var replaceXml = GetReplaceXml(featureXml, lockedLokalIds);
 
                 replaceXml.Save(newTempFile);
             }
@@ -34,8 +34,8 @@ namespace SFKB_clientTests
             return newTempFile;
         }
 
-        private static XElement GetReplaceXml(XElement featureXml, string ar5FeatureLokalId)
-        {          
+        private static XElement GetReplaceXml(XElement featureXml, List<Guid> lockedLokalIds)
+        {
             activeSchemaLocation = featureXml.Attribute(xsiNamespace + "schemaLocation").Value + " " + chlogfSchemaLocation;
 
             activeNamespace = featureXml.Attribute(XNamespace.Xmlns + appPrefix).Value;
@@ -46,35 +46,23 @@ namespace SFKB_clientTests
 
             var featureMembers = featureXml.Descendants(gmlNamespace + "featureMember");
 
-            var activeFeature = featureMembers.FirstOrDefault( f => f.Descendants(activeNamespace + "lokalId").FirstOrDefault().Value == ar5FeatureLokalId);
-
-            var gmlId = activeFeature.Descendants().Where(d => d.Attribute(gmlNamespace + "id") != null && d.Attribute(gmlNamespace + "id").Value.StartsWith("QMS_")).FirstOrDefault();
-
-            var activeGeometry = gmlId.Attribute(gmlNamespace + "id").Value.Split("_")[2];
-
             foreach (var featureMember in featureMembers)
             {
-                var lokalId = GetLokalId(featureMember);
+                var currentLokalId = GetLokalId(featureMember);
 
-                if (lokalId != ar5FeatureLokalId)
-                {
-                    var currentGmlIds = featureMember.Descendants().Where(d => d.Attribute(gmlNamespace + "id") != null && d.Attribute(gmlNamespace + "id").Value.StartsWith("QMS_"));
-
-                    if(!currentGmlIds.Any(id => id.Attribute(gmlNamespace + "id").Value.Contains(activeGeometry))) 
-                        continue;
-                }
-
-                string xpathExpressionLokalidFilter = GetLokalIdXpath();
+                if (!lockedLokalIds.Contains(currentLokalId)) continue;
+                
+                var xpathExpressionLokalidFilter = GetLokalIdXpath();
 
                 var replaceElement = new XElement(wfsNamespace + "Replace");
 
                 replaceElement.Add(featureMember.FirstNode);
 
-                replaceElement.Add(GetFilter(lokalId, xpathExpressionLokalidFilter));
+                replaceElement.Add(GetFilter(currentLokalId, xpathExpressionLokalidFilter));
 
                 transactionElement.Add(replaceElement);
             }
-            
+
             changeLogElement.Add(transactionElement);
 
             var count = featureMembers.Count();
@@ -84,9 +72,27 @@ namespace SFKB_clientTests
                 new XAttribute("endIndex", 1),
                 new XAttribute("numberMatched", count),
                 new XAttribute("numberReturned", count));
-                       
+
             return changeLogElement;
         }
+
+        //private static bool FeatureReferencesActiveGeometry(XElement featureMember, IEnumerable<string> activeGeometryIds)
+        //{
+        //    var currentGmlIdElements = featureMember.Descendants().Where(d => d.Attribute(gmlNamespace + "id") != null && d.Attribute(gmlNamespace + "id").Value.StartsWith("QMS_"));
+
+        //    var currentGmlIds = currentGmlIdElements.Select(i => i.Attribute(gmlNamespace + "id").Value.Split('_').Last());
+
+        //    return currentGmlIds.Intersect(activeGeometryIds).Count() != 0;
+        //}
+
+        //private static IEnumerable<string> GetGeometryId(string ar5FeatureLokalId, IEnumerable<XElement> featureMembers)
+        //{
+        //    var activeFeature = featureMembers.FirstOrDefault(f => f.Descendants(activeNamespace + "lokalId").FirstOrDefault().Value == ar5FeatureLokalId);
+
+        //    var gmlId = activeFeature.Descendants().Where(d => d.Attribute(gmlNamespace + "id") != null && d.Attribute(gmlNamespace + "id").Value.StartsWith("QMS_"));
+
+        //    return gmlId.Select(i => i.Attribute(gmlNamespace + "id").Value.Split("_").Last());
+        //}
 
         private static XElement GetChangeLogElement()
         {
@@ -103,7 +109,7 @@ namespace SFKB_clientTests
                 );
         }
 
-        private static XElement GetFilter(string lokalId, string xpathExpressionLokalidFilter)
+        private static XElement GetFilter(Guid lokalId, string xpathExpressionLokalidFilter)
         {
             return new XElement(fesNamespace + "Filter",
                                 new XElement(fesNamespace + "PropertyIsEqualTo",
@@ -125,9 +131,9 @@ namespace SFKB_clientTests
             return $"{appPrefix}:identifikasjon/{appPrefix}:Identifikasjon/{appPrefix}:lokalId";
         }
 
-        private static string GetLokalId(XElement feature)
+        private static Guid GetLokalId(XElement feature)
         {
-            return feature.Descendants(activeNamespace + "lokalId").Nodes().FirstOrDefault().ToString();
+            return new Guid(feature.Descendants(activeNamespace + "lokalId").Nodes().FirstOrDefault().ToString());
         }
     }
 }
