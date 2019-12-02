@@ -1,10 +1,10 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json.Linq;
 using SFKB_API;
@@ -23,7 +23,7 @@ namespace SFKB_clientTests
         private const string Ar5GrenseFeatureLokalId = "0003f094-b524-4a5a-bb05-d69881df853a";
 
         [TestInitialize]
-        public void Init()
+        public async Task InitAsync()
         {
             var basicIdentification = File.Exists(ConfigLocation)
                 ? GetIdentificationFromConfigFile()
@@ -39,7 +39,7 @@ namespace SFKB_clientTests
 
             Client = new Client(httpClient);
 
-            GetDatasets();
+            await GetDatasetsAsync();
         }
 
         private static string GetIdentificationFromEnvironmentVariables()
@@ -57,19 +57,21 @@ namespace SFKB_clientTests
         }
 
         [TestMethod]
-        public void TestGetDatasets()
+        public async Task TestGetDatasetsAsync()
         {
-            Assert.IsTrue(GetDataset().Id == DatasetId, $"No dataset found with id {DatasetId}");
+            var dataset = await GetDataset();
+
+            Assert.IsTrue(dataset.Id == DatasetId, $"No dataset found with id {DatasetId}");
         }
 
-        private Dataset GetDataset()
+        private Task<Dataset> GetDataset()
         {
-            return Client.GetDatasetMetadataAsync(DatasetId).Result;
+            return Client.GetDatasetMetadataAsync(DatasetId);
         }
 
-        private void GetDatasets()
+        private async Task GetDatasetsAsync()
         {
-            var datasets = Client.GetDatasetsAsync().Result;
+            var datasets = await Client.GetDatasetsAsync();
 
             Assert.IsTrue(datasets.Count > 0, "No datasets returned");
 
@@ -97,35 +99,37 @@ namespace SFKB_clientTests
         }
 
         [TestMethod]
-        public void TestReplacePolygonFeature()
+        public async Task TestReplacePolygonFeatureAsync()
         {
-            ReplaceByLokalId(Ar5FlateFeatureLokalId);
+            await ReplaceByLokalIdAsync(Ar5FlateFeatureLokalId);
         }
 
         [TestMethod]
-        public void TestReplaceReferencedLineFeature()
+        public async Task TestReplaceReferencedLineFeatureAsync()
         {
-            ReplaceByLokalId(Ar5GrenseFeatureLokalId);
+            await ReplaceByLokalIdAsync(Ar5GrenseFeatureLokalId);
         }
 
-        private void ReplaceByLokalId(string lokalId)
+        private async Task ReplaceByLokalIdAsync(string lokalId)
         {
             var locking = GetLocking();
 
-            var tempFile = LockAndSaveFeatureByLokalId(lokalId, locking);
+            var tempFile = await LockAndSaveFeatureByLokalIdAsync(lokalId, locking);
 
-            var lockedLokalIds = Client.GetDatasetLocksAsync(DatasetId, locking).Result.SelectMany(l => l.Features.Select(f => f.Lokalid)).ToList();
+            var datasetLocks = await Client.GetDatasetLocksAsync(DatasetId, locking);
+
+            var lockedLokalIds = datasetLocks.SelectMany(l => l.Features.Select(f => f.Lokalid)).ToList();
 
             var wfsReplaceFile = Wfs.CreateReplaceWrappingForFeatures(tempFile, lockedLokalIds);
 
             using (var featureStream = File.OpenRead(wfsReplaceFile))
             {
-                var result = Client.UpdateDatasetFeaturesAsync(DatasetId, locking, featureStream).Result;
+                var response = await Client.UpdateDatasetFeaturesAsync(DatasetId, locking, featureStream);
 
-                Assert.IsTrue(result.Features_replaced > 0, "No features updated");
+                Assert.IsTrue(response.Features_replaced > 0, "No features updated");
             };
 
-            Client.DeleteDatasetLocksAsync(DatasetId, locking);
+            await Client.DeleteDatasetLocksAsync(DatasetId, locking);
         }
 
         //[TestMethod]
@@ -155,35 +159,35 @@ namespace SFKB_clientTests
         }
 
         [TestMethod]
-        public void TestGetLockedFeaturesByLokalId()
+        public async Task TestGetLockedFeaturesByLokalIdAsync()
         {
             var locking = GetLocking();
 
-            LockAndSaveFeatureByLokalId(Ar5FlateFeatureLokalId, locking);
+            await LockAndSaveFeatureByLokalIdAsync(Ar5FlateFeatureLokalId, locking);
 
-            Client.DeleteDatasetLocksAsync(DatasetId, locking);
+            await Client.DeleteDatasetLocksAsync(DatasetId, locking);
 
-            var locks = Client.GetDatasetLocksAsync(DatasetId, locking).Result.FirstOrDefault();
+            var locks = await Client.GetDatasetLocksAsync(DatasetId, locking);
 
-            Assert.IsTrue(locks == null, "Locks not deleted");
+            Assert.IsTrue(locks.Count() == 0, "Locks not deleted");
         }
 
-        private string LockAndSaveFeatureByLokalId(string lokalId, Locking locking)
+        private async Task<string> LockAndSaveFeatureByLokalIdAsync(string lokalId, Locking locking)
         {
-            var fileResponse = Client.GetDatasetFeaturesAsync(DatasetId, locking, null, GetExampleQuery(lokalId)).Result;
+            var fileResponse = await Client.GetDatasetFeaturesAsync(DatasetId, locking, null, GetLokalIdQuery(lokalId));
 
             return WriteStreamToDisk(fileResponse);
         }
 
         [TestMethod]
-        public void TestGetFeaturesByLokalId()
+        public async Task TestGetFeaturesByLokalIdAsync()
         {
-            LockAndSaveFeatureByLokalId(Ar5GrenseFeatureLokalId, null);
+            await LockAndSaveFeatureByLokalIdAsync(Ar5GrenseFeatureLokalId, null);
         }
 
-        private string GetExampleQuery(string ar5GrenseFeatureLokalId)
+        private string GetLokalIdQuery(string lokalid)
         {
-            return $"eq(*/identifikasjon/lokalid,{Ar5FlateFeatureLokalId})";
+            return $"eq(*/identifikasjon/lokalid,{lokalid})";
         }
 
         //private BoundingBox GetExampleBbox()
