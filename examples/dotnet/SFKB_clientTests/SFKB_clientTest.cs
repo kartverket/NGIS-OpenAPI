@@ -110,7 +110,7 @@ namespace SFKB_clientTests
 
             Assert.IsTrue(lockedLokalIds!= null && lockedLokalIds.Count > 0, $"No features locked for datasetId {datasetId} and lokalId {lokalId}");
 
-            var wfsReplaceFile = Wfs.CreateReplaceWrappingForFeatures(tempFile, lockedLokalIds);
+            var wfsReplaceFile = Wfs.CreateReplaceTransaction(tempFile, lockedLokalIds);
 
             using (var featureStream = File.OpenRead(wfsReplaceFile))
             {

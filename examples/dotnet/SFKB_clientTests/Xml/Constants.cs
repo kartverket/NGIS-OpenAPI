@@ -5,9 +5,11 @@ namespace XmlConstants
     internal class Strings
     {
         internal static string activeSchemaLocation;
-        internal static readonly string xpathExpressionLokalidFilter = $"{appPrefix}:identifikasjon/{appPrefix}:Identifikasjon/{appPrefix}:lokalId";
+        internal static string activeSchemaPrefix;
+
+        internal static readonly string xpathExpressionLokalidFilter = $"{activeSchemaPrefix}:identifikasjon/{activeSchemaPrefix}:Identifikasjon/{activeSchemaPrefix}:lokalId";
         internal static readonly string chlogfSchemaLocation = "http://skjema.geonorge.no/standard/geosynkronisering/1.1/endringslogg http://skjema.geonorge.no/standard/geosynkronisering/1.1/endringslogg/changelogfile.xsd";
-        internal static readonly string appPrefix = "app";
+        internal static readonly string GeoNorge = "http://skjema.geonorge.no/";
     }
 
     internal class Namespaces
@@ -28,7 +30,7 @@ namespace XmlConstants
         internal static readonly XName xNameFeatureMember = Namespaces.gmlNamespace + "featureMember";
         internal static readonly XName xNameReplace = Namespaces.wfsNamespace + "Replace";
         internal static readonly XName xNameTransactionCollection = Namespaces.chlogfNamespace + "TransactionCollection";
-        internal static readonly XName xNameAppPrefix = XNamespace.Xmlns + Strings.appPrefix;
+        internal static readonly XName xNameAppPrefix = XNamespace.Xmlns + Strings.activeSchemaPrefix;
         internal static readonly XName xNameFilter = Namespaces.fesNamespace + "Filter";
         internal static readonly XName xNamePropertyIsEqualTo = Namespaces.fesNamespace + "PropertyIsEqualTo";
         internal static readonly XName xNameValueReference = Namespaces.fesNamespace + "ValueReference";
@@ -40,7 +42,7 @@ namespace XmlConstants
         internal static readonly XAttribute chlogfNamespaceDeclaration = new XAttribute(XNamespace.Xmlns + "chlogf", Namespaces.chlogfNamespace.NamespaceName);
         internal static readonly XAttribute xsiNamespaceDeclaration = new XAttribute(XNamespace.Xmlns + "xsi", Namespaces.xsiNamespace.NamespaceName);
         internal static readonly XAttribute wfsNamespaceDeclaration = new XAttribute(XNamespace.Xmlns + "wfs", Namespaces.wfsNamespace.NamespaceName);
-        internal static readonly XAttribute appNamespaceDeclaration = new XAttribute(XNamespace.Xmlns + Strings.appPrefix, Namespaces.activeNamespace.NamespaceName);
+        internal static readonly XAttribute appNamespaceDeclaration = new XAttribute(XNamespace.Xmlns + Strings.activeSchemaPrefix, Namespaces.activeNamespace.NamespaceName);
         internal static readonly XAttribute gmlNamespaceDeclaration = new XAttribute(XNamespace.Xmlns + "gml", Namespaces.gmlNamespace.NamespaceName);
         internal static readonly XAttribute fesNamespaceDeclaration = new XAttribute(XNamespace.Xmlns + "fes", Namespaces.fesNamespace.NamespaceName);
     }

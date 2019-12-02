@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using XmlConstants;
 
 namespace SFKB_clientTests
 {
     internal class Wfs
     {
-        internal static string CreateReplaceWrappingForFeatures(string tempFile, List<Guid> lockedLokalIds)
+        internal static string CreateReplaceTransaction(string tempFile, List<Guid> lockedLokalIds)
         {
             var newTempFile = Path.GetTempFileName();
 
@@ -27,44 +28,107 @@ namespace SFKB_clientTests
 
         private static XElement GetReplaceXml(XElement featureXml, List<Guid> lockedLokalIds)
         {
-            Strings.activeSchemaLocation = featureXml.Attribute(Names.xNameSchemaLocation).Value + " " + Strings.chlogfSchemaLocation;
+            SetActiveNamespaceConstants(featureXml);
 
-            Namespaces.activeNamespace = featureXml.Attribute(Names.xNameAppPrefix).Value;
+            var transactionElement = CreateTransactionElement();
 
-            var transactionElement = GetTransactionElement();
+            var count = 0;
 
-            var featureMembers = featureXml.Descendants(Names.xNameFeatureMember);
-
-            foreach (var featureMember in featureMembers)
+            foreach (var featureMember in featureXml.Descendants(Names.xNameFeatureMember))
             {
                 var currentLokalId = GetLokalId(featureMember);
 
                 if (!lockedLokalIds.Contains(currentLokalId)) continue;
-                
-                var replaceElement = new XElement(Names.xNameReplace);
 
-                replaceElement.Add(featureMember.FirstNode);
+                AddReplaceFeatureMembertoTransaction(transactionElement, featureMember, currentLokalId);
 
-                replaceElement.Add(GetFilter(currentLokalId));
-
-                transactionElement.Add(replaceElement);
+                count++;
             }
 
-            var changeLogElement = GetChangeLogElement();
+            return CreateChangeLogElement(transactionElement, count);
+        }
 
-            changeLogElement.Add(transactionElement);
+        private static void SetActiveNamespaceConstants(XElement featureXml)
+        {
+            GetActiveNamespacePrefix(featureXml);
 
-            var count = featureMembers.Count();
+            GetActiveSchemaLocation(featureXml);
+        }
 
-            changeLogElement.Add(
+        private static void AddReplaceFeatureMembertoTransaction(XElement transactionElement, XElement featureMember, Guid currentLokalId)
+        {
+            var replaceElement = new XElement(Names.xNameReplace);
+
+            replaceElement.Add(featureMember.FirstNode);
+
+            replaceElement.Add(CreateFilter(currentLokalId));
+
+            transactionElement.Add(replaceElement);
+        }
+
+        private static void GetActiveNamespacePrefix(XElement featureXml)
+        {
+            var prefixDeclaration = featureXml.DescendantsAndSelf().SelectMany(d => d.Attributes().Where(a => IsGeoNorgeSchema(a))).FirstOrDefault();
+
+            Assert.IsTrue(prefixDeclaration != null, $"Unable to find a namespaceDeclaration starting with {Strings.GeoNorge}");
+
+            Strings.activeSchemaPrefix = prefixDeclaration.Name.LocalName;
+
+            Namespaces.activeNamespace = prefixDeclaration.Value;
+        }
+
+        private static bool IsGeoNorgeSchema(XAttribute a)
+        {
+            return a.Value.ToLower().StartsWith(Strings.GeoNorge);
+        }
+
+        private static void GetActiveSchemaLocation(XElement featureXml)
+        {
+            Strings.activeSchemaLocation = featureXml.Attribute(Names.xNameSchemaLocation).Value + " " + Strings.chlogfSchemaLocation;
+        }
+
+        private static XElement CreateChangeLogElement(XElement transactionElement, int count)
+        {
+            return new XElement(
+                Names.xNameTransactionCollection,
                 new XAttribute("startIndex", 1),
                 new XAttribute("endIndex", count),
                 new XAttribute("numberMatched", count),
                 new XAttribute("numberReturned", count),
-                new XAttribute("timeStamp", DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.ffzzz")));
-
-            return changeLogElement;
+                new XAttribute("timeStamp", DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.ffzzz")),
+                Attributes.chlogfNamespaceDeclaration,
+                Attributes.xsiNamespaceDeclaration,
+                Attributes.appNamespaceDeclaration,
+                Attributes.wfsNamespaceDeclaration,
+                Attributes.gmlNamespaceDeclaration,
+                Attributes.fesNamespaceDeclaration,
+                new XAttribute(Names.xNameSchemaLocation, Strings.activeSchemaLocation),
+                transactionElement
+                );
         }
+
+        private static XElement CreateFilter(Guid lokalId)
+        {
+            return new XElement(Names.xNameFilter,
+                                new XElement(Names.xNamePropertyIsEqualTo,
+                                    new XElement(Names.xNameValueReference, Strings.xpathExpressionLokalidFilter),
+                                    new XElement(Names.xNameLiteral, lokalId)
+                                    )
+                                );
+        }
+
+        private static XElement CreateTransactionElement()
+        {
+            return new XElement(Namespaces.chlogfNamespace + "transactions",
+                new XAttribute("version", "2.0.0"),
+                new XAttribute("service", "WFS"));
+        }
+
+        private static Guid GetLokalId(XElement feature)
+        {
+            return new Guid(feature.Descendants(Namespaces.activeNamespace + "lokalId").Nodes().FirstOrDefault().ToString());
+        }
+
 
         //private static bool FeatureReferencesActiveGeometry(XElement featureMember, IEnumerable<string> activeGeometryIds)
         //{
@@ -83,41 +147,5 @@ namespace SFKB_clientTests
 
         //    return gmlId.Select(i => i.Attribute(gmlNamespace + "id").Value.Split("_").Last());
         //}
-
-        private static XElement GetChangeLogElement()
-        {
-            return new XElement(
-                Names.xNameTransactionCollection,
-                Attributes.chlogfNamespaceDeclaration,
-                Attributes.xsiNamespaceDeclaration,
-                Attributes.appNamespaceDeclaration,
-                Attributes.wfsNamespaceDeclaration,
-                Attributes.gmlNamespaceDeclaration,
-                Attributes.fesNamespaceDeclaration,                
-                new XAttribute(Names.xNameSchemaLocation, Strings.activeSchemaLocation)
-                );
-        }
-
-        private static XElement GetFilter(Guid lokalId)
-        {
-            return new XElement(Names.xNameFilter,
-                                new XElement(Names.xNamePropertyIsEqualTo,
-                                    new XElement(Names.xNameValueReference, Strings.xpathExpressionLokalidFilter),
-                                    new XElement(Names.xNameLiteral, lokalId)
-                                    )
-                                );
-        }
-
-        private static XElement GetTransactionElement()
-        {
-            return new XElement(Namespaces.chlogfNamespace + "transactions",
-                new XAttribute("version", "2.0.0"),
-                new XAttribute("service", "WFS"));
-        }
-
-        private static Guid GetLokalId(XElement feature)
-        {
-            return new Guid(feature.Descendants(Namespaces.activeNamespace + "lokalId").Nodes().FirstOrDefault().ToString());
-        }
     }
 }
