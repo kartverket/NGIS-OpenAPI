@@ -1,0 +1,5 @@
+examples/dotnet/SFKB_clientTests/config.json
+/examples/dotnet/SFKB_clientTests/.vs/SFKB-API_clientTests
+/examples/dotnet/SFKB_clientTests/bin/Debug
+/examples/dotnet/SFKB_clientTests/obj/Debug
+/examples/dotnet/SFKB_clientTests/Client.cs

@@ -84,7 +84,11 @@ namespace SFKB_clientTests
 
         private static void GetActiveSchemaLocation(XElement featureXml)
         {
-            Strings.activeSchemaLocation = featureXml.Attribute(Names.xNameSchemaLocation).Value + " " + Strings.chlogfSchemaLocation;
+            var candidates = featureXml.DescendantsAndSelf().SelectMany(d => d.Attributes(Names.xNameSchemaLocation));
+
+            Assert.IsTrue(candidates != null && candidates.Count() > 0, "Unable to find schemaLocation declaration");
+
+            Strings.activeSchemaLocation = string.Join(' ', candidates.Select(a => a.Value) ) + " " + Strings.chlogfSchemaLocation;
         }
 
         private static XElement CreateChangeLogElement(XElement transactionElement, int count)
