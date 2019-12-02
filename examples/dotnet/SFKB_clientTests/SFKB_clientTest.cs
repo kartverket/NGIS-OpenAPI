@@ -101,22 +101,22 @@ namespace SFKB_clientTests
         [TestMethod]
         public async Task TestReplacePolygonFeatureAsync()
         {
-            await ReplaceByLokalIdAsync(Ar5FlateFeatureLokalId);
+            await ReplaceByLokalIdAsync(DatasetId, Ar5FlateFeatureLokalId);
         }
 
         [TestMethod]
         public async Task TestReplaceReferencedLineFeatureAsync()
         {
-            await ReplaceByLokalIdAsync(Ar5GrenseFeatureLokalId);
+            await ReplaceByLokalIdAsync(DatasetId, Ar5GrenseFeatureLokalId);
         }
 
-        private async Task ReplaceByLokalIdAsync(string lokalId)
+        private async Task ReplaceByLokalIdAsync(Guid datasetId, string lokalId)
         {
             var locking = GetLocking();
 
             var tempFile = await LockAndSaveFeatureByLokalIdAsync(lokalId, locking);
 
-            var datasetLocks = await Client.GetDatasetLocksAsync(DatasetId, locking);
+            var datasetLocks = await Client.GetDatasetLocksAsync(datasetId, locking);
 
             var lockedLokalIds = datasetLocks.SelectMany(l => l.Features.Select(f => f.Lokalid)).ToList();
 
@@ -124,12 +124,12 @@ namespace SFKB_clientTests
 
             using (var featureStream = File.OpenRead(wfsReplaceFile))
             {
-                var response = await Client.UpdateDatasetFeaturesAsync(DatasetId, locking, featureStream);
+                var response = await Client.UpdateDatasetFeaturesAsync(datasetId, locking, featureStream);
 
                 Assert.IsTrue(response.Features_replaced > 0, "No features updated");
             };
 
-            await Client.DeleteDatasetLocksAsync(DatasetId, locking);
+            await DeleteLocks(datasetId, locking);
         }
 
         //[TestMethod]
@@ -165,9 +165,14 @@ namespace SFKB_clientTests
 
             await LockAndSaveFeatureByLokalIdAsync(Ar5FlateFeatureLokalId, locking);
 
-            await Client.DeleteDatasetLocksAsync(DatasetId, locking);
+            await DeleteLocks(DatasetId, locking);
+        }
 
-            var locks = await Client.GetDatasetLocksAsync(DatasetId, locking);
+        private async Task DeleteLocks(Guid datasetId, Locking locking)
+        {
+            await Client.DeleteDatasetLocksAsync(datasetId, locking);
+
+            var locks = await Client.GetDatasetLocksAsync(datasetId, locking);
 
             Assert.IsTrue(locks.Count() == 0, "Locks not deleted");
         }

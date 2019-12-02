@@ -3,21 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
+using XmlConstants;
 
 namespace SFKB_clientTests
 {
     internal class Wfs
     {
-        private static readonly XNamespace gmlNamespace = "http://www.opengis.net/gml/3.2";
-        private static readonly XNamespace wfsNamespace = "http://www.opengis.net/wfs/2.0";
-        private static readonly XNamespace fesNamespace = "http://www.opengis.net/fes/2.0";
-        private static readonly XNamespace xsiNamespace = "http://www.w3.org/2001/XMLSchema-instance";
-        private static readonly string appPrefix = "app";
-        private static readonly XNamespace chlogfNamespace = "http://skjema.geonorge.no/standard/geosynkronisering/1.1/endringslogg";
-        private static XNamespace activeNamespace;
-        private static string activeSchemaLocation;
-        private static readonly string chlogfSchemaLocation = "http://skjema.geonorge.no/standard/geosynkronisering/1.1/endringslogg http://skjema.geonorge.no/standard/geosynkronisering/1.1/endringslogg/changelogfile.xsd";
-
         internal static string CreateReplaceWrappingForFeatures(string tempFile, List<Guid> lockedLokalIds)
         {
             var newTempFile = Path.GetTempFileName();
@@ -36,15 +27,13 @@ namespace SFKB_clientTests
 
         private static XElement GetReplaceXml(XElement featureXml, List<Guid> lockedLokalIds)
         {
-            activeSchemaLocation = featureXml.Attribute(xsiNamespace + "schemaLocation").Value + " " + chlogfSchemaLocation;
+            Strings.activeSchemaLocation = featureXml.Attribute(Names.xNameSchemaLocation).Value + " " + Strings.chlogfSchemaLocation;
 
-            activeNamespace = featureXml.Attribute(XNamespace.Xmlns + appPrefix).Value;
-
-            var changeLogElement = GetChangeLogElement();
+            Namespaces.activeNamespace = featureXml.Attribute(Names.xNameAppPrefix).Value;
 
             var transactionElement = GetTransactionElement();
 
-            var featureMembers = featureXml.Descendants(gmlNamespace + "featureMember");
+            var featureMembers = featureXml.Descendants(Names.xNameFeatureMember);
 
             foreach (var featureMember in featureMembers)
             {
@@ -52,16 +41,16 @@ namespace SFKB_clientTests
 
                 if (!lockedLokalIds.Contains(currentLokalId)) continue;
                 
-                var xpathExpressionLokalidFilter = GetLokalIdXpath();
-
-                var replaceElement = new XElement(wfsNamespace + "Replace");
+                var replaceElement = new XElement(Names.xNameReplace);
 
                 replaceElement.Add(featureMember.FirstNode);
 
-                replaceElement.Add(GetFilter(currentLokalId, xpathExpressionLokalidFilter));
+                replaceElement.Add(GetFilter(currentLokalId));
 
                 transactionElement.Add(replaceElement);
             }
+
+            var changeLogElement = GetChangeLogElement();
 
             changeLogElement.Add(transactionElement);
 
@@ -69,9 +58,10 @@ namespace SFKB_clientTests
 
             changeLogElement.Add(
                 new XAttribute("startIndex", 1),
-                new XAttribute("endIndex", 1),
+                new XAttribute("endIndex", count),
                 new XAttribute("numberMatched", count),
-                new XAttribute("numberReturned", count));
+                new XAttribute("numberReturned", count),
+                new XAttribute("timeStamp", DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.ffzzz")));
 
             return changeLogElement;
         }
@@ -96,44 +86,38 @@ namespace SFKB_clientTests
 
         private static XElement GetChangeLogElement()
         {
-            return new XElement(chlogfNamespace + "TransactionCollection",
-                new XAttribute(XNamespace.Xmlns + "chlogf", chlogfNamespace.NamespaceName),
-                new XAttribute(XNamespace.Xmlns + "xsi", xsiNamespace.NamespaceName),
-                new XAttribute(XNamespace.Xmlns + appPrefix, activeNamespace.NamespaceName),
-                new XAttribute(XNamespace.Xmlns + "wfs", wfsNamespace.NamespaceName),
-                new XAttribute(XNamespace.Xmlns + "gml", gmlNamespace.NamespaceName),
-                new XAttribute(XNamespace.Xmlns + "fes", fesNamespace.NamespaceName),
-                new XAttribute(xsiNamespace + "schemaLocation", activeSchemaLocation),                
-                new XAttribute("timeStamp", DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.ffzzz"))
-                
+            return new XElement(
+                Names.xNameTransactionCollection,
+                Attributes.chlogfNamespaceDeclaration,
+                Attributes.xsiNamespaceDeclaration,
+                Attributes.appNamespaceDeclaration,
+                Attributes.wfsNamespaceDeclaration,
+                Attributes.gmlNamespaceDeclaration,
+                Attributes.fesNamespaceDeclaration,                
+                new XAttribute(Names.xNameSchemaLocation, Strings.activeSchemaLocation)
                 );
         }
 
-        private static XElement GetFilter(Guid lokalId, string xpathExpressionLokalidFilter)
+        private static XElement GetFilter(Guid lokalId)
         {
-            return new XElement(fesNamespace + "Filter",
-                                new XElement(fesNamespace + "PropertyIsEqualTo",
-                                    new XElement(fesNamespace + "ValueReference", xpathExpressionLokalidFilter),
-                                    new XElement(fesNamespace + "Literal", lokalId)
+            return new XElement(Names.xNameFilter,
+                                new XElement(Names.xNamePropertyIsEqualTo,
+                                    new XElement(Names.xNameValueReference, Strings.xpathExpressionLokalidFilter),
+                                    new XElement(Names.xNameLiteral, lokalId)
                                     )
                                 );
         }
 
         private static XElement GetTransactionElement()
         {
-            return new XElement(chlogfNamespace + "transactions",
+            return new XElement(Namespaces.chlogfNamespace + "transactions",
                 new XAttribute("version", "2.0.0"),
                 new XAttribute("service", "WFS"));
         }
 
-        private static string GetLokalIdXpath()
-        {
-            return $"{appPrefix}:identifikasjon/{appPrefix}:Identifikasjon/{appPrefix}:lokalId";
-        }
-
         private static Guid GetLokalId(XElement feature)
         {
-            return new Guid(feature.Descendants(activeNamespace + "lokalId").Nodes().FirstOrDefault().ToString());
+            return new Guid(feature.Descendants(Namespaces.activeNamespace + "lokalId").Nodes().FirstOrDefault().ToString());
         }
     }
 }
