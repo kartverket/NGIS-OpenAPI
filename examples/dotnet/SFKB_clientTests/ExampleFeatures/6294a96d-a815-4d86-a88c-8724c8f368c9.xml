@@ -1,0 +1,51 @@
+<chlogf:TransactionCollection xmlns:chlogf="http://skjema.geonorge.no/standard/geosynkronisering/1.1/endringslogg" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xmlns:app="http://skjema.geonorge.no/SOSI/produktspesifikasjon/FKB-Ar5/4.6" 
+  xmlns:wfs="http://www.opengis.net/wfs/2.0" 
+  xmlns:gml="http://www.opengis.net/gml/3.2" 
+  xmlns:fes="http://www.opengis.net/fes/2.0" xsi:schemaLocation="http://skjema.geonorge.no/SOSI/produktspesifikasjon/FKB-Ar5/4.6 http://skjema.geonorge.no/SOSI/produktspesifikasjon/FKB-Ar5/4.6/FKB-AR546.xsd http://skjema.geonorge.no/standard/geosynkronisering/1.1/endringslogg http://skjema.geonorge.no/standard/geosynkronisering/1.1/endringslogg/changelogfile.xsd" timeStamp="2019-12-02T10:37:28.95+01:00" startIndex="1" endIndex="1" numberMatched="23" numberReturned="23">
+  <chlogf:transactions version="2.0.0" service="WFS">
+    <wfs:Insert>
+      <gml:FeatureCollection>
+        <gml:featureMember>
+          <app:ArealressursGrense gml:id="app.ArealressursGrense_6294a96d-a815-4d86-a88c-8724c8f368c9">
+            <app:identifikasjon>
+              <app:Identifikasjon>
+                <app:lokalId>6294a96d-a815-4d86-a88c-8724c8f368c9</app:lokalId>
+                <app:navnerom>AR5_test23</app:navnerom>
+                <app:versjonId>2019-11-11 11:57:47.371000</app:versjonId>
+              </app:Identifikasjon>
+            </app:identifikasjon>
+            <app:datafangstdato>2014-07-13</app:datafangstdato>
+            <app:oppdateringsdato>2019-11-12T14:02:26</app:oppdateringsdato>
+            <app:opphav>FKB-Veg</app:opphav>
+            <app:registreringsversjon>
+              <app:Registreringsversjon>
+                <app:produkt>FKB-AR5</app:produkt>
+                <app:versjon>4.5 20140301</app:versjon>
+              </app:Registreringsversjon>
+            </app:registreringsversjon>
+            <app:verifiseringsdato>2014-07-13</app:verifiseringsdato>
+            <app:kvalitet>
+              <app:Posisjonskvalitet>
+                <app:målemetode>24</app:målemetode>
+                <app:nøyaktighet>39</app:nøyaktighet>
+                <app:synbarhet>0</app:synbarhet>
+              </app:Posisjonskvalitet>
+            </app:kvalitet>
+            <app:grense>
+              <gml:Curve gml:id="QMS_d997f6fb-0c94-445f-b628-e0b7cb8e499e_f8bb8f5f-ffd2-4d89-af5f-7c2b1a70849e" srsName="urn:ogc:def:crs:EPSG::25833" srsDimension="2">
+                <gml:segments>
+                  <gml:LineStringSegment>
+                    <gml:posList>365730.76000000001 7217690.8600000003 366066.62 7217702.0099999998</gml:posList>
+                  </gml:LineStringSegment>
+                </gml:segments>
+              </gml:Curve>
+            </app:grense>
+            <app:avgrensingType>7200</app:avgrensingType>
+          </app:ArealressursGrense>
+        </gml:featureMember>
+      </gml:FeatureCollection>
+    </wfs:Insert>
+  </chlogf:transactions>
+</chlogf:TransactionCollection>

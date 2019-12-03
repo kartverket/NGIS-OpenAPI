@@ -1,7 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SFKB_API;
 
@@ -11,11 +13,13 @@ namespace SFKB_clientTests
     public class SfkbClientTest
     {
         private static Client Client;
-        private Guid DatasetId;
-        private static readonly Guid WrongDatasetId = new Guid("2fa85f64-5717-4562-b3fc-2c963f66afa6");
+        private static Guid DatasetId;
+        private static readonly Guid WrongDatasetId = new Guid();
+        private static readonly Guid WrongLokalId = new Guid();
         private const string Ar5DatasetName = "ar5_test_23";
-        private const string Ar5FlateFeatureLokalId = "20f893f2-5c8c-466f-b25b-d51ae98f1399";
-        private const string Ar5GrenseFeatureLokalId = "0003f094-b524-4a5a-bb05-d69881df853a";
+        private const string ExampleFeatures = "ExampleFeatures";
+        private Guid Ar5FlateFeatureLokalId = new Guid("20f893f2-5c8c-466f-b25b-d51ae98f1399");
+        private Guid Ar5GrenseFeatureLokalId = new Guid("0003f094-b524-4a5a-bb05-d69881df853a");
 
         [TestInitialize]
         public async Task InitAsync()
@@ -28,7 +32,7 @@ namespace SFKB_clientTests
         [TestCleanup]
         public async Task CleanupAsync()
         {
-            await DeleteLocks(DatasetId, General.GetLocking());
+            await DeleteLocks(DatasetId, GetLocking());
         }
 
         [TestMethod]
@@ -75,17 +79,86 @@ namespace SFKB_clientTests
         [TestMethod]
         public async Task TestGetLockedFeaturesByLokalIdAsync()
         {
-            var locking = General.GetLocking();
+            var locking = GetLocking();
 
             await LockAndSaveFeatureByLokalIdAsync(Ar5FlateFeatureLokalId, locking);
         }
 
         [TestMethod]
-        public async Task TestGetFeaturesByLokalIdAsync()
+        public async Task TestGetFeaturesByLokalIdSansLockAsync()
         {
             await LockAndSaveFeatureByLokalIdAsync(Ar5GrenseFeatureLokalId, null);
+
+            var locks = await Client.GetDatasetLocksAsync(DatasetId, GetLocking());
+
+            Assert.IsTrue(locks.Count() == 0, $"Locks exists on dataset {DatasetId}");
         }
-        
+
+        [TestMethod]
+        public async Task TestInsertAndDeleteNewFeaturesAsync()
+        {
+            var examplesDir = new DirectoryInfo(ExampleFeatures);
+
+            var locking = GetLocking();
+
+            foreach (var exampleFile in examplesDir.GetFiles())
+            {
+                using (var featureStream = File.OpenRead(exampleFile.FullName))
+                {
+                    var lokalId = new Guid(exampleFile.Name.Split('.')[0]);
+
+                    var existingFeature = await LockAndSaveFeatureByLokalIdAsync(lokalId, locking);
+
+                    if (FileHasFeatures(existingFeature)) await DeleteByLokalIdAsync(existingFeature, lokalId, locking);
+
+                    var response = await Client.UpdateDatasetFeaturesAsync(DatasetId, locking, featureStream);
+
+                    Assert.IsTrue(response.Features_created > 0, "No features updated");
+
+                    var newFeature = await LockAndSaveFeatureByLokalIdAsync(lokalId, locking);
+
+                    await DeleteByLokalIdAsync(newFeature, lokalId, locking);
+                };
+            }
+        }
+
+        [TestMethod]
+        public async Task TestNonExistingLokalIdAsync()
+        {
+            var tempFile = await LockAndSaveFeatureByLokalIdAsync(WrongLokalId, null);
+
+            Assert.IsFalse(FileHasFeatures(tempFile), $"Query with lokalId {WrongLokalId} gave unexpected result");
+        }
+
+        internal static Locking GetLocking()
+        {
+            return new Locking { Type = LockingType.User_lock };
+        }
+
+        private async Task DeleteByLokalIdAsync(string tempFile, Guid lokalId, Locking locking)
+        {
+            await DeleteByLokalIdAsync(tempFile, new List <Guid> { lokalId }, locking);
+        }
+
+        private async Task DeleteByLokalIdAsync(string tempFile, List<Guid> lokalIds, Locking locking)
+        {
+            string deleteXmlPath = Wfs.CreateDeleteTransaction(tempFile, lokalIds);
+
+            using (var featureStream = File.OpenRead(deleteXmlPath))
+            {
+                var response = await Client.UpdateDatasetFeaturesAsync(DatasetId, locking, featureStream);
+
+                Assert.IsTrue(response.Features_erased > 0, $"Feature with lokalIds ({string.Join(',', lokalIds)}) not deleted");
+            }
+        }
+
+        private bool FileHasFeatures(string tempFile)
+        {
+            var xml = XElement.Load(tempFile);
+
+            return xml.HasElements && xml.Descendants().Count() > 0;
+        }
+
         private Task<Dataset> GetDataset()
         {
             return Client.GetDatasetMetadataAsync(DatasetId);
@@ -100,9 +173,9 @@ namespace SFKB_clientTests
             DatasetId = datasets.FirstOrDefault(d => d.Name == Ar5DatasetName).Id;
         }
 
-        private async Task ReplaceByLokalIdAsync(Guid datasetId, string lokalId)
+        private async Task ReplaceByLokalIdAsync(Guid datasetId, Guid lokalId)
         {
-            var locking = General.GetLocking();
+            var locking = GetLocking();
 
             var tempFile = await LockAndSaveFeatureByLokalIdAsync(lokalId, locking);
 
@@ -133,14 +206,14 @@ namespace SFKB_clientTests
             Assert.IsTrue(locks.Count() == 0, "Locks not deleted");
         }
 
-        private async Task<string> LockAndSaveFeatureByLokalIdAsync(string lokalId, Locking locking)
+        private async Task<string> LockAndSaveFeatureByLokalIdAsync(Guid lokalId, Locking locking)
         {
             var fileResponse = await Client.GetDatasetFeaturesAsync(DatasetId, locking, null, GetLokalIdQuery(lokalId));
 
             return General.WriteStreamToDisk(fileResponse);
         }
 
-        private string GetLokalIdQuery(string lokalid)
+        private string GetLokalIdQuery(Guid lokalid)
         {
             return $"eq(*/identifikasjon/lokalid,{lokalid})";
         }

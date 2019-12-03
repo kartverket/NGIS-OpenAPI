@@ -26,6 +26,34 @@ namespace SFKB_clientTests
             return newTempFile;
         }
 
+        internal static string CreateDeleteTransaction(string tempFile, List<Guid> lokalIds)
+        {
+            var newTempFile = Path.GetTempFileName();
+
+            var deleteXml = XElement.Load(tempFile);
+
+            SetActiveNamespaceConstants(deleteXml);
+
+            var transactionElement = CreateTransactionElement();
+
+            foreach (var lokalid in lokalIds)
+            {
+                var typeName = deleteXml.DescendantsAndSelf().FirstOrDefault(d => d.Value == lokalid.ToString()).Parent.Parent.Parent.Name;
+                
+                transactionElement.Add(new XElement(
+                    Constants.xNameDelete,
+                    new XAttribute("typeName", $"{Constants.activeSchemaPrefix}:{typeName.LocalName}"),
+                    CreateFilter(lokalid)
+                    ));
+            }
+
+            var changeLogElement = CreateChangeLogElement(transactionElement, lokalIds.Count);
+
+            changeLogElement.Save(newTempFile);
+            
+            return newTempFile;
+        }
+
         private static XElement GetReplaceXml(XElement featureXml, List<Guid> lockedLokalIds)
         {
             SetActiveNamespaceConstants(featureXml);
@@ -34,7 +62,7 @@ namespace SFKB_clientTests
 
             var count = 0;
 
-            foreach (var featureMember in featureXml.Descendants(Names.xNameFeatureMember))
+            foreach (var featureMember in featureXml.Descendants(Constants.xNameFeatureMember))
             {
                 var currentLokalId = GetLokalId(featureMember);
 
@@ -57,7 +85,7 @@ namespace SFKB_clientTests
 
         private static void AddReplaceFeatureMembertoTransaction(XElement transactionElement, XElement featureMember, Guid currentLokalId)
         {
-            var replaceElement = new XElement(Names.xNameReplace);
+            var replaceElement = new XElement(Constants.xNameReplace);
 
             replaceElement.Add(featureMember.FirstNode);
 
@@ -70,67 +98,67 @@ namespace SFKB_clientTests
         {
             var prefixDeclaration = featureXml.DescendantsAndSelf().SelectMany(d => d.Attributes().Where(a => IsGeoNorgeSchema(a))).FirstOrDefault();
 
-            Assert.IsTrue(prefixDeclaration != null, $"Unable to find a namespaceDeclaration starting with {Strings.GeoNorge}");
+            Assert.IsTrue(prefixDeclaration != null, $"Unable to find a namespaceDeclaration starting with {Constants.GeoNorge}");
 
-            Strings.activeSchemaPrefix = prefixDeclaration.Name.LocalName;
+            Constants.activeSchemaPrefix = prefixDeclaration.Name.LocalName;
 
-            Namespaces.activeNamespace = prefixDeclaration.Value;
+            Constants.activeNamespace = prefixDeclaration.Value;
         }
 
         private static bool IsGeoNorgeSchema(XAttribute a)
         {
-            return a.Value.ToLower().StartsWith(Strings.GeoNorge);
+            return a.Value.ToLower().StartsWith(Constants.GeoNorge);
         }
 
         private static void GetActiveSchemaLocation(XElement featureXml)
         {
-            var candidates = featureXml.DescendantsAndSelf().SelectMany(d => d.Attributes(Names.xNameSchemaLocation));
+            var candidates = featureXml.DescendantsAndSelf().SelectMany(d => d.Attributes(Constants.xNameSchemaLocation));
 
             Assert.IsTrue(candidates != null && candidates.Count() > 0, "Unable to find schemaLocation declaration");
 
-            Strings.activeSchemaLocation = string.Join(' ', candidates.Select(a => a.Value) ) + " " + Strings.chlogfSchemaLocation;
+            Constants.activeSchemaLocation = string.Join(' ', candidates.Select(a => a.Value) ) + " " + Constants.chlogfSchemaLocation;
         }
 
         private static XElement CreateChangeLogElement(XElement transactionElement, int count)
         {
             return new XElement(
-                Names.xNameTransactionCollection,
+                Constants.xNameTransactionCollection,
                 new XAttribute("startIndex", 1),
                 new XAttribute("endIndex", count),
                 new XAttribute("numberMatched", count),
                 new XAttribute("numberReturned", count),
                 new XAttribute("timeStamp", DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.ffzzz")),
-                Attributes.chlogfNamespaceDeclaration,
-                Attributes.xsiNamespaceDeclaration,
-                Attributes.appNamespaceDeclaration,
-                Attributes.wfsNamespaceDeclaration,
-                Attributes.gmlNamespaceDeclaration,
-                Attributes.fesNamespaceDeclaration,
-                new XAttribute(Names.xNameSchemaLocation, Strings.activeSchemaLocation),
+                Constants.chlogfNamespaceDeclaration,
+                Constants.xsiNamespaceDeclaration,
+                new XAttribute(XNamespace.Xmlns + Constants.activeSchemaPrefix, Constants.activeNamespace.NamespaceName),
+                Constants.wfsNamespaceDeclaration,
+                Constants.gmlNamespaceDeclaration,
+                Constants.fesNamespaceDeclaration,
+                new XAttribute(Constants.xNameSchemaLocation, Constants.activeSchemaLocation),
                 transactionElement
                 );
         }
 
-        private static XElement CreateFilter(Guid lokalId)
+        internal static XElement CreateFilter(Guid lokalId)
         {
-            return new XElement(Names.xNameFilter,
-                                new XElement(Names.xNamePropertyIsEqualTo,
-                                    new XElement(Names.xNameValueReference, Strings.xpathExpressionLokalidFilter),
-                                    new XElement(Names.xNameLiteral, lokalId)
+            return new XElement(Constants.xNameFilter,
+                                new XElement(Constants.xNamePropertyIsEqualTo,
+                                    new XElement(Constants.xNameValueReference, $"{Constants.activeSchemaPrefix}:identifikasjon/{Constants.activeSchemaPrefix}:Identifikasjon/{Constants.activeSchemaPrefix}:lokalId"),
+                                    new XElement(Constants.xNameLiteral, lokalId)
                                     )
                                 );
         }
 
         private static XElement CreateTransactionElement()
         {
-            return new XElement(Namespaces.chlogfNamespace + "transactions",
+            return new XElement(Constants.chlogfNamespace + "transactions",
                 new XAttribute("version", "2.0.0"),
                 new XAttribute("service", "WFS"));
         }
 
         private static Guid GetLokalId(XElement feature)
         {
-            return new Guid(feature.Descendants(Namespaces.activeNamespace + "lokalId").Nodes().FirstOrDefault().ToString());
+            return new Guid(feature.Descendants(Constants.activeNamespace + "lokalId").Nodes().FirstOrDefault().ToString());
         }
 
 

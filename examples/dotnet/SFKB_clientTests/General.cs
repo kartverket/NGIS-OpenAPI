@@ -61,10 +61,6 @@ namespace SFKB_clientTests
 
             return tempFile;
         }
-
-        internal static Locking GetLocking()
-        {
-            return new Locking { Type = LockingType.User_lock };
-        }
+        
     }
 }
