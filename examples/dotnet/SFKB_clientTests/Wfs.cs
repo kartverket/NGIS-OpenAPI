@@ -10,18 +10,43 @@ namespace SFKB_clientTests
 {
     internal class Wfs
     {
+        internal static string CreateInsertTransaction(string tempFile, List<Guid> lokalIds)
+        {
+            var newTempFile = Path.GetTempFileName();
+
+            var insertXml = XElement.Load(tempFile);
+
+            SetActiveNamespaceConstants(insertXml);
+
+            var insertElement = new XElement(Constants.xNameInsert);
+
+            foreach (var lokalid in lokalIds)
+            {
+                var feature = insertXml.DescendantsAndSelf().FirstOrDefault(d => d.Value == lokalid.ToString()).Parent.Parent.Parent;
+
+                insertElement.Add(feature);
+            }
+
+            var transactionElement = CreateTransactionElement();
+
+            transactionElement.Add(insertElement);
+
+            var changeLogElement = CreateChangeLogElement(transactionElement, lokalIds.Count);
+
+            changeLogElement.Save(newTempFile);
+
+            return newTempFile;
+        }
+
         internal static string CreateReplaceTransaction(string tempFile, List<Guid> lockedLokalIds)
         {
             var newTempFile = Path.GetTempFileName();
 
-            using (var featureStream = File.OpenRead(tempFile))
-            {
-                var featureXml = XElement.Load(featureStream);
+            var featureXml = XElement.Load(tempFile);
 
-                var replaceXml = GetReplaceXml(featureXml, lockedLokalIds);
+            var replaceXml = GetReplaceXml(featureXml, lockedLokalIds);
 
-                replaceXml.Save(newTempFile);
-            }
+            replaceXml.Save(newTempFile);
 
             return newTempFile;
         }

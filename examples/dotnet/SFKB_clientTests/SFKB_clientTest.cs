@@ -103,23 +103,30 @@ namespace SFKB_clientTests
 
             foreach (var exampleFile in examplesDir.GetFiles())
             {
-                using (var featureStream = File.OpenRead(exampleFile.FullName))
-                {
-                    var lokalId = new Guid(exampleFile.Name.Split('.')[0]);
+                var lokalId = new Guid(exampleFile.Name.Split('.')[0]);
 
-                    var existingFeature = await LockAndSaveFeatureByLokalIdAsync(lokalId, locking);
+                var existingFeature = await LockAndSaveFeatureByLokalIdAsync(lokalId, locking);
 
-                    if (FileHasFeatures(existingFeature)) await DeleteByLokalIdAsync(existingFeature, lokalId, locking);
+                if (FileHasFeatures(existingFeature)) await DeleteByLokalIdAsync(existingFeature, lokalId, locking);
 
-                    var response = await Client.UpdateDatasetFeaturesAsync(DatasetId, locking, featureStream);
+                var insertXml = Wfs.CreateInsertTransaction(exampleFile.FullName, new List<Guid> { lokalId });
 
-                    Assert.IsTrue(response.Features_created > 0, "No features updated");
+                var response = await Execute(locking, insertXml);
 
-                    var newFeature = await LockAndSaveFeatureByLokalIdAsync(lokalId, locking);
+                Assert.IsTrue(response.Features_created > 0, "No features updated");
 
-                    await DeleteByLokalIdAsync(newFeature, lokalId, locking);
-                };
+                var newFeature = await LockAndSaveFeatureByLokalIdAsync(lokalId, locking);
+
+                await DeleteByLokalIdAsync(newFeature, lokalId, locking);
             }
+        }
+
+        private static async Task<Response> Execute(Locking locking, string xmlFile)
+        {
+            using (var featureStream = File.OpenRead(xmlFile))
+            {
+                return await Client.UpdateDatasetFeaturesAsync(DatasetId, locking, featureStream);
+            };
         }
 
         [TestMethod]
@@ -144,12 +151,9 @@ namespace SFKB_clientTests
         {
             string deleteXmlPath = Wfs.CreateDeleteTransaction(tempFile, lokalIds);
 
-            using (var featureStream = File.OpenRead(deleteXmlPath))
-            {
-                var response = await Client.UpdateDatasetFeaturesAsync(DatasetId, locking, featureStream);
+            var response = await Execute(locking, deleteXmlPath);
 
-                Assert.IsTrue(response.Features_erased > 0, $"Feature with lokalIds ({string.Join(',', lokalIds)}) not deleted");
-            }
+            Assert.IsTrue(response.Features_erased > 0, $"Feature with lokalIds ({string.Join(',', lokalIds)}) not deleted");
         }
 
         private bool FileHasFeatures(string tempFile)
@@ -189,12 +193,9 @@ namespace SFKB_clientTests
 
             var wfsReplaceFile = Wfs.CreateReplaceTransaction(tempFile, lockedLokalIds);
 
-            using (var featureStream = File.OpenRead(wfsReplaceFile))
-            {
-                var response = await Client.UpdateDatasetFeaturesAsync(datasetId, locking, featureStream);
+            var response = await Execute(locking, wfsReplaceFile);
 
-                Assert.IsTrue(response.Features_replaced > 0, "No features updated");
-            };
+            Assert.IsTrue(response.Features_replaced > 0, "No features updated");
         }
 
         private async Task DeleteLocks(Guid datasetId, Locking locking)
