@@ -20,12 +20,7 @@ namespace SFKB_clientTests
 
             var insertElement = new XElement(Constants.xNameInsert);
 
-            foreach (var lokalid in lokalIds)
-            {
-                var feature = insertXml.DescendantsAndSelf().FirstOrDefault(d => d.Value == lokalid.ToString()).Parent.Parent.Parent;
-
-                insertElement.Add(feature);
-            }
+            foreach (var lokalid in lokalIds) insertElement.Add(GetFeatureByLokalId(insertXml, lokalid));
 
             var transactionElement = CreateTransactionElement();
 
@@ -36,6 +31,11 @@ namespace SFKB_clientTests
             changeLogElement.Save(newTempFile);
 
             return newTempFile;
+        }
+
+        private static XElement GetFeatureByLokalId(XElement xElement, Guid lokalid)
+        {
+            return xElement.DescendantsAndSelf().FirstOrDefault(d => d.Value == lokalid.ToString()).Parent.Parent.Parent;
         }
 
         internal static string CreateReplaceTransaction(string tempFile, List<Guid> lockedLokalIds)
@@ -63,7 +63,7 @@ namespace SFKB_clientTests
 
             foreach (var lokalid in lokalIds)
             {
-                var typeName = deleteXml.DescendantsAndSelf().FirstOrDefault(d => d.Value == lokalid.ToString()).Parent.Parent.Parent.Name;
+                var typeName = GetFeatureByLokalId(deleteXml, lokalid).Name;
                 
                 transactionElement.Add(new XElement(
                     Constants.xNameDelete,
