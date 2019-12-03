@@ -23,7 +23,13 @@ namespace SFKB_clientTests
             Client = General.GetClientWithBasicAuthentication();
 
             await GetDatasetsAsync();
-        }        
+        }
+
+        [TestCleanup]
+        public async Task CleanupAsync()
+        {
+            await DeleteLocks(DatasetId, General.GetLocking());
+        }
 
         [TestMethod]
         public async Task TestGetDatasetsAsync()
@@ -72,8 +78,6 @@ namespace SFKB_clientTests
             var locking = General.GetLocking();
 
             await LockAndSaveFeatureByLokalIdAsync(Ar5FlateFeatureLokalId, locking);
-
-            await DeleteLocks(DatasetId, locking);
         }
 
         [TestMethod]
@@ -81,7 +85,7 @@ namespace SFKB_clientTests
         {
             await LockAndSaveFeatureByLokalIdAsync(Ar5GrenseFeatureLokalId, null);
         }
-
+        
         private Task<Dataset> GetDataset()
         {
             return Client.GetDatasetMetadataAsync(DatasetId);
@@ -118,8 +122,6 @@ namespace SFKB_clientTests
 
                 Assert.IsTrue(response.Features_replaced > 0, "No features updated");
             };
-
-            await DeleteLocks(datasetId, locking);
         }
 
         private async Task DeleteLocks(Guid datasetId, Locking locking)
