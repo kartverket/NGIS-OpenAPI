@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -111,6 +112,8 @@ namespace SFKB_clientTests
 
                 var insertXml = Wfs.CreateInsertTransaction(exampleFile.FullName, new List<Guid> { lokalId });
 
+                Console.WriteLine($"Executing Insert");
+
                 var response = await Execute(locking, insertXml);
 
                 Assert.IsTrue(response.Features_created > 0, "No features updated");
@@ -125,7 +128,17 @@ namespace SFKB_clientTests
         {
             using (var featureStream = File.OpenRead(xmlFile))
             {
-                return await Client.UpdateDatasetFeaturesAsync(DatasetId, locking, featureStream);
+                var timer = new Stopwatch();
+                
+                timer.Start();
+
+                var response = await Client.UpdateDatasetFeaturesAsync(DatasetId, locking, featureStream);
+
+                timer.Stop();
+
+                Console.WriteLine($"Execute took {timer.Elapsed}");
+
+                return response;
             };
         }
 
@@ -150,6 +163,8 @@ namespace SFKB_clientTests
         private async Task DeleteByLokalIdAsync(string tempFile, List<Guid> lokalIds, Locking locking)
         {
             string deleteXmlPath = Wfs.CreateDeleteTransaction(tempFile, lokalIds);
+
+            Console.WriteLine($"Executing Delete");
 
             var response = await Execute(locking, deleteXmlPath);
 
@@ -192,6 +207,8 @@ namespace SFKB_clientTests
             Assert.IsTrue(lockedLokalIds!= null && lockedLokalIds.Count > 0, $"No features locked for datasetId {datasetId} and lokalId {lokalId}");
 
             var wfsReplaceFile = Wfs.CreateReplaceTransaction(tempFile, lockedLokalIds);
+
+            Console.WriteLine($"Executing Replace");
 
             var response = await Execute(locking, wfsReplaceFile);
 
