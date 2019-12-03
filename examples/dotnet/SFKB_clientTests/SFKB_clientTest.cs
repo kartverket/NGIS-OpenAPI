@@ -28,14 +28,16 @@ namespace SFKB_clientTests
             Client = General.GetClientWithBasicAuthentication();
 
             await GetDatasetsAsync();
+
+            await RemoveAllLocksIfExists();
         }
 
         [TestCleanup]
         public async Task CleanupAsync()
         {
-            await DeleteLocks(DatasetId, GetLocking());
+            await RemoveAllLocksIfExists();
         }
-
+        
         [TestMethod]
         public async Task TestGetDatasetsAsync()
         {
@@ -215,11 +217,17 @@ namespace SFKB_clientTests
             Assert.IsTrue(response.Features_replaced > 0, "No features updated");
         }
 
-        private async Task DeleteLocks(Guid datasetId, Locking locking)
+        private async Task RemoveAllLocksIfExists()
         {
-            await Client.DeleteDatasetLocksAsync(datasetId, locking);
+            var locking = GetLocking();
 
-            var locks = await Client.GetDatasetLocksAsync(datasetId, locking);
+            var locks = await Client.GetDatasetLocksAsync(DatasetId, locking);
+
+            if (locks.Count == 0) return;
+
+            await Client.DeleteDatasetLocksAsync(DatasetId, locking);
+
+            locks = await Client.GetDatasetLocksAsync(DatasetId, locking);
 
             Assert.IsTrue(locks.Count() == 0, "Locks not deleted");
         }
