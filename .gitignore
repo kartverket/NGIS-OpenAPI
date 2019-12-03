@@ -1,0 +1,7 @@
+examples/dotnet/SFKB_clientTests/config.json
+/examples/dotnet/SFKB_clientTests/.vs
+/examples/dotnet/SFKB_clientTests/bin
+/examples/dotnet/SFKB_clientTests/Client.cs
+examples/dotnet/SFKB_clientTests/obj
+spec/openapi.json
+examples/typescript/Client.ts
