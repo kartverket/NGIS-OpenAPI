@@ -158,6 +158,9 @@ paths:
             application/vnd.kartverket.sosi+gml; version=1.0:
              schema:
               type: object
+            application/vnd.kartverket.sosi+json; version=1.0:
+             schema:
+              type: object
         '401':
           description: Gyldig autentisering av brukeren mangler eller er ugyldig
         '403':
