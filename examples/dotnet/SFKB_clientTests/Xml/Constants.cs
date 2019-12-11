@@ -32,14 +32,10 @@ namespace XmlConstants
         internal static readonly XAttribute chlogfNamespaceDeclaration;
         internal static readonly XAttribute xsiNamespaceDeclaration;
         internal static readonly XAttribute wfsNamespaceDeclaration;
-        
-
         internal static readonly XAttribute gmlNamespaceDeclaration;
         internal static readonly XAttribute fesNamespaceDeclaration;
 
         internal static XNamespace activeNamespace;
-        //internal static readonly XName xNameAppPrefix = XNamespace.Xmlns + activeSchemaPrefix;
-        //internal static readonly XAttribute appNamespaceDeclaration = new XAttribute(XNamespace.Xmlns + activeSchemaPrefix, activeNamespace.NamespaceName);
 
         static Constants()
         {
@@ -67,6 +63,5 @@ namespace XmlConstants
             fesNamespaceDeclaration = new XAttribute(XNamespace.Xmlns + "fes", fesNamespace.NamespaceName);
 
         }
-
     }
 }

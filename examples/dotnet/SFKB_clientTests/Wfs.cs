@@ -10,18 +10,43 @@ namespace SFKB_clientTests
 {
     internal class Wfs
     {
+        internal static string CreateInsertTransaction(string tempFile, List<Guid> lokalIds)
+        {
+            var newTempFile = Path.GetTempFileName();
+
+            var insertXml = XElement.Load(tempFile);
+
+            SetActiveNamespaceConstants(insertXml);
+
+            var insertElement = new XElement(Constants.xNameInsert);
+
+            foreach (var lokalid in lokalIds) insertElement.Add(GetFeatureByLokalId(insertXml, lokalid));
+
+            var transactionElement = CreateTransactionElement();
+
+            transactionElement.Add(insertElement);
+
+            var changeLogElement = CreateChangeLogElement(transactionElement, lokalIds.Count);
+
+            changeLogElement.Save(newTempFile);
+
+            return newTempFile;
+        }
+
+        private static XElement GetFeatureByLokalId(XElement xElement, Guid lokalid)
+        {
+            return xElement.DescendantsAndSelf().FirstOrDefault(d => d.Value == lokalid.ToString()).Parent.Parent.Parent;
+        }
+
         internal static string CreateReplaceTransaction(string tempFile, List<Guid> lockedLokalIds)
         {
             var newTempFile = Path.GetTempFileName();
 
-            using (var featureStream = File.OpenRead(tempFile))
-            {
-                var featureXml = XElement.Load(featureStream);
+            var featureXml = XElement.Load(tempFile);
 
-                var replaceXml = GetReplaceXml(featureXml, lockedLokalIds);
+            var replaceXml = GetReplaceXml(featureXml, lockedLokalIds);
 
-                replaceXml.Save(newTempFile);
-            }
+            replaceXml.Save(newTempFile);
 
             return newTempFile;
         }
@@ -38,7 +63,7 @@ namespace SFKB_clientTests
 
             foreach (var lokalid in lokalIds)
             {
-                var typeName = deleteXml.DescendantsAndSelf().FirstOrDefault(d => d.Value == lokalid.ToString()).Parent.Parent.Parent.Name;
+                var typeName = GetFeatureByLokalId(deleteXml, lokalid).Name;
                 
                 transactionElement.Add(new XElement(
                     Constants.xNameDelete,
