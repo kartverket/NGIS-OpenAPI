@@ -246,9 +246,6 @@ paths:
             enum: [none, direct, all]
           required: true
           description: |
-            TODO: Hva låses når vi angir brukerlås (som er eneste låse-mekanisme vi støtter pr i dag) i tillegg til selve objektet det spørres etter?
-            Se forslag i teksten.
-          
             Angir hvilke refererte features som skal hentes ut i tillegg til feature det spørres direkte etter med lokalid.
             
             Punkter har ingen referanser, og parameteret påvirker derfor ikke uthenting av et punkt.
