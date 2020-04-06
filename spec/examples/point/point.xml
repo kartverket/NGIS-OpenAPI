@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<gml:FeatureCollection xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:app="http://skjema.geonorge.no/SOSI/produktspesifikasjon/FKB-Bygning/4.61" xmlns:gml="http://www.opengis.net/gml/3.2" gml:id="_76ca4cf7-8e5c-4527-96ea-ca2e04b39845" xsi:schemaLocation="http://skjema.geonorge.no/SOSI/produktspesifikasjon/FKB-Bygning/4.61 http://skjema.geonorge.no/SOSI/produktspesifikasjon/FKB-Bygning/4.61/FKB-Bygning461.xsd">
+  <gml:boundedBy>
+    <gml:Envelope srsName="urn:ogc:def:crs:EPSG::25832" srsDimension="2">
+      <gml:lowerCorner>615958.59999999998 6745463</gml:lowerCorner>
+      <gml:upperCorner>615958.59999999998 6745463</gml:upperCorner>
+    </gml:Envelope>
+  </gml:boundedBy>
+  <gml:featureMember>
+    <app:Bygning gml:id="app.Bygning_01635c09-9772-48ab-895b-9188a8d2efa4">
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>01635c09-9772-48ab-895b-9188a8d2efa4</app:lokalId>
+          <app:navnerom>http://data.geonorge.no/SFKB/FKB-Bygning/so</app:navnerom>
+          <app:versjonId>2019-03-27 09:10:42.712000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:oppdateringsdato>2019-10-25T09:13:21</app:oppdateringsdato>
+      <app:informasjon>Data hentet fra Matrikkelen 04.11.16</app:informasjon>
+      <app:datafangstdato>1800-01-01</app:datafangstdato>
+      <app:posisjon>
+        <gml:Point gml:id="QMS_9f002065-0a76-4685-ba51-87c57b6f4254_a38abb79-13b6-4f8b-90b0-5804a953cafe" srsName="urn:ogc:def:crs:EPSG::25832" srsDimension="2">
+          <gml:pos>615958.59999999998 6745463</gml:pos>
+        </gml:Point>
+      </app:posisjon>
+      <app:bygningsnummer>300228303</app:bygningsnummer>
+      <app:bygningstype>181</app:bygningstype>
+      <app:bygningsstatus>IG</app:bygningsstatus>
+      <app:kommunenummer>0403</app:kommunenummer>
+    </app:Bygning>
+  </gml:featureMember>
+</gml:FeatureCollection>

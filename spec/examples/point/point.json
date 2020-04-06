@@ -1,0 +1,36 @@
+{
+    "type": "FeatureCollection",
+    "crs": {
+        "type": "name",
+        "properties": {
+            "name": "EPSG:4258"
+        }
+    },
+    "features": [
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    11.13268064358583,
+                    60.827540711088889
+                ]
+            },
+            "properties": {
+                "featuretype": "Bygning",
+                "bygningsnummer": 300228303,
+                "bygningstype": "181",
+                "bygningsstatus": "IG",
+                "kommunenummer": "0403",
+                "datafangstdato": 18000101,
+                "identifikasjon": {
+                    "navnerom": "http://data.geonorge.no/SFKB/FKB-Bygning/so",
+                    "lokalId": "01635c09-9772-48ab-895b-9188a8d2efa4",
+                    "versjonId": "2019-03-27 09:10:42.712000"
+                },
+                "informasjon": "Data hentet fra Matrikkelen 04.11.16",
+                "oppdateringsdato": 20191025091321
+            }
+        }
+    ]
+}

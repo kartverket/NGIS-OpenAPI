@@ -17,7 +17,6 @@ info:
     url: https://www.kartverket.no/Prosjekter/Sentral-felles-kartdatabase/brukerstotte/
     
 servers:
-# Added by API Auto Mocking Plugin
   - description: Test-server Norkart
     url: https://qmsrest.westeurope.cloudapp.azure.com:8080/v1/
   - url: http://sfkb.kartverket.no/v1
@@ -44,11 +43,7 @@ paths:
         Dersom brukeren ikke har tilgang til noen dataset, returneres en tom liste.
       operationId: getDatasets
       parameters:        
-        - in: header
-          name: X-Client-Product-Version
-          schema:
-            type: string
-          required: true
+        - $ref: '#/components/parameters/clientHeaderParam'
       responses:
         '200':      # Response
           description: OK
@@ -72,18 +67,8 @@ paths:
         Her ligger all informasjon som kommer ut i listen over dataset, og i tillegg en del ekstra informasjon som enten er unødvendig eller for tung å ha med i listen over dataset.
       operationId: getDatasetMetadata
       parameters:
-        - in: header
-          name: X-Client-Product-Version
-          schema:
-            type: string
-          required: true
-        - in: path
-          name: datasetId
-          schema:
-            type: string
-            format: uuid
-          required: true
-          description: UUID of the dataset to get
+        - $ref: '#/components/parameters/clientHeaderParam'
+        - $ref: '#/components/parameters/datasetIdParam'
       responses:
         '200':      # Response
           description: OK
@@ -108,34 +93,10 @@ paths:
         Henter en liste over alle dataset som brukeren har lese- eller skrivetilgang til.
       operationId: getDatasetFeatures
       parameters:
-        - in: header
-          name: X-Client-Product-Version
-          schema:
-            type: string
-          required: true
-        - in: path
-          name: datasetId
-          schema:
-            type: string
-            format: uuid
-          required: true
-          description: UUID of the dataset to get
+        - $ref: '#/components/parameters/clientHeaderParam'
+        - $ref: '#/components/parameters/datasetIdParam'
         - $ref: '#/components/parameters/lockingParam'
-        - in: query
-          name: bbox
-          schema:
-            $ref: '#/components/schemas/BoundingBox' 
-          description: |
-            Henter ut objekter i et bestemt område (angitt med et rektangel)
-            
-            Dette kan være aktuelt for å få ut alle objekter som ikke er direkte knyttet til et objekt, som f.eks mønelinje og takkant til en bygning.
-          
-            Eksempel: Hent ut et 10x10m rektangel
-            
-            **TODO: Usikker på syntaks**
-            
-            ?bbox=(10,10,20,20)
-            
+        - $ref: '#/components/parameters/bboxParam'
         - in: query
           name: query
           schema:
@@ -174,6 +135,7 @@ paths:
             application/vnd.kartverket.sosi+gml; version=1.0:
              schema:
               type: object
+              example: spec/examples/point/point.json
         '401':
           description: Gyldig autentisering av brukeren mangler eller er ugyldig
         '403':
@@ -192,18 +154,8 @@ paths:
         Henter en liste over alle dataset som brukeren har lese- eller skrivetilgang til.
       operationId: updateDatasetFeatures
       parameters:
-        - in: header
-          name: X-Client-Product-Version
-          schema:
-            type: string
-          required: true
-        - in: path
-          name: datasetId
-          schema:
-            type: string
-            format: uuid
-          required: true
-          description: UUID of the dataset to get
+        - $ref: '#/components/parameters/clientHeaderParam'
+        - $ref: '#/components/parameters/datasetIdParam'
         - $ref: '#/components/parameters/lockingParam'
       requestBody:
         description: Optional description in *Markdown*
@@ -242,28 +194,12 @@ paths:
        - features
       summary: Hent ut en bestemt feature fra et dataset
       description: >-
-        HEnter ut en bestemt feature med mulighet for å få med refererte objekter for redigering.
+        Henter ut en bestemt feature med mulighet for å få med refererte objekter for redigering.
       operationId: getDatasetFeature
       parameters:
-        - in: header
-          name: X-Client-Product-Version
-          schema:
-            type: string
-          required: true
-        - in: path
-          name: datasetId
-          schema:
-            type: string
-            format: uuid
-          required: true
-          description: UUID of the dataset to get
-        - in: path
-          name: lokalId
-          schema:
-            type: string
-            format: uuid
-          required: true
-          description: Identifikasjon.Lokalid til objektet som skal hentes ut
+        - $ref: '#/components/parameters/clientHeaderParam'
+        - $ref: '#/components/parameters/datasetIdParam'
+        - $ref: '#/components/parameters/lokalIdParam'
         - $ref: '#/components/parameters/lockingParam'
         - in: query
           name: references
@@ -315,20 +251,8 @@ paths:
         Henter ut alle egenskapene til en bestemt feature.
       operationId: getDatasetFeatureAttributes
       parameters:
-        - in: path
-          name: datasetId
-          schema:
-            type: string
-            format: uuid
-          required: true
-          description: UUID of the dataset to get
-        - in: path
-          name: lokalId
-          schema:
-            type: string
-            format: uuid
-          required: true
-          description: Identifikasjon.Lokalid til objektet som skal hentes ut
+        - $ref: '#/components/parameters/datasetIdParam'
+        - $ref: '#/components/parameters/lokalIdParam'
         - $ref: '#/components/parameters/lockingParam'     
       responses:
         '200':      # Response
@@ -355,20 +279,8 @@ paths:
         Oppdaterer alle egenskapene til en bestemt feature i et dataset.
       operationId: updateDatasetFeatureAttributes
       parameters:
-        - in: path
-          name: datasetId
-          schema:
-            type: string
-            format: uuid
-          required: true
-          description: UUID of the dataset to get
-        - in: path
-          name: lokalId
-          schema:
-            type: string
-            format: uuid
-          required: true
-          description: Identifikasjon.Lokalid til objektet som skal hentes ut
+        - $ref: '#/components/parameters/datasetIdParam'
+        - $ref: '#/components/parameters/lokalIdParam'
         - $ref: '#/components/parameters/lockingParam'
       requestBody:
         required: true
@@ -400,18 +312,8 @@ paths:
         Henter bl.a. informasjon om hvilke objekter brukeren har låst i et bestemt dataset.
       operationId: getDatasetLocks
       parameters:
-        - in: header
-          name: X-Client-Product-Version
-          schema:
-            type: string
-          required: true
-        - in: path
-          name: datasetId
-          schema:
-            type: string
-            format: uuid
-          required: true
-          description: UUID of the dataset to get
+        - $ref: '#/components/parameters/clientHeaderParam'
+        - $ref: '#/components/parameters/datasetIdParam'
         - $ref: '#/components/parameters/lockingParam'
       responses:
         '200':      # Response
@@ -434,18 +336,8 @@ paths:
         Fjerne alle låser brukeren har i et bestemt dataset
       operationId: deleteDatasetLocks        
       parameters:
-        - in: header
-          name: X-Client-Product-Version
-          schema:
-            type: string
-          required: true
-        - in: path
-          name: datasetId
-          schema:
-            type: string
-            format: uuid
-          required: true
-          description: UUID of the dataset to delete locks in
+        - $ref: '#/components/parameters/clientHeaderParam'
+        - $ref: '#/components/parameters/datasetIdParam'
         - $ref: '#/components/parameters/lockingParam'
       responses:
         '204': # Success
@@ -530,28 +422,12 @@ components:
           features:
             - lokalid: '933f0223-2598-485b-b886-3c69650b22b0'
             - lokalid: 'ddb688c3-b2d9-47eb-93d2-cc4704b6394c'
-        
-          
     BoundingBox:
-      type: object
-      properties:
-        ll:
-          type: array
-          minItems: 2
-          maxItems: 2
-          items:
-            type: number
-            format: double
-        ur:
-          type: array
-          minItems: 2
-          maxItems: 2
-          items:
-            type: number
-            format: double
-      example:
-        ll: [10.0, 100.0]
-        ur: [20.0, 200.0]
+      type: array
+      minItems: 4
+      maxItems: 6
+      items:
+        type: number
     # Schema for error response body
     Error:
       type: object
@@ -572,6 +448,35 @@ components:
         - detail
        
   parameters:
+    clientHeaderParam:
+      in: header
+      name: X-Client-Product-Version
+      schema:
+        type: string
+      required: true
+    datasetIdParam:
+      in: path
+      name: datasetId
+      schema:
+        type: string
+        format: uuid
+      required: true
+      description: UUID of the dataset to get
+    bboxParam:
+      in: query
+      name: bbox
+      style: form
+      explode: false
+      schema:
+        $ref: '#/components/schemas/BoundingBox'
+      description: |
+        Henter ut objekter i et bestemt område (angitt med et rektangel)
+        
+        Dette kan være aktuelt for å få ut alle objekter som ikke er direkte knyttet til et objekt, som f.eks mønelinje og takkant til en bygning.
+      examples:
+        smallbbox:
+          summary: Et 10x10m vindu
+          value: [10.0, 100.0, 20.0, 200.0] # ?bbox=10.0,100.0,20.0,200.0
     lockingParam:
       in: query
       name: locking
@@ -593,3 +498,11 @@ components:
         
         Foreløpig er det kun brukerlås (locking[type]=user_lock) som støttes. Kallet legger da til objekter i brukerlåsen. 
         Låsen vil fjernes neste gang brukeren skriver data til dataset'et, eller dersom låsen slettes.
+    lokalIdParam:
+      in: path
+      name: lokalId
+      schema:
+        type: string
+        format: uuid
+      required: true
+      description: Identifikasjon.Lokalid til objektet
