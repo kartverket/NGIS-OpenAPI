@@ -132,10 +132,18 @@ paths:
         '200':      # Response
           description: OK
           content: # Response body
+            application/vnd.kartverket.sosi+json; version=1.0:
+             schema:
+              type: object
+              example: 
+                description: eksempel på punkt
+                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/point/point.json'
             application/vnd.kartverket.sosi+gml; version=1.0:
              schema:
               type: object
-              example: spec/examples/point/point.json
+              example: 
+                description: eksempel på punkt
+                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/point/point.xml'
         '401':
           description: Gyldig autentisering av brukeren mangler eller er ugyldig
         '403':
