@@ -139,6 +139,9 @@ paths:
               singlePoint:
                 description: eksempel på punkt
                 externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/point/point.json'
+              singleCurve:
+                description: eksempel på linje
+                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/point/curve.json'
             application/vnd.kartverket.sosi+gml; version=1.0:
              schema:
               type: object
@@ -438,6 +441,7 @@ components:
       maxItems: 6
       items:
         type: number
+      example: [10.0, 10.0, 20.0, 20.0]
     # Schema for error response body
     Error:
       type: object
@@ -464,6 +468,7 @@ components:
       schema:
         type: string
       required: true
+      example: 'ExampleApp 10.0.0 (Build 54321)'
     datasetIdParam:
       in: path
       name: datasetId
@@ -472,6 +477,7 @@ components:
         format: uuid
       required: true
       description: UUID of the dataset to get
+      example: dc3507da-a95f-4482-b762-f140f5a11788
     bboxParam:
       in: query
       name: bbox
@@ -479,14 +485,15 @@ components:
       explode: false
       schema:
         $ref: '#/components/schemas/BoundingBox'
-      description: |
-        Henter ut objekter i et bestemt område (angitt med et rektangel)
-        
-        Dette kan være aktuelt for å få ut alle objekter som ikke er direkte knyttet til et objekt, som f.eks mønelinje og takkant til en bygning.
       examples:
         smallbbox:
           summary: Et 10x10m vindu
           value: [10.0, 100.0, 20.0, 200.0] # ?bbox=10.0,100.0,20.0,200.0
+      description: |
+        Henter ut objekter i et bestemt område (angitt med et rektangel)
+        
+        Dette kan være aktuelt for å få ut alle objekter som ikke er direkte knyttet til et objekt, som f.eks mønelinje og takkant til en bygning.
+
     lockingParam:
       in: query
       name: locking
