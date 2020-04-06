@@ -135,13 +135,15 @@ paths:
             application/vnd.kartverket.sosi+json; version=1.0:
              schema:
               type: object
-              example: 
+             examples: 
+              singlePoint:
                 description: eksempel på punkt
                 externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/point/point.json'
             application/vnd.kartverket.sosi+gml; version=1.0:
              schema:
               type: object
-              example: 
+             examples: 
+              singlePoint:
                 description: eksempel på punkt
                 externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/point/point.xml'
         '401':
