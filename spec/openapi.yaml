@@ -43,6 +43,12 @@ paths:
         Henter en liste over alle dataset som brukeren har lese- eller skrivetilgang til. 
         Dersom brukeren ikke har tilgang til noen dataset, returneres en tom liste.
       operationId: getDatasets
+      parameters:        
+        - in: header
+          name: X-Client-Product-Version
+          schema:
+            type: string
+          required: true
       responses:
         '200':      # Response
           description: OK
@@ -66,6 +72,11 @@ paths:
         Her ligger all informasjon som kommer ut i listen over dataset, og i tillegg en del ekstra informasjon som enten er unødvendig eller for tung å ha med i listen over dataset.
       operationId: getDatasetMetadata
       parameters:
+        - in: header
+          name: X-Client-Product-Version
+          schema:
+            type: string
+          required: true
         - in: path
           name: datasetId
           schema:
@@ -97,6 +108,11 @@ paths:
         Henter en liste over alle dataset som brukeren har lese- eller skrivetilgang til.
       operationId: getDatasetFeatures
       parameters:
+        - in: header
+          name: X-Client-Product-Version
+          schema:
+            type: string
+          required: true
         - in: path
           name: datasetId
           schema:
@@ -176,6 +192,11 @@ paths:
         Henter en liste over alle dataset som brukeren har lese- eller skrivetilgang til.
       operationId: updateDatasetFeatures
       parameters:
+        - in: header
+          name: X-Client-Product-Version
+          schema:
+            type: string
+          required: true
         - in: path
           name: datasetId
           schema:
@@ -224,6 +245,11 @@ paths:
         HEnter ut en bestemt feature med mulighet for å få med refererte objekter for redigering.
       operationId: getDatasetFeature
       parameters:
+        - in: header
+          name: X-Client-Product-Version
+          schema:
+            type: string
+          required: true
         - in: path
           name: datasetId
           schema:
@@ -374,6 +400,11 @@ paths:
         Henter bl.a. informasjon om hvilke objekter brukeren har låst i et bestemt dataset.
       operationId: getDatasetLocks
       parameters:
+        - in: header
+          name: X-Client-Product-Version
+          schema:
+            type: string
+          required: true
         - in: path
           name: datasetId
           schema:
@@ -403,6 +434,11 @@ paths:
         Fjerne alle låser brukeren har i et bestemt dataset
       operationId: deleteDatasetLocks        
       parameters:
+        - in: header
+          name: X-Client-Product-Version
+          schema:
+            type: string
+          required: true
         - in: path
           name: datasetId
           schema:
