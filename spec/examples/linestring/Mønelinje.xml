@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<gml:FeatureCollection xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:app="http://skjema.geonorge.no/SOSI/produktspesifikasjon/FKB-Bygning/4.61" xmlns:gml="http://www.opengis.net/gml/3.2" gml:id="_faa31dd0-012b-4ece-8abf-e1f6ca52dab1" xsi:schemaLocation="http://skjema.geonorge.no/SOSI/produktspesifikasjon/FKB-Bygning/4.61 http://skjema.geonorge.no/SOSI/produktspesifikasjon/FKB-Bygning/4.61/FKB-Bygning461.xsd">
+  <gml:boundedBy>
+    <gml:Envelope srsName="urn:ogc:def:crs:EPSG::25832" srsDimension="2">
+      <gml:lowerCorner>613816.98999999999 6746132.0099999998</gml:lowerCorner>
+      <gml:upperCorner>613819.93000000005 6746144.3399999999</gml:upperCorner>
+    </gml:Envelope>
+  </gml:boundedBy>
+  <gml:featureMember>
+    <app:Mønelinje gml:id="app.Mønelinje_002c6f7f-fdbe-4a33-94b6-a6ee02e7941e">
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>002c6f7f-fdbe-4a33-94b6-a6ee02e7941e</app:lokalId>
+          <app:navnerom>http://data.geonorge.no/SFKB/FKB-Bygning/so</app:navnerom>
+          <app:versjonId>2019-03-27 09:10:42.712000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:registreringsversjon>
+        <app:Registreringsversjon>
+          <app:produkt>FKB</app:produkt>
+          <app:versjon>4.0</app:versjon>
+        </app:Registreringsversjon>
+      </app:registreringsversjon>
+      <app:verifiseringsdato>2012-04-02</app:verifiseringsdato>
+      <app:oppdateringsdato>2019-10-25T09:13:21</app:oppdateringsdato>
+      <app:kvalitet>
+        <app:Posisjonskvalitet>
+          <app:målemetode>24</app:målemetode>
+          <app:nøyaktighet>22</app:nøyaktighet>
+          <app:synbarhet>0</app:synbarhet>
+          <app:målemetodeHøyde>24</app:målemetodeHøyde>
+          <app:nøyaktighetHøyde>34</app:nøyaktighetHøyde>
+        </app:Posisjonskvalitet>
+      </app:kvalitet>
+      <app:datafangstdato>2007-05-03</app:datafangstdato>
+      <app:treDNivå>2</app:treDNivå>
+      <app:grense>
+        <gml:Curve gml:id="QMS_0c7e5bde-a842-441e-85d6-987a933190fb_3f00a1a3-fe14-4d3e-9c93-5eeb84de16c2" srsName="urn:ogc:def:crs:EPSG::25832" srsDimension="2">
+          <gml:segments>
+            <gml:LineStringSegment>
+              <gml:posList>613816.98999999999 6746132.0099999998 613819.93000000005 6746144.3399999999</gml:posList>
+            </gml:LineStringSegment>
+          </gml:segments>
+        </gml:Curve>
+      </app:grense>
+    </app:Mønelinje>
+  </gml:featureMember>
+</gml:FeatureCollection>

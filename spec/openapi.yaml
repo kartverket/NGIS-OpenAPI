@@ -26,7 +26,7 @@ security:
   - basicAuth: []  # <-- use the same name here
   
 tags:
-  - name: Metadata
+  - name: metadata
     description: "Informasjon om dataset som brukeren har tilgang til"
   - name: features
     description: "Operasjoner på features i et bestemt dataset"
@@ -36,7 +36,7 @@ paths:
   /datasets:
     get:
       tags:
-       - Metadata
+       - metadata
       summary: Hent liste over tilgjengelige dataset
       description: |
         Henter en liste over alle dataset som brukeren har lese- eller skrivetilgang til. 
@@ -60,7 +60,7 @@ paths:
   /datasets/{datasetId}:
     get:
       tags:
-       - Metadata
+       - metadata
       summary: Hent metadata for et bestemt dataset
       description: |
         Henter utvidet informasjon om et bestemt dataset. 
@@ -138,17 +138,33 @@ paths:
              examples: 
               singlePoint:
                 description: eksempel på punkt
-                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/point/point.json'
-              singleCurve:
+                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/point/Bygning.json'
+              singleLineString:
                 description: eksempel på linje
-                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/point/curve.json'
+                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/linestring/Mønelinje.json'
+              singleArc:
+                description: |
+                  eksempel på bue
+                  
+                  Standarden GeoJSON har ingen egen type for bue. 
+                  
+                  Det er derfor foreslått en håndtering der en kurve kan ha en spesialegenskap som sier at denne kurven representerer en bue. 
+                  Det skal også legges inn tilstrekkelig antall mellompunkt, slik at applikasjoner som ikke kjenner spesialegenskapen får en tilfredstillende representasjon av buen.   
+
+                  TODO: Prinsipp for “stroking” av kurve? 
+
+
+                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/linestring/Mønelinje.json'
             application/vnd.kartverket.sosi+gml; version=1.0:
              schema:
               type: object
              examples: 
               singlePoint:
                 description: eksempel på punkt
-                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/point/point.xml'
+                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/point/Bygning.xml'
+              singleLineString:
+                description: eksempel på linje
+                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/linestring/Mønelinje.xml'
         '401':
           description: Gyldig autentisering av brukeren mangler eller er ugyldig
         '403':
@@ -366,6 +382,9 @@ components:
     basicAuth:     # <-- arbitrary name for the security scheme
       type: http
       scheme: basic
+      description: |
+        Brukernavn og passord som er gyldige mot dataset som skal brukes. 
+        For QMS er dette brukernavn og passord mot oppgaven.
   schemas:
     Dataset:
       type: object
@@ -511,9 +530,14 @@ components:
         required:
           - type
       description: |
-        Låser objektene som hentes ut for oppdatering. Krever skrivetilgang mot dataset'et.
+        Angir låsetype som skal brukes for å hente ut objekter for oppdatering. Krever at brukeren har skrivetilgang mot dataset'et.
         
-        Foreløpig er det kun brukerlås (locking[type]=user_lock) som støttes. Kallet legger da til objekter i brukerlåsen. 
+        *user_lock*
+
+        Hver bruker har én lås per dataset. Hver gang data hentes ut med `user_lock` legges objektene til denne låsen. 
+        Alle objekter i låsen låses opp neste gang brukeren skriver data til dataset'et.
+
+        Foreløpig er det kun brukerlås (`user_lock`) som støttes. Kallet legger da til objekter i brukerlåsen. 
         Låsen vil fjernes neste gang brukeren skriver data til dataset'et, eller dersom låsen slettes.
     lokalIdParam:
       in: path
