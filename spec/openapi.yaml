@@ -48,7 +48,7 @@ paths:
         '200':      # Response
           description: OK
           content:  # Response body
-            application/json:  # Media type
+            application/vnd.kartverket.ngis.datasets+json:  # Media type
               schema: 
                 type: array
                 items:
@@ -73,7 +73,7 @@ paths:
         '200':      # Response
           description: OK
           content:  # Response body
-            application/json:  # Media type
+            application/vnd.kartverket.ngis.dataset+json:  # Media type
              schema: 
                $ref: '#/components/schemas/Dataset'    # Reference to object definition
         '401':
@@ -348,7 +348,7 @@ paths:
         '200':      # Response
           description: OK
           content:  # Response body
-            application/json:  # Media type
+            application/vnd.kartverket.ngis.locks+json:  # Media type
              schema: 
                $ref: '#/components/schemas/Locks'    # Reference to object definition
         '401':
