@@ -152,9 +152,11 @@ paths:
                 description: |
                   eksempel på flate med en enkel avgrensningslinje
 
-                  Representasjonspunktet ligger i `geometry_properties` og må ligge innenfor flaten.
+                  Representasjonspunktet ligger i `geometry_properties` som `position` og må ligge innenfor flaten.
 
-                  Lenken til avgrensningslinjer ligger i `geometry_properties` under `exterior`.
+                  Lenken til avgrensningslinjer (lokalid) ligger i `geometry_properties` under `exterior`. 
+                  Minus foran betyr at linjen er brukt med motsatt retning i flaten.
+
                 externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/polygon/ArealressursFlate_enkel.json'
 
             application/vnd.kartverket.sosi+gml; version=1.0:
@@ -195,6 +197,19 @@ paths:
           application/vnd.kartverket.sosi+wfs-t; version=1.0:
            schema:
             type: object
+          application/vnd.kartverket.sosi+json; version=1.0:
+            schema:
+              type: object
+            examples: 
+              singlePoint:
+                description: | 
+                  eksempel på oppdatering av punkt
+
+                  Den eneste forskjellen i innholdet er `update : { action : "Replace" }` som angir hvilken operasjon som skal gjøres.
+
+                  Action kan være `Create`, `Replace` eller `Erase`. 
+                  Ved `Replace` eller `Erase` med `user_lock` må objektet være hentet ut med `user_lock` før det kan endres. 
+                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/point/Bygning_update.json'
            
       responses: #TODO: valideringsfeil
         '200':
