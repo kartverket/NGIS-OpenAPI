@@ -298,7 +298,7 @@ paths:
 
                   Legg merke til at det sendes inn endring på både flaten og linjen som brukes i avgrensningen. Dette er nødvendig for å ivareta delt geometri.
 
-                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/polygon/ArealressursFlate_enkel_replace.xml'
+                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/polygon/ArealressursFlate_enkel_replace.json'
 
            
       responses: #TODO: valideringsfeil
