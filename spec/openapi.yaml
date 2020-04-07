@@ -158,14 +158,16 @@ paths:
               type: object
              examples: 
               singlePoint:
-                description: eksempel på punkt
+                description: | 
+                  Eksempel på uthentet punkt
                 externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/point/Bygning.json'
               singleLineString:
-                description: eksempel på linje
+                description: |
+                  Eksempel på uthentet linje
                 externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/linestring/Mønelinje.json'
               singleArc:
                 description: |
-                  eksempel på bue
+                  Eksempel på uthentet bue (WIP)
                   
                   Standarden GeoJSON har ingen egen type for bue. 
                   
@@ -174,25 +176,65 @@ paths:
                 externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/linestring/Mønelinje.json'
               simplePolygon:
                 description: |
-                  eksempel på flate med en enkel avgrensningslinje
+                  Eksempel på uthentet flate som refererer én enkel avgrensningslinje
 
-                  Representasjonspunktet ligger i `geometry_properties` som `position` og må ligge innenfor flaten.
+                  Representasjonspunktet som ligger inne i flaten ligger i `geometry_properties` som `position`.
 
-                  Lenken til avgrensningslinjer (lokalid) ligger i `geometry_properties` under `exterior`. 
-                  Minus foran betyr at linjen er brukt med motsatt retning i flaten.
+                  Lenkene til avgrensningslinjer (bruker linjenes lokalid) ligger i `geometry_properties` under `exterior`. 
+
+                  Ytre avgrensningslinjer i en flate må ha retning mot klokka (CCW) og indre avgrensningslinjer må ha retning med klokka.
+                  Det betyr at noen av linjene som brukes må brukes i motsatt retning - dette gjøres ved å angi `-` (minus) foran linjereferansen (lokalid).
 
                 externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/polygon/ArealressursFlate_enkel.json'
+              multipleLinesPolygon:
+                description: |
+                  Eksempel på uthentet flate som refererer flere avgrensningslinjer der den ene bruker linjen i motsatt retning
+
+                  Representasjonspunktet som ligger inne i flaten ligger i `geometry_properties` som `position`.
+
+                  Lenkene til avgrensningslinjer (bruker linjenes lokalid) ligger i `geometry_properties` under `exterior`. 
+
+                  Ytre avgrensningslinjer i en flate må ha retning mot klokka (CCW) og indre avgrensningslinjer må ha retning med klokka.
+                  Det betyr at noen av linjene som brukes må brukes i motsatt retning - dette gjøres ved å angi `-` (minus) foran linjereferansen (lokalid).
+
+                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/polygon/ArealressursFlate.json'
 
             application/vnd.kartverket.sosi+gml; version=1.0:
              schema:
               type: object
              examples: 
               singlePoint:
-                description: eksempel på punkt
+                description: |
+                  Eksempel på uthentet punkt
                 externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/point/Bygning.xml'
               singleLineString:
-                description: eksempel på linje
+                description: | 
+                  Eksempel på uthentet linje
                 externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/linestring/Mønelinje.xml'
+              simplePolygon:
+                description: |
+                  Eksempel på uthentet flate som refererer én enkel avgrensningslinje
+
+                  Representasjonspunktet som ligger inne i flaten ligger i `geometry_properties` som `position`.
+
+                  Lenkene til avgrensningslinjer (bruker linjenes lokalid) ligger i `geometry_properties` under `exterior`. 
+
+                  Ytre avgrensningslinjer i en flate må ha retning mot klokka (CCW) og indre avgrensningslinjer må ha retning med klokka.
+                  Det betyr at noen av linjene som brukes må brukes i motsatt retning - dette gjøres ved å angi `-` (minus) foran linjereferansen (lokalid).
+
+                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/polygon/ArealressursFlate_enkel.xml'
+              multipleLinesPolygon:
+                description: |
+                  Eksempel på uthentet flate som refererer flere avgrensningslinjer der den ene bruker linjen i motsatt retning
+
+                  Representasjonspunktet som ligger inne i flaten ligger i `<app:posisjon>` som `<gml:Point>`.
+
+                  TODO: gml:id : Lenkene til avgrensningslinjer (bruker linjenes lokalid) ligger i `geometry_properties` under `exterior`. 
+
+                  Ytre avgrensningslinjer i en flate må ha retning mot klokka (CCW) og indre avgrensningslinjer må ha retning med klokka.
+                  Det betyr at noen av linjene som brukes må brukes i motsatt retning - TODO: gml:id dette gjøres ved å angi `-` (minus) foran linjereferansen (lokalid).
+
+                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/polygon/ArealressursFlate.xml'
         '401':
           description: Gyldig autentisering av brukeren mangler eller er ugyldig
         '403':
