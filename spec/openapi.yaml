@@ -104,19 +104,7 @@ paths:
           description: |
             Filter på egenskaper og/eller objekttype for å begrense hvilke features som hentes ut.
             
-            Dersom objekttypen ikke skal begrenses, kan den angis med `*`
-            
-            Eksempel: Hent en bygning med bestemt bygningsnummer
-            
-            `?query=eq(Bygning/bygningsnummer,1234)`
-            
-            Eksempel: Hent et objekt med bestemt lokalid
-            
-            `?query=eq(*/identifikasjon/lokalid,000a7b9b-7088-482f-a3cf-9761b97a54b6)`
-            
-            Merk: Når et objekt hentes ut med lokalid er det normalt ikke nødvendig å filtrere på objekttype, derfor er objekttypen angitt med `*`.
-            
-            Merk: Spørringer er foreløpig begrenset til eksemplene over, nemlig spørringer etter bygningsnummer og lokalid.
+            Spørringer er foreløpig begrenset til bygningsnummer og lokalid.
             
             Generell regel for egenskapsspørringer:
             
@@ -125,6 +113,15 @@ paths:
             > \<objekttypenavn\>/\<attributtnavn\> [ / \<attributtnavn\> …]
           
             Hvis vi ikke ønsker å begrense spørringen til en bestemt objekttype, kan vi angi * som <objekttypenavn>.
+          examples:
+            bygningsnummer:
+              value: eq(Bygning/bygningsnummer,1234)
+              summary: Spørring etter et bestemt bygningsnummer for objekttypen Bygning
+            lokalid:
+              value: eq(*/identifikasjon/lokalid,000a7b9b-7088-482f-a3cf-9761b97a54b6)
+              summary: |
+                Spørring etter et bestemt objekt med gitt lokalid
+                Når et objekt hentes ut med lokalid er det normalt ikke nødvendig å filtrere på objekttype, derfor er objekttypen angitt med `*`.
 
             
             
@@ -148,13 +145,18 @@ paths:
                   
                   Standarden GeoJSON har ingen egen type for bue. 
                   
-                  Det er derfor foreslått en håndtering der en kurve kan ha en spesialegenskap som sier at denne kurven representerer en bue. 
-                  Det skal også legges inn tilstrekkelig antall mellompunkt, slik at applikasjoner som ikke kjenner spesialegenskapen får en tilfredstillende representasjon av buen.   
-
-                  TODO: Prinsipp for “stroking” av kurve? 
-
-
+                  For at buer enkelt skal kunne leses av klienter, er derfor bue-geometrien konvertert til en linje med `is_arc=true` i `geometry_properties`.
+                  Første, midtre og siste punkt beskriver buen dersom klienten vil implementere korrekt tegning av denne.
                 externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/linestring/Mønelinje.json'
+              simplePolygon:
+                description: |
+                  eksempel på flate med en enkel avgrensningslinje
+
+                  Representasjonspunktet ligger i `geometry_properties` og må ligge innenfor flaten.
+
+                  Lenken til avgrensningslinjer ligger i `geometry_properties` under `exterior`.
+                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/polygon/ArealressursFlate_enkel.json'
+
             application/vnd.kartverket.sosi+gml; version=1.0:
              schema:
               type: object
@@ -198,7 +200,7 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/vnd.kartverket.ngis.edit_features_summary+json:
               schema:
                 type: object
                 properties:
