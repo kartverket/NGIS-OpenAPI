@@ -12,6 +12,23 @@ info:
           - egenskapsspørring (begrenset i første versjon til bygningsnummer eller lokalid)
       - Lagre data til et bestemt datasett
         - Operasjoner som håndteres: nytt objekt, endre objekt og slett objekt
+    
+    ## Prinsipper for systemet
+
+    ### Delt geometri
+    
+    Flater består av avgrensningslinjer som ligger lagret som egne objekter. På den måten kan en linje avgrense ingen, én eller flere flater.
+    Det er likevel slik at flater hentes ut og lagres med egen geometri for å gjøre det enklere å tegne opp datene, men ved endring av (delte) linjer og flater
+    må det tas hensyn til delt geometri. Forsøk på endring av linje eller flate uten tilsvarende endring av evt. delt geometri vil bli avvist av systemet.
+
+    ### Låsing
+    
+    Foreløpig er det kun `user_lock` som er støttet. Det betyr at data må hentes ut med `user_lock` før de kan sendes inn med endringer. 
+    Dette er nærmere beskrevet i de aktuelle kallene.
+    
+    
+
+
   contact:
     name: SFKB Brukerstøtte
     url: https://www.kartverket.no/Prosjekter/Sentral-felles-kartdatabase/brukerstotte/
@@ -547,15 +564,14 @@ components:
         required:
           - type
       description: |
-        Angir låsetype som skal brukes for å hente ut objekter for oppdatering. Krever at brukeren har skrivetilgang mot dataset'et.
+        Angir låsetype som skal brukes (foreløpig er kun `user_lock` støttet, og denne bruker ikke `id`). Krever at brukeren har skrivetilgang mot dataset'et.
         
         *user_lock*
 
         Hver bruker har én lås per dataset. Hver gang data hentes ut med `user_lock` legges objektene til denne låsen. 
         Alle objekter i låsen låses opp neste gang brukeren skriver data til dataset'et.
 
-        Foreløpig er det kun brukerlås (`user_lock`) som støttes. Kallet legger da til objekter i brukerlåsen. 
-        Låsen vil fjernes neste gang brukeren skriver data til dataset'et, eller dersom låsen slettes.
+        Låsen vil fjernes neste gang brukeren skriver data til dataset'et med `user_lock`, eller dersom låsen slettes.
     lokalIdParam:
       in: path
       name: lokalId
