@@ -273,13 +273,33 @@ paths:
             examples: 
               singlePoint:
                 description: | 
-                  eksempel på oppdatering av punkt
+                  Eksempel på oppdatering av punkt
 
-                  Den eneste forskjellen i innholdet er `update : { action : "Replace" }` som angir hvilken operasjon som skal gjøres.
+                  Den eneste forskjellen fra uthentet punkt i innholdet er `update : { action : "Replace" }` som angir at objektet skal erstattes.
 
                   Action kan være `Create`, `Replace` eller `Erase`. 
-                  Ved `Replace` eller `Erase` med `user_lock` må objektet være hentet ut med `user_lock` før det kan endres. 
-                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/point/Bygning_update.json'
+                  Ved `Replace` eller `Erase` med `user_lock` må objektet være hentet ut med `user_lock` før det kan endres.
+                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/point/Bygning_replace.json'
+              simplePolygon:
+                description: |
+                  Eksempel på oppdatering av flate som refererer én enkel avgrensningslinje
+
+                  Den eneste forskjellen fra uthentet punkt i innholdet er `update : { action : "Replace" }` som angir at objektet skal erstattes.
+
+                  Action kan være `Create`, `Replace` eller `Erase`. 
+                  Ved `Replace` eller `Erase` med `user_lock` må objektet være hentet ut med `user_lock` før det kan endres.
+
+                  Representasjonspunktet som ligger inne i flaten ligger i `geometry_properties` som `position`.
+
+                  Lenkene til avgrensningslinjer (bruker linjenes lokalid) ligger i `geometry_properties` under `exterior`. 
+
+                  Ytre avgrensningslinjer i en flate må ha retning mot klokka (CCW) og indre avgrensningslinjer må ha retning med klokka.
+                  Det betyr at noen av linjene som brukes må brukes i motsatt retning - dette gjøres ved å angi `-` (minus) foran linjereferansen (lokalid).
+
+                  Legg merke til at det sendes inn endring på både flaten og linjen som brukes i avgrensningen. Dette er nødvendig for å ivareta delt geometri.
+
+                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/polygon/ArealressursFlate_enkel_replace.xml'
+
            
       responses: #TODO: valideringsfeil
         '200':
