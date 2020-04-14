@@ -22,14 +22,14 @@
                 "bygningstype": "181",
                 "bygningsstatus": "IG",
                 "kommunenummer": "0403",
-                "datafangstdato": 18000101,
+                "datafangstdato": "1800-01-01",
                 "identifikasjon": {
                     "navnerom": "http://data.geonorge.no/SFKB/FKB-Bygning/so",
                     "lokalId": "01635c09-9772-48ab-895b-9188a8d2efa4",
                     "versjonId": "2019-03-27 09:10:42.712000"
                 },
                 "informasjon": "Data hentet fra Matrikkelen 04.11.16",
-                "oppdateringsdato": 20191025091321
+                "oppdateringsdato": "2019-10-25T09:13:21"
             }
         }
     ]

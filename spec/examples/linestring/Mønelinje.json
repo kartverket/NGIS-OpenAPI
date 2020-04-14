@@ -34,7 +34,7 @@
                     "målemetodeHøyde": "24",
                     "nøyaktighetHøyde": 34
                 },
-                "datafangstdato": 20070503,
+                "datafangstdato": "2007-05-03",
                 "identifikasjon": {
                     "navnerom": "http://data.geonorge.no/SFKB/FKB-Bygning/so",
                     "lokalId": "002c6f7f-fdbe-4a33-94b6-a6ee02e7941e",
@@ -44,8 +44,8 @@
                     "produkt": "FKB",
                     "versjon": "4.0"
                 },
-                "verifiseringsdato": 20120402,
-                "oppdateringsdato": 20191025091321
+                "verifiseringsdato": "2012-04-02",
+                "oppdateringsdato": "2019-10-25T09:13:21"
             }
         }
     ]

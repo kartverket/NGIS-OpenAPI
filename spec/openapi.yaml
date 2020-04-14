@@ -263,8 +263,8 @@ paths:
         required: true
         content:
           application/vnd.kartverket.sosi+wfs-t; version=1.0:
-           schema:
-            type: object
+            schema:
+              type: object
           application/vnd.kartverket.sosi+json; version=1.0:
             schema:
               type: object
@@ -309,10 +309,13 @@ paths:
                 properties:
                   features_created:
                     type: integer
+                    example: 10
                   features_replaced:
                     type: integer
+                    example: 2
                   features_erased:
                     type: integer
+                    example: 5
         '401':
           description: Gyldig autentisering av brukeren mangler eller er ugyldig
         '403':
@@ -368,8 +371,11 @@ paths:
           description: OK
           content: # Response body
             application/vnd.kartverket.sosi+gml; version=1.0:
-             schema:
-              type: object
+              schema:
+                type: object
+            application/vnd.kartverket.sosi+json; version=1.0:
+              schema:
+                type: object
         '401':
           description: Gyldig autentisering av brukeren mangler eller er ugyldig
         '403':
@@ -403,6 +409,12 @@ paths:
             application/vnd.kartverket.ngis.attributes+json; version=1.0:
              schema:
               type: object
+             examples:
+              singleLineStringAttributes:
+                description: |
+                  Eksempel på egenskaper til linje
+                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/linestring/Mønelinje.attributes.json'
+
         '401':
           description: Gyldig autentisering av brukeren mangler eller er ugyldig
         '403':
@@ -433,7 +445,12 @@ paths:
         content:
           application/vnd.kartverket.ngis.attributes+json; version=1.0:
            schema:
-            type: object     
+            type: object 
+           examples:
+            singleLineStringAttributes:
+              description: |
+                Eksempel på egenskaper til linje
+              externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/linestring/Mønelinje.attributes.json'  
       responses:
         '200':
           description: OK
@@ -441,6 +458,12 @@ paths:
             application/vnd.kartverket.ngis.attributes+json; version=1.0:
              schema:
               type: object  
+             examples:
+              singleLineStringAttributes:
+                description: |
+                  Eksempel på egenskaper til linje
+                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/linestring/Mønelinje.attributes.json'
+
         '401':
           description: Gyldig autentisering av brukeren mangler eller er ugyldig
         '403':
