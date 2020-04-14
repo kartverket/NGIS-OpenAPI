@@ -332,7 +332,7 @@ paths:
 
                   Legg merke til at det kun sendes inn endring på begge flatene og linjen med endring (punkt 2 i geometrien er endret fra `6.192145518765789,64.8340495192154` til `6.1921,64.8340496`) som er delt mellom dem og brukes i avgrensningen. Dette er nødvendig for å ivareta delt geometri.
 
-                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/polygon/ArealressursFlater_update.json'   
+                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/polygon/ArealressursFlater_replace.json'   
 
            
       responses: #TODO: valideringsfeil
