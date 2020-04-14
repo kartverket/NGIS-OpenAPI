@@ -66,9 +66,7 @@ paths:
           content:  # Response body
             application/vnd.kartverket.ngis.datasets+json:  # Media type
               schema: 
-                type: array
-                items:
-                  $ref: '#/components/schemas/Dataset'    # Reference to object definition
+                $ref: '#/components/schemas/DatasetList'    # Reference to object definition
         '401':
           description: Gyldig autentisering av brukeren mangler eller er ugyldig
         '500':
@@ -509,6 +507,29 @@ components:
         Brukernavn og passord som er gyldige mot dataset som skal brukes. 
         For QMS er dette brukernavn og passord mot oppgaven.
   schemas:
+    DatasetList:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+            format: uuid
+          name:
+            type: string
+          access:
+            type: string
+            enum: [read_only, read_write]
+      example:
+        - id: '07b59e3d-a4b6-4bae-ac4c-664d3dc3d778'
+          name: 'AR5'
+          access: read_write
+        - id: '08b59e3d-a4b6-4bae-ac4c-664d3dc3d779'
+          name: 'Bygning'
+          access: read_only
+        - id: '09b59e3d-a4b6-4bae-ac4c-664d3dc3d659'
+          name: 'DEK'
+          access: read_only
     Dataset:
       type: object
       properties:
@@ -517,15 +538,8 @@ components:
           format: uuid
         name:
           type: string
-        kommune:
-          type: integer
-        fylke:
-          type: integer
-        sone:
-          type: integer
         description:
           type: string
-        #hele_landet som egen metadata?
         resolution:
           type: number
           format: double
@@ -539,15 +553,10 @@ components:
           type: string
           enum: [read_only, read_write]
         bbox: 
-          $ref: '#/components/schemas/BoundingBox' 
-      required:
-        - id
-        - name
-        - access
+          $ref: '#/components/schemas/BoundingBox'
       example:
         id: '07b59e3d-a4b6-4bae-ac4c-664d3dc3d778'
         name: 'AR5'
-        sone: 22
         resolution: 0.001
         coordinate_reference_system: 'EPSG:5972'
         access: read_write
