@@ -28,8 +28,10 @@ info:
 
     ### Låsing
     
-    Foreløpig er det kun `user_lock` som er støttet. Det betyr at data må hentes ut med `user_lock` før de kan sendes inn med endringer. 
     Dette er nærmere beskrevet i de aktuelle kallene.
+
+    Foreløpig er det kun `user_lock` som er støttet. Det betyr at data må hentes ut med `user_lock` før de kan sendes inn med endringer.
+    
     
     
 servers:
@@ -196,7 +198,20 @@ paths:
                   Det betyr at noen av linjene som brukes må brukes i motsatt retning - dette gjøres ved å angi `-` (minus) foran linjereferansen (lokalid).
 
                 externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/polygon/ArealressursFlate.json'
+              multiplePolygonsSharedLine:
+                description: |
+                  Eksempel på uthentede flater som refererer samme avgrensningslinje der én av flatene også har hull (`interiors`)
 
+                  Representasjonspunktet som ligger inne i flaten ligger i `geometry_properties` som `position`.
+
+                  Lenkene til avgrensningslinjer (bruker linjenes lokalid) ligger i `geometry_properties` under `exterior`. 
+                  
+                  Lenkene til indre avgrensningslinjer ligger i `geometry_properties` under `interiors` (liste av liste av linjenes lokalid). 
+
+                  Ytre avgrensningslinjer i en flate må ha retning mot klokka (CCW) og indre avgrensningslinjer må ha retning med klokka.
+                  Det betyr at noen av linjene som brukes må brukes i motsatt retning - dette gjøres ved å angi `-` (minus) foran linjereferansen (lokalid).
+
+                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/polygon/ArealressursFlater.json'            
             application/vnd.kartverket.sosi+gml; version=1.0:
              schema:
               type: object
@@ -297,6 +312,27 @@ paths:
                   Legg merke til at det sendes inn endring på både flaten og linjen som brukes i avgrensningen. Dette er nødvendig for å ivareta delt geometri.
 
                 externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/polygon/ArealressursFlate_enkel_replace.json'
+              multiplePolygonsSharedLine:
+                description: |
+                  Eksempel på oppdatering av avgrenseningslinje som refereres av to flater.
+
+                  Den eneste forskjellen fra uthentet punkt i innholdet er `update : { action : "Replace" }` som angir at objektet skal erstattes.
+
+                  Action kan være `Create`, `Replace` eller `Erase`. 
+                  Ved `Replace` eller `Erase` med `user_lock` må objektet være hentet ut med `user_lock` før det kan endres.
+
+                  Representasjonspunktet som ligger inne i flaten ligger i `geometry_properties` som `position`.
+
+                  Lenkene til avgrensningslinjer (bruker linjenes lokalid) ligger i `geometry_properties` under `exterior`. 
+                  
+                  Lenkene til indre avgrensningslinjer ligger i `geometry_properties` under `interiors` (liste av liste av linjenes lokalid). 
+
+                  Ytre avgrensningslinjer i en flate må ha retning mot klokka (CCW) og indre avgrensningslinjer må ha retning med klokka.
+                  Det betyr at noen av linjene som brukes må brukes i motsatt retning - dette gjøres ved å angi `-` (minus) foran linjereferansen (lokalid).
+
+                  Legg merke til at det kun sendes inn endring på begge flatene og linjen med endring (punkt 2 i geometrien er endret fra `6.192145518765789,64.8340495192154` til `6.1921,64.8340496`) som er delt mellom dem og brukes i avgrensningen. Dette er nødvendig for å ivareta delt geometri.
+
+                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/polygon/ArealressursFlater_update.json'   
 
            
       responses: #TODO: valideringsfeil
@@ -661,7 +697,10 @@ components:
         $ref: '#/components/schemas/BoundingBox'
       examples:
         smallbbox:
-          summary: Et 10x10m vindu
+          summary: |
+            Et 10x10m vindu
+
+            NB! Koordinatene må være i dataset'ets koordinatsystem
           value: [10.0, 100.0, 20.0, 200.0] # ?bbox=10.0,100.0,20.0,200.0
       description: |
         Henter ut objekter i et bestemt område (angitt med et rektangel)
