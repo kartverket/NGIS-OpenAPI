@@ -662,7 +662,7 @@ components:
         required:
           - type
       description: |
-        Angir låsetype som skal brukes (foreløpig er kun `user_lock` støttet, og denne bruker ikke `id`). Krever at brukeren har skrivetilgang mot dataset'et.
+        Angir låsetype som skal brukes (foreløpig er kun `user_lock` støttet). Krever at brukeren har skrivetilgang mot dataset'et.
         
         *user_lock*
 
@@ -670,6 +670,8 @@ components:
         Alle objekter i låsen låses opp neste gang brukeren skriver data til dataset'et.
 
         Låsen vil fjernes neste gang brukeren skriver data til dataset'et med `user_lock`, eller dersom låsen slettes.
+
+        Feltet `id` er ikke i bruk for `user_lock`.
     lokalIdParam:
       in: path
       name: lokalId
