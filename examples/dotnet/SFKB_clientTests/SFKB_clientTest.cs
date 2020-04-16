@@ -21,6 +21,7 @@ namespace SFKB_clientTests
         private const string ExampleFeatures = "ExampleFeatures";
         private Guid Ar5FlateFeatureLokalId = new Guid("20f893f2-5c8c-466f-b25b-d51ae98f1399");
         private Guid Ar5GrenseFeatureLokalId = new Guid("0003f094-b524-4a5a-bb05-d69881df853a");
+        private const string clientString = "SystemTestClient";
 
         [TestInitialize]
         public async Task InitAsync()
@@ -53,7 +54,7 @@ namespace SFKB_clientTests
 
             try
             {
-                var result = Client.GetDatasetMetadataAsync(WrongDatasetId).Result;
+                var result = Client.GetDatasetMetadataAsync(clientString, WrongDatasetId).Result;
             }
             catch (Exception e)
             {
@@ -92,7 +93,7 @@ namespace SFKB_clientTests
         {
             await LockAndSaveFeatureByLokalIdAsync(Ar5GrenseFeatureLokalId, null);
 
-            var locks = await Client.GetDatasetLocksAsync(DatasetId, GetLocking());
+            var locks = await Client.GetDatasetLocksAsync(clientString, DatasetId, GetLocking());
 
             Assert.IsTrue(locks.Count() == 0, $"Locks exists on dataset {DatasetId}");
         }
@@ -134,7 +135,7 @@ namespace SFKB_clientTests
                 
                 timer.Start();
 
-                var response = await Client.UpdateDatasetFeaturesAsync(DatasetId, locking, featureStream);
+                var response = await Client.UpdateDatasetFeaturesAsync(clientString, DatasetId, locking, featureStream);
 
                 timer.Stop();
 
@@ -182,12 +183,12 @@ namespace SFKB_clientTests
 
         private Task<Dataset> GetDataset()
         {
-            return Client.GetDatasetMetadataAsync(DatasetId);
+            return Client.GetDatasetMetadataAsync(clientString, DatasetId);
         }
 
         private async Task GetDatasetsAsync()
         {
-            var datasets = await Client.GetDatasetsAsync();
+            var datasets = await Client.GetDatasetsAsync(clientString);
 
             Assert.IsTrue(datasets.Count > 0, "No datasets returned");
 
@@ -200,7 +201,7 @@ namespace SFKB_clientTests
 
             var tempFile = await LockAndSaveFeatureByLokalIdAsync(lokalId, locking);
 
-            var datasetLocks = await Client.GetDatasetLocksAsync(datasetId, locking);
+            var datasetLocks = await Client.GetDatasetLocksAsync(clientString, datasetId, locking);
 
             Assert.IsTrue(datasetLocks?.Count() > 0, $"No dataset found for datasetId {datasetId}");
 
@@ -221,20 +222,20 @@ namespace SFKB_clientTests
         {
             var locking = GetLocking();
 
-            var locks = await Client.GetDatasetLocksAsync(DatasetId, locking);
+            var locks = await Client.GetDatasetLocksAsync(clientString, DatasetId, locking);
 
             if (locks.Count == 0) return;
 
-            await Client.DeleteDatasetLocksAsync(DatasetId, locking);
+            await Client.DeleteDatasetLocksAsync(clientString, DatasetId, locking);
 
-            locks = await Client.GetDatasetLocksAsync(DatasetId, locking);
+            locks = await Client.GetDatasetLocksAsync(clientString, DatasetId, locking);
 
             Assert.IsTrue(locks.Count() == 0, "Locks not deleted");
         }
 
         private async Task<string> LockAndSaveFeatureByLokalIdAsync(Guid lokalId, Locking locking)
         {
-            var fileResponse = await Client.GetDatasetFeaturesAsync(DatasetId, locking, null, GetLokalIdQuery(lokalId));
+            var fileResponse = await Client.GetDatasetFeaturesAsync(clientString, DatasetId, locking, null, GetLokalIdQuery(lokalId));
 
             return General.WriteStreamToDisk(fileResponse);
         }
