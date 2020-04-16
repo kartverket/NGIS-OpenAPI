@@ -38,14 +38,14 @@ namespace SFKB_clientTests
         {
             await RemoveAllLocksIfExists();
         }
-        
+
         [TestMethod]
         public async Task TestGetDatasetsAsync()
         {
-            var dataset = await GetDataset();
+            var datasets = await GetDatasetsAsync();
 
-            Assert.IsTrue(dataset.Id == DatasetId, $"No dataset found with id {DatasetId}");
-        }        
+            Assert.IsTrue(datasets.Any(dataset => dataset.Id == DatasetId), $"No dataset found with id {DatasetId}");
+        }
 
         [TestMethod]
         public void TestGetDatasetWithWrongId()
@@ -181,18 +181,20 @@ namespace SFKB_clientTests
             return xml.HasElements && xml.Descendants().Count() > 0;
         }
 
-        private Task<Dataset> GetDataset()
-        {
-            return Client.GetDatasetMetadataAsync(clientString, DatasetId);
-        }
+        //private Task<Dataset> GetDataset()
+        //{
+        //    return Client.GetDatasetMetadataAsync(clientString, DatasetId);
+        //}
 
-        private async Task GetDatasetsAsync()
+        private async Task<ICollection<Anonymous>> GetDatasetsAsync()
         {
             var datasets = await Client.GetDatasetsAsync(clientString);
 
             Assert.IsTrue(datasets.Count > 0, "No datasets returned");
 
             DatasetId = datasets.FirstOrDefault(d => d.Name == Ar5DatasetName).Id;
+
+            return datasets;
         }
 
         private async Task ReplaceByLokalIdAsync(Guid datasetId, Guid lokalId)
