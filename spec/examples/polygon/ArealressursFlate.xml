@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<gml:FeatureCollection xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:app="http://skjema.geonorge.no/SOSI/produktspesifikasjon/FKB-Ar5/4.6" xmlns:gml="http://www.opengis.net/gml/3.2" gml:id="_d7ca8ce1-1201-479a-bc89-e5bc085b44b5" xsi:schemaLocation="http://skjema.geonorge.no/SOSI/produktspesifikasjon/FKB-Ar5/4.6 http://skjema.geonorge.no/SOSI/produktspesifikasjon/FKB-Ar5/4.6/FKB-AR546.xsd">
+  <gml:boundedBy>
+    <gml:Envelope srsName="urn:ogc:def:crs:EPSG::25832" srsDimension="2">
+      <gml:lowerCorner>366683.69 7192870.0999999996</gml:lowerCorner>
+      <gml:upperCorner>366812.07000000001 7192920.1600000001</gml:upperCorner>
+    </gml:Envelope>
+  </gml:boundedBy>
+  <gml:featureMember>
+    <app:ArealressursFlate gml:id="app.ArealressursFlate_00ca0d9b-965e-4b3a-964a-2d5b7f371d8d">
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>00ca0d9b-965e-4b3a-964a-2d5b7f371d8d</app:lokalId>
+          <app:navnerom>AR5_test22</app:navnerom>
+          <app:versjonId>2019-11-11 11:57:18.918000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:datafangstdato>1981-05-27</app:datafangstdato>
+      <app:oppdateringsdato>2019-11-13T08:27:11</app:oppdateringsdato>
+      <app:opphav>NIBIO</app:opphav>
+      <app:registreringsversjon>
+        <app:Registreringsversjon>
+          <app:produkt>FKB-AR5</app:produkt>
+          <app:versjon>4.5 20140301</app:versjon>
+        </app:Registreringsversjon>
+      </app:registreringsversjon>
+      <app:verifiseringsdato>1981-05-27</app:verifiseringsdato>
+      <app:kvalitet>
+        <app:Posisjonskvalitet>
+          <app:målemetode>32</app:målemetode>
+          <app:nøyaktighet>1</app:nøyaktighet>
+          <app:synbarhet>0</app:synbarhet>
+        </app:Posisjonskvalitet>
+      </app:kvalitet>
+      <app:område>
+        <gml:Polygon gml:id="QMS_e2908212-3dd1-465a-9e54-f97402d3f347_a1202e2c-9a38-441b-8145-47699f0527fe" srsName="urn:ogc:def:crs:EPSG::25832" srsDimension="2">
+          <gml:exterior>
+            <gml:Ring>
+              <gml:curveMember>
+                <gml:LineString gml:id="QMS_e14f503c-00db-43cf-ac94-73529043aea1_8fb08296-0154-4bd4-a5b3-1ca310951164">
+                  <gml:posList>366810.25 7192920.1600000001 366804.12 7192914.6699999999 366792.85000000003 7192911.9800000004 366780.40000000002 7192913.8300000001 366767.35000000003 7192912 366752.71000000002 7192907.21 366744.52000000002 7192900.4400000004 366735.95000000001 7192890.6699999999 366722.39000000001 7192888.5599999996 366714.53000000003 7192893.8799999999 366706.72999999998 7192901.0999999996 366696.06 7192902.4000000004 366684.42999999999 7192897.7199999997 366683.69 7192889.25</gml:posList>
+                </gml:LineString>
+              </gml:curveMember>
+              <gml:curveMember>
+                <gml:LineString gml:id="QMS_-_2d731ea6-d339-42d9-9d25-1206d5b1b57c_34c1ca17-a15d-4501-8a75-3d25ab17526a">
+                  <gml:posList>366683.69 7192889.25 366688.64000000001 7192887.1100000003 366691.95000000001 7192880.5 366694.53999999998 7192879.9400000004 366700.03999999998 7192880.2800000003 366706.03999999998 7192880.1200000001 366717.5 7192878.7999999998 366724.47000000003 7192877.5899999999 366731.46000000002 7192877 366736.97000000003 7192877.3499999996 366740.42999999999 7192875.7400000002 366742.28999999998 7192871.2000000002 366745.77000000002 7192870.0999999996 366751.29999999999 7192870.9299999997 366757.29999999999 7192871.2800000003 366768.78000000003 7192870.4500000002 366774.81 7192871.2800000003 366788.40000000002 7192874.5 366795.94 7192875.79 366805.5 7192878.0300000003 366809.16000000003 7192883.4100000001 366811.96000000002 7192894.3399999999 366812.07000000001 7192901.8399999999 366810.78000000003 7192909.3799999999 366810.45000000001 7192915.3799999999 366810.25 7192920.1600000001</gml:posList>
+                </gml:LineString>
+              </gml:curveMember>
+            </gml:Ring>
+          </gml:exterior>
+        </gml:Polygon>
+      </app:område>
+      <app:posisjon>
+        <gml:Point gml:id="QMS_9d6bbe1a-189b-40e4-ae01-e0df38e52817_11432076-32a6-4968-b2d5-2fc0766b3a23" srsName="urn:ogc:def:crs:EPSG::25832" srsDimension="2">
+          <gml:pos>366777.08000000002 7192895.2199999997</gml:pos>
+        </gml:Point>
+      </app:posisjon>
+      <app:arealtype>60</app:arealtype>
+      <app:treslag>39</app:treslag>
+      <app:skogbonitet>11</app:skogbonitet>
+      <app:grunnforhold>45</app:grunnforhold>
+      <app:kartstandard>AR5</app:kartstandard>
+    </app:ArealressursFlate>
+  </gml:featureMember>
+</gml:FeatureCollection>

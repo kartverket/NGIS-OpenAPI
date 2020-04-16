@@ -1,8 +1,13 @@
 openapi: 3.0.0
 info:
   version: 1.0.0
+  contact:
+    name: SFKB Brukerstøtte
+    url: https://www.kartverket.no/Prosjekter/Sentral-felles-kartdatabase/brukerstotte/
   title: Oppdateringsgrensesnitt for SFKB
   description: |
+    # NGIS-OpenAPI
+    
     Grov oversikt over funksjonalitet:
       - Hente liste over tilgjengelige datasett 
       - Hente metadata for et bestemt datasett
@@ -12,12 +17,24 @@ info:
           - egenskapsspørring (begrenset i første versjon til bygningsnummer eller lokalid)
       - Lagre data til et bestemt datasett
         - Operasjoner som håndteres: nytt objekt, endre objekt og slett objekt
-  contact:
-    name: SFKB Brukerstøtte
-    url: https://www.kartverket.no/Prosjekter/Sentral-felles-kartdatabase/brukerstotte/
+    
+    ## Generelle prinsipper for systemet
+
+    ### Delt geometri
+    
+    Flater består av avgrensningslinjer som ligger lagret som egne objekter. På den måten kan en linje avgrense ingen, én eller flere flater.
+    Det er likevel slik at flater hentes ut og lagres med egen geometri for å gjøre det enklere å tegne opp datene, men ved endring av (delte) linjer og flater
+    må det tas hensyn til delt geometri. Forsøk på endring av linje eller flate uten tilsvarende endring av evt. delt geometri vil bli avvist av systemet.
+
+    ### Låsing
+    
+    Dette er nærmere beskrevet i de aktuelle kallene.
+
+    Foreløpig er det kun `user_lock` som er støttet. Det betyr at data må hentes ut med `user_lock` før de kan sendes inn med endringer.
+    
+    
     
 servers:
-# Added by API Auto Mocking Plugin
   - description: Test-server Norkart
     url: https://qmsrest.westeurope.cloudapp.azure.com:8080/v1/
   - url: http://sfkb.kartverket.no/v1
@@ -27,7 +44,7 @@ security:
   - basicAuth: []  # <-- use the same name here
   
 tags:
-  - name: Metadata
+  - name: metadata
     description: "Informasjon om dataset som brukeren har tilgang til"
   - name: features
     description: "Operasjoner på features i et bestemt dataset"
@@ -37,58 +54,46 @@ paths:
   /datasets:
     get:
       tags:
-       - Metadata
+       - metadata
       summary: Hent liste over tilgjengelige dataset
       description: |
         Henter en liste over alle dataset som brukeren har lese- eller skrivetilgang til. 
         Dersom brukeren ikke har tilgang til noen dataset, returneres en tom liste.
       operationId: getDatasets
       parameters:        
-        - in: header
-          name: X-Client-Product-Version
-          schema:
-            type: string
-          required: true
+        - $ref: '#/components/parameters/clientHeaderParam'
       responses:
         '200':      # Response
           description: OK
           content:  # Response body
-            application/json:  # Media type
+            application/vnd.kartverket.ngis.datasets+json:  # Media type
               schema: 
-                type: array
-                items:
-                  $ref: '#/components/schemas/Dataset'    # Reference to object definition
+                $ref: '#/components/schemas/DatasetList'    # Reference to object definition
         '401':
           description: Gyldig autentisering av brukeren mangler eller er ugyldig
-        '5XX':
+        '500':
           description: Intern feil på serveren
+        '501':
+          description: Intern feil på serveren (kallet er ikke implementert)
+        '503':
+          description: Intern feil på serveren (tjenesten er utilgjengelig)
   /datasets/{datasetId}:
     get:
       tags:
-       - Metadata
+       - metadata
       summary: Hent metadata for et bestemt dataset
       description: |
         Henter utvidet informasjon om et bestemt dataset. 
         Her ligger all informasjon som kommer ut i listen over dataset, og i tillegg en del ekstra informasjon som enten er unødvendig eller for tung å ha med i listen over dataset.
       operationId: getDatasetMetadata
       parameters:
-        - in: header
-          name: X-Client-Product-Version
-          schema:
-            type: string
-          required: true
-        - in: path
-          name: datasetId
-          schema:
-            type: string
-            format: uuid
-          required: true
-          description: UUID of the dataset to get
+        - $ref: '#/components/parameters/clientHeaderParam'
+        - $ref: '#/components/parameters/datasetIdParam'
       responses:
         '200':      # Response
           description: OK
           content:  # Response body
-            application/json:  # Media type
+            application/vnd.kartverket.ngis.dataset+json:  # Media type
              schema: 
                $ref: '#/components/schemas/Dataset'    # Reference to object definition
         '401':
@@ -97,8 +102,12 @@ paths:
           description: Ugyldig brukernavn og/eller passord
         '404':
           description: Fant ikke angitt dataset
-        '5XX':
+        '500':
           description: Intern feil på serveren
+        '501':
+          description: Intern feil på serveren (kallet er ikke implementert)
+        '503':
+          description: Intern feil på serveren (tjenesten er utilgjengelig)
   /datasets/{datasetId}/features:
     get:
       tags:
@@ -108,34 +117,10 @@ paths:
         Henter en liste over alle dataset som brukeren har lese- eller skrivetilgang til.
       operationId: getDatasetFeatures
       parameters:
-        - in: header
-          name: X-Client-Product-Version
-          schema:
-            type: string
-          required: true
-        - in: path
-          name: datasetId
-          schema:
-            type: string
-            format: uuid
-          required: true
-          description: UUID of the dataset to get
+        - $ref: '#/components/parameters/clientHeaderParam'
+        - $ref: '#/components/parameters/datasetIdParam'
         - $ref: '#/components/parameters/lockingParam'
-        - in: query
-          name: bbox
-          schema:
-            $ref: '#/components/schemas/BoundingBox' 
-          description: |
-            Henter ut objekter i et bestemt område (angitt med et rektangel)
-            
-            Dette kan være aktuelt for å få ut alle objekter som ikke er direkte knyttet til et objekt, som f.eks mønelinje og takkant til en bygning.
-          
-            Eksempel: Hent ut et 10x10m rektangel
-            
-            **TODO: Usikker på syntaks**
-            
-            ?bbox=(10,10,20,20)
-            
+        - $ref: '#/components/parameters/bboxParam'
         - in: query
           name: query
           schema:
@@ -143,19 +128,7 @@ paths:
           description: |
             Filter på egenskaper og/eller objekttype for å begrense hvilke features som hentes ut.
             
-            Dersom objekttypen ikke skal begrenses, kan den angis med `*`
-            
-            Eksempel: Hent en bygning med bestemt bygningsnummer
-            
-            `?query=eq(Bygning/bygningsnummer,1234)`
-            
-            Eksempel: Hent et objekt med bestemt lokalid
-            
-            `?query=eq(*/identifikasjon/lokalid,000a7b9b-7088-482f-a3cf-9761b97a54b6)`
-            
-            Merk: Når et objekt hentes ut med lokalid er det normalt ikke nødvendig å filtrere på objekttype, derfor er objekttypen angitt med `*`.
-            
-            Merk: Spørringer er foreløpig begrenset til eksemplene over, nemlig spørringer etter bygningsnummer og lokalid.
+            Spørringer er foreløpig begrenset til bygningsnummer og lokalid.
             
             Generell regel for egenskapsspørringer:
             
@@ -164,6 +137,15 @@ paths:
             > \<objekttypenavn\>/\<attributtnavn\> [ / \<attributtnavn\> …]
           
             Hvis vi ikke ønsker å begrense spørringen til en bestemt objekttype, kan vi angi * som <objekttypenavn>.
+          examples:
+            bygningsnummer:
+              value: 'eq(Bygning/bygningsnummer,1234)'
+              summary: Spørring etter et bestemt bygningsnummer for objekttypen Bygning
+            lokalid:
+              value: 'eq(*/identifikasjon/lokalid,000a7b9b-7088-482f-a3cf-9761b97a54b6)'
+              summary: |
+                Spørring etter et bestemt objekt med gitt lokalid
+                Når et objekt hentes ut med lokalid er det normalt ikke nødvendig å filtrere på objekttype, derfor er objekttypen angitt med `*`.
 
             
             
@@ -171,9 +153,102 @@ paths:
         '200':      # Response
           description: OK
           content: # Response body
+            
             application/vnd.kartverket.sosi+gml; version=1.0:
              schema:
               type: object
+             examples: 
+              singlePoint:
+                description: |
+                  Eksempel på uthentet punkt
+                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/point/Bygning.xml'
+              singleLineString:
+                description: | 
+                  Eksempel på uthentet linje
+                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/linestring/Mønelinje.xml'
+              simplePolygon:
+                description: |
+                  Eksempel på uthentet flate som refererer én enkel avgrensningslinje
+
+                  Representasjonspunktet som ligger inne i flaten ligger i `geometry_properties` som `position`.
+
+                  Lenkene til avgrensningslinjer (bruker linjenes lokalid) ligger i `geometry_properties` under `exterior`. 
+
+                  Ytre avgrensningslinjer i en flate må ha retning mot klokka (CCW) og indre avgrensningslinjer må ha retning med klokka.
+                  Det betyr at noen av linjene som brukes må brukes i motsatt retning - dette gjøres ved å angi `-` (minus) foran linjereferansen (lokalid).
+
+                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/polygon/ArealressursFlate_enkel.xml'
+              multipleLinesPolygon:
+                description: |
+                  Eksempel på uthentet flate som refererer flere avgrensningslinjer der den ene bruker linjen i motsatt retning
+
+                  Representasjonspunktet som ligger inne i flaten ligger i `<app:posisjon>` som `<gml:Point>`.
+
+                  TODO: gml:id : Lenkene til avgrensningslinjer (bruker linjenes lokalid) ligger i `geometry_properties` under `exterior`. 
+
+                  Ytre avgrensningslinjer i en flate må ha retning mot klokka (CCW) og indre avgrensningslinjer må ha retning med klokka.
+                  Det betyr at noen av linjene som brukes må brukes i motsatt retning - TODO: gml:id dette gjøres ved å angi `-` (minus) foran linjereferansen (lokalid).
+
+                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/polygon/ArealressursFlate.xml'
+            application/vnd.kartverket.sosi+json; version=1.0:
+             schema:
+              type: object
+             examples: 
+              singlePoint:
+                description: | 
+                  Eksempel på uthentet punkt
+                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/point/Bygning.json'
+              singleLineString:
+                description: |
+                  Eksempel på uthentet linje
+                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/linestring/Mønelinje.json'
+              singleArc:
+                description: |
+                  Eksempel på uthentet bue (WIP)
+                  
+                  Standarden GeoJSON har ingen egen type for bue. 
+                  
+                  For at buer enkelt skal kunne leses av klienter, er derfor bue-geometrien konvertert til en linje med `is_arc=true` i `geometry_properties`.
+                  Første, midtre og siste punkt beskriver buen dersom klienten vil implementere korrekt tegning av denne.
+                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/linestring/Mønelinje.json'
+              simplePolygon:
+                description: |
+                  Eksempel på uthentet flate som refererer én enkel avgrensningslinje
+
+                  Representasjonspunktet som ligger inne i flaten ligger i `geometry_properties` som `position`.
+
+                  Lenkene til avgrensningslinjer (bruker linjenes lokalid) ligger i `geometry_properties` under `exterior`. 
+
+                  Ytre avgrensningslinjer i en flate må ha retning mot klokka (CCW) og indre avgrensningslinjer må ha retning med klokka.
+                  Det betyr at noen av linjene som brukes må brukes i motsatt retning - dette gjøres ved å angi `-` (minus) foran linjereferansen (lokalid).
+
+                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/polygon/ArealressursFlate_enkel.json'
+              multipleLinesPolygon:
+                description: |
+                  Eksempel på uthentet flate som refererer flere avgrensningslinjer der den ene bruker linjen i motsatt retning
+
+                  Representasjonspunktet som ligger inne i flaten ligger i `geometry_properties` som `position`.
+
+                  Lenkene til avgrensningslinjer (bruker linjenes lokalid) ligger i `geometry_properties` under `exterior`. 
+
+                  Ytre avgrensningslinjer i en flate må ha retning mot klokka (CCW) og indre avgrensningslinjer må ha retning med klokka.
+                  Det betyr at noen av linjene som brukes må brukes i motsatt retning - dette gjøres ved å angi `-` (minus) foran linjereferansen (lokalid).
+
+                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/polygon/ArealressursFlate.json'
+              multiplePolygonsSharedLine:
+                description: |
+                  Eksempel på uthentede flater som refererer samme avgrensningslinje der én av flatene også har hull (`interiors`)
+
+                  Representasjonspunktet som ligger inne i flaten ligger i `geometry_properties` som `position`.
+
+                  Lenkene til avgrensningslinjer (bruker linjenes lokalid) ligger i `geometry_properties` under `exterior`. 
+                  
+                  Lenkene til indre avgrensningslinjer ligger i `geometry_properties` under `interiors` (liste av liste av linjenes lokalid). 
+
+                  Ytre avgrensningslinjer i en flate må ha retning mot klokka (CCW) og indre avgrensningslinjer må ha retning med klokka.
+                  Det betyr at noen av linjene som brukes må brukes i motsatt retning - dette gjøres ved å angi `-` (minus) foran linjereferansen (lokalid).
+
+                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/polygon/ArealressursFlater.json'            
         '401':
           description: Gyldig autentisering av brukeren mangler eller er ugyldig
         '403':
@@ -182,8 +257,12 @@ paths:
           description: Fant ikke angitt dataset
         '406':
           description: Klienten har ugyldig Accept-header og kan ikke motta data på et format som serveren kan levere
-        '5XX':
+        '500':
           description: Intern feil på serveren
+        '501':
+          description: Intern feil på serveren (kallet er ikke implementert)
+        '503':
+          description: Intern feil på serveren (tjenesten er utilgjengelig)
     post:
       tags:
        - features
@@ -192,49 +271,100 @@ paths:
         Henter en liste over alle dataset som brukeren har lese- eller skrivetilgang til.
       operationId: updateDatasetFeatures
       parameters:
-        - in: header
-          name: X-Client-Product-Version
-          schema:
-            type: string
-          required: true
-        - in: path
-          name: datasetId
-          schema:
-            type: string
-            format: uuid
-          required: true
-          description: UUID of the dataset to get
+        - $ref: '#/components/parameters/clientHeaderParam'
+        - $ref: '#/components/parameters/datasetIdParam'
         - $ref: '#/components/parameters/lockingParam'
       requestBody:
         description: Optional description in *Markdown*
         required: true
         content:
           application/vnd.kartverket.sosi+wfs-t; version=1.0:
-           schema:
-            type: object
+            schema:
+              type: object
+          application/vnd.kartverket.sosi+json; version=1.0:
+            schema:
+              type: object
+            examples: 
+              singlePoint:
+                description: | 
+                  Eksempel på oppdatering av punkt
+
+                  Den eneste forskjellen fra uthentet punkt i innholdet er `update : { action : "Replace" }` som angir at objektet skal erstattes.
+
+                  Action kan være `Create`, `Replace` eller `Erase`. 
+                  Ved `Replace` eller `Erase` med `user_lock` må objektet være hentet ut med `user_lock` før det kan endres.
+                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/point/Bygning_replace.json'
+              simplePolygon:
+                description: |
+                  Eksempel på oppdatering av flate som refererer én enkel avgrensningslinje
+
+                  Den eneste forskjellen fra uthentet punkt i innholdet er `update : { action : "Replace" }` som angir at objektet skal erstattes.
+
+                  Action kan være `Create`, `Replace` eller `Erase`. 
+                  Ved `Replace` eller `Erase` med `user_lock` må objektet være hentet ut med `user_lock` før det kan endres.
+
+                  Representasjonspunktet som ligger inne i flaten ligger i `geometry_properties` som `position`.
+
+                  Lenkene til avgrensningslinjer (bruker linjenes lokalid) ligger i `geometry_properties` under `exterior`. 
+
+                  Ytre avgrensningslinjer i en flate må ha retning mot klokka (CCW) og indre avgrensningslinjer må ha retning med klokka.
+                  Det betyr at noen av linjene som brukes må brukes i motsatt retning - dette gjøres ved å angi `-` (minus) foran linjereferansen (lokalid).
+
+                  Legg merke til at det sendes inn endring på både flaten og linjen som brukes i avgrensningen. Dette er nødvendig for å ivareta delt geometri.
+
+                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/polygon/ArealressursFlate_enkel_replace.json'
+              multiplePolygonsSharedLine:
+                description: |
+                  Eksempel på oppdatering av avgrenseningslinje som refereres av to flater.
+
+                  Den eneste forskjellen fra uthentet punkt i innholdet er `update : { action : "Replace" }` som angir at objektet skal erstattes.
+
+                  Action kan være `Create`, `Replace` eller `Erase`. 
+                  Ved `Replace` eller `Erase` med `user_lock` må objektet være hentet ut med `user_lock` før det kan endres.
+
+                  Representasjonspunktet som ligger inne i flaten ligger i `geometry_properties` som `position`.
+
+                  Lenkene til avgrensningslinjer (bruker linjenes lokalid) ligger i `geometry_properties` under `exterior`. 
+                  
+                  Lenkene til indre avgrensningslinjer ligger i `geometry_properties` under `interiors` (liste av liste av linjenes lokalid). 
+
+                  Ytre avgrensningslinjer i en flate må ha retning mot klokka (CCW) og indre avgrensningslinjer må ha retning med klokka.
+                  Det betyr at noen av linjene som brukes må brukes i motsatt retning - dette gjøres ved å angi `-` (minus) foran linjereferansen (lokalid).
+
+                  Legg merke til at det kun sendes inn endring på begge flatene og linjen med endring (punkt 2 i geometrien er endret fra `6.192145518765789,64.8340495192154` til `6.1921,64.8340496`) som er delt mellom dem og brukes i avgrensningen. Dette er nødvendig for å ivareta delt geometri.
+
+                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/polygon/ArealressursFlater_replace.json'   
+
            
       responses: #TODO: valideringsfeil
         '200':
           description: OK
           content:
-            application/json:
+            application/vnd.kartverket.ngis.edit_features_summary+json:
               schema:
                 type: object
                 properties:
                   features_created:
                     type: integer
+                    example: 10
                   features_replaced:
                     type: integer
+                    example: 2
                   features_erased:
                     type: integer
+                    example: 5
         '401':
           description: Gyldig autentisering av brukeren mangler eller er ugyldig
         '403':
           description: Ugyldig brukernavn og/eller passord
         '404':
           description: Fant ikke angitt dataset
-        '5XX':
+        '500':
           description: Intern feil på serveren
+        '501':
+          description: Intern feil på serveren (kallet er ikke implementert)
+        '503':
+          description: Intern feil på serveren (tjenesten er utilgjengelig)
 
   /datasets/{datasetId}/features/{lokalId}:
     get:
@@ -242,28 +372,12 @@ paths:
        - features
       summary: Hent ut en bestemt feature fra et dataset
       description: >-
-        HEnter ut en bestemt feature med mulighet for å få med refererte objekter for redigering.
+        Henter ut en bestemt feature med mulighet for å få med refererte objekter for redigering.
       operationId: getDatasetFeature
       parameters:
-        - in: header
-          name: X-Client-Product-Version
-          schema:
-            type: string
-          required: true
-        - in: path
-          name: datasetId
-          schema:
-            type: string
-            format: uuid
-          required: true
-          description: UUID of the dataset to get
-        - in: path
-          name: lokalId
-          schema:
-            type: string
-            format: uuid
-          required: true
-          description: Identifikasjon.Lokalid til objektet som skal hentes ut
+        - $ref: '#/components/parameters/clientHeaderParam'
+        - $ref: '#/components/parameters/datasetIdParam'
+        - $ref: '#/components/parameters/lokalIdParam'
         - $ref: '#/components/parameters/lockingParam'
         - in: query
           name: references
@@ -294,8 +408,11 @@ paths:
           description: OK
           content: # Response body
             application/vnd.kartverket.sosi+gml; version=1.0:
-             schema:
-              type: object
+              schema:
+                type: object
+            application/vnd.kartverket.sosi+json; version=1.0:
+              schema:
+                type: object
         '401':
           description: Gyldig autentisering av brukeren mangler eller er ugyldig
         '403':
@@ -304,8 +421,12 @@ paths:
           description: Fant ikke angitt dataset
         '406':
           description: Klienten har ugyldig Accept-header og kan ikke motta data på et format som serveren kan levere
-        '5XX':
+        '500':
           description: Intern feil på serveren
+        '501':
+          description: Intern feil på serveren (kallet er ikke implementert)
+        '503':
+          description: Intern feil på serveren (tjenesten er utilgjengelig)
   /datasets/{datasetId}/features/{lokalId}/attributes:
     get:
       tags:
@@ -315,20 +436,8 @@ paths:
         Henter ut alle egenskapene til en bestemt feature.
       operationId: getDatasetFeatureAttributes
       parameters:
-        - in: path
-          name: datasetId
-          schema:
-            type: string
-            format: uuid
-          required: true
-          description: UUID of the dataset to get
-        - in: path
-          name: lokalId
-          schema:
-            type: string
-            format: uuid
-          required: true
-          description: Identifikasjon.Lokalid til objektet som skal hentes ut
+        - $ref: '#/components/parameters/datasetIdParam'
+        - $ref: '#/components/parameters/lokalIdParam'
         - $ref: '#/components/parameters/lockingParam'     
       responses:
         '200':      # Response
@@ -337,6 +446,12 @@ paths:
             application/vnd.kartverket.ngis.attributes+json; version=1.0:
              schema:
               type: object
+             examples:
+              singleLineStringAttributes:
+                description: |
+                  Eksempel på egenskaper til linje
+                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/linestring/Mønelinje.attributes.json'
+
         '401':
           description: Gyldig autentisering av brukeren mangler eller er ugyldig
         '403':
@@ -345,8 +460,12 @@ paths:
           description: Fant ikke angitt dataset
         '406':
           description: Klienten har ugyldig Accept-header og kan ikke motta data på et format som serveren kan levere
-        '5XX':
+        '500':
           description: Intern feil på serveren
+        '501':
+          description: Intern feil på serveren (kallet er ikke implementert)
+        '503':
+          description: Intern feil på serveren (tjenesten er utilgjengelig)
     put:
       tags:
        - features
@@ -355,27 +474,20 @@ paths:
         Oppdaterer alle egenskapene til en bestemt feature i et dataset.
       operationId: updateDatasetFeatureAttributes
       parameters:
-        - in: path
-          name: datasetId
-          schema:
-            type: string
-            format: uuid
-          required: true
-          description: UUID of the dataset to get
-        - in: path
-          name: lokalId
-          schema:
-            type: string
-            format: uuid
-          required: true
-          description: Identifikasjon.Lokalid til objektet som skal hentes ut
+        - $ref: '#/components/parameters/datasetIdParam'
+        - $ref: '#/components/parameters/lokalIdParam'
         - $ref: '#/components/parameters/lockingParam'
       requestBody:
         required: true
         content:
           application/vnd.kartverket.ngis.attributes+json; version=1.0:
            schema:
-            type: object     
+            type: object 
+           examples:
+            singleLineStringAttributes:
+              description: |
+                Eksempel på egenskaper til linje
+              externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/linestring/Mønelinje.attributes.json'  
       responses:
         '200':
           description: OK
@@ -383,14 +495,24 @@ paths:
             application/vnd.kartverket.ngis.attributes+json; version=1.0:
              schema:
               type: object  
+             examples:
+              singleLineStringAttributes:
+                description: |
+                  Eksempel på egenskaper til linje
+                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/linestring/Mønelinje.attributes.json'
+
         '401':
           description: Gyldig autentisering av brukeren mangler eller er ugyldig
         '403':
           description: Ugyldig brukernavn og/eller passord
         '404':
           description: Fant ikke angitt dataset
-        '5XX':
+        '500':
           description: Intern feil på serveren
+        '501':
+          description: Intern feil på serveren (kallet er ikke implementert)
+        '503':
+          description: Intern feil på serveren (tjenesten er utilgjengelig)
   /datasets/{datasetId}/locks:
     get:
       tags:
@@ -400,24 +522,14 @@ paths:
         Henter bl.a. informasjon om hvilke objekter brukeren har låst i et bestemt dataset.
       operationId: getDatasetLocks
       parameters:
-        - in: header
-          name: X-Client-Product-Version
-          schema:
-            type: string
-          required: true
-        - in: path
-          name: datasetId
-          schema:
-            type: string
-            format: uuid
-          required: true
-          description: UUID of the dataset to get
+        - $ref: '#/components/parameters/clientHeaderParam'
+        - $ref: '#/components/parameters/datasetIdParam'
         - $ref: '#/components/parameters/lockingParam'
       responses:
         '200':      # Response
           description: OK
           content:  # Response body
-            application/json:  # Media type
+            application/vnd.kartverket.ngis.locks+json:  # Media type
              schema: 
                $ref: '#/components/schemas/Locks'    # Reference to object definition
         '401':
@@ -434,18 +546,8 @@ paths:
         Fjerne alle låser brukeren har i et bestemt dataset
       operationId: deleteDatasetLocks        
       parameters:
-        - in: header
-          name: X-Client-Product-Version
-          schema:
-            type: string
-          required: true
-        - in: path
-          name: datasetId
-          schema:
-            type: string
-            format: uuid
-          required: true
-          description: UUID of the dataset to delete locks in
+        - $ref: '#/components/parameters/clientHeaderParam'
+        - $ref: '#/components/parameters/datasetIdParam'
         - $ref: '#/components/parameters/lockingParam'
       responses:
         '204': # Success
@@ -461,7 +563,33 @@ components:
     basicAuth:     # <-- arbitrary name for the security scheme
       type: http
       scheme: basic
+      description: |
+        Brukernavn og passord som er gyldige mot dataset som skal brukes. 
+        For QMS er dette brukernavn og passord mot oppgaven.
   schemas:
+    DatasetList:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+            format: uuid
+          name:
+            type: string
+          access:
+            type: string
+            enum: [read_only, read_write]
+      example:
+        - id: '07b59e3d-a4b6-4bae-ac4c-664d3dc3d778'
+          name: 'AR5'
+          access: read_write
+        - id: '08b59e3d-a4b6-4bae-ac4c-664d3dc3d779'
+          name: 'Bygning'
+          access: read_only
+        - id: '09b59e3d-a4b6-4bae-ac4c-664d3dc3d659'
+          name: 'DEK'
+          access: read_only
     Dataset:
       type: object
       properties:
@@ -470,15 +598,8 @@ components:
           format: uuid
         name:
           type: string
-        kommune:
-          type: integer
-        fylke:
-          type: integer
-        sone:
-          type: integer
         description:
           type: string
-        #hele_landet som egen metadata?
         resolution:
           type: number
           format: double
@@ -492,15 +613,10 @@ components:
           type: string
           enum: [read_only, read_write]
         bbox: 
-          $ref: '#/components/schemas/BoundingBox' 
-      required:
-        - id
-        - name
-        - access
+          $ref: '#/components/schemas/BoundingBox'
       example:
         id: '07b59e3d-a4b6-4bae-ac4c-664d3dc3d778'
         name: 'AR5'
-        sone: 22
         resolution: 0.001
         coordinate_reference_system: 'EPSG:5972'
         access: read_write
@@ -530,28 +646,13 @@ components:
           features:
             - lokalid: '933f0223-2598-485b-b886-3c69650b22b0'
             - lokalid: 'ddb688c3-b2d9-47eb-93d2-cc4704b6394c'
-        
-          
     BoundingBox:
-      type: object
-      properties:
-        ll:
-          type: array
-          minItems: 2
-          maxItems: 2
-          items:
-            type: number
-            format: double
-        ur:
-          type: array
-          minItems: 2
-          maxItems: 2
-          items:
-            type: number
-            format: double
-      example:
-        ll: [10.0, 100.0]
-        ur: [20.0, 200.0]
+      type: array
+      minItems: 4
+      maxItems: 6
+      items:
+        type: number
+      example: [10.0, 10.0, 20.0, 20.0]
     # Schema for error response body
     Error:
       type: object
@@ -572,6 +673,41 @@ components:
         - detail
        
   parameters:
+    clientHeaderParam:
+      in: header
+      name: X-Client-Product-Version
+      schema:
+        type: string
+      required: true
+      example: 'ExampleApp 10.0.0 (Build 54321)'
+    datasetIdParam:
+      in: path
+      name: datasetId
+      schema:
+        type: string
+        format: uuid
+      required: true
+      description: UUID of the dataset to get
+      example: dc3507da-a95f-4482-b762-f140f5a11788
+    bboxParam:
+      in: query
+      name: bbox
+      style: form
+      explode: false
+      schema:
+        $ref: '#/components/schemas/BoundingBox'
+      examples:
+        smallbbox:
+          summary: |
+            Et 10x10m vindu
+
+            NB! Koordinatene må være i dataset'ets koordinatsystem
+          value: [10.0, 100.0, 20.0, 200.0] # ?bbox=10.0,100.0,20.0,200.0
+      description: |
+        Henter ut objekter i et bestemt område (angitt med et rektangel)
+        
+        Dette kan være aktuelt for å få ut alle objekter som ikke er direkte knyttet til et objekt, som f.eks mønelinje og takkant til en bygning.
+
     lockingParam:
       in: query
       name: locking
@@ -589,7 +725,21 @@ components:
         required:
           - type
       description: |
-        Låser objektene som hentes ut for oppdatering. Krever skrivetilgang mot dataset'et.
+        Angir låsetype som skal brukes (foreløpig er kun `user_lock` støttet). Krever at brukeren har skrivetilgang mot dataset'et.
         
-        Foreløpig er det kun brukerlås (locking[type]=user_lock) som støttes. Kallet legger da til objekter i brukerlåsen. 
-        Låsen vil fjernes neste gang brukeren skriver data til dataset'et, eller dersom låsen slettes.
+        *user_lock*
+
+        Hver bruker har én lås per dataset. Hver gang data hentes ut med `user_lock` legges objektene til denne låsen. 
+        Alle objekter i låsen låses opp neste gang brukeren skriver data til dataset'et.
+
+        Låsen vil fjernes neste gang brukeren skriver data til dataset'et med `user_lock`, eller dersom låsen slettes.
+
+        Feltet `id` er ikke i bruk for `user_lock`.
+    lokalIdParam:
+      in: path
+      name: lokalId
+      schema:
+        type: string
+        format: uuid
+      required: true
+      description: Identifikasjon.Lokalid til objektet

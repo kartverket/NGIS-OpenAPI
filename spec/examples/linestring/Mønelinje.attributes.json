@@ -1,0 +1,23 @@
+{
+    "featuretype": "Mønelinje",
+    "treDNivå": "2",
+    "kvalitet": {
+        "målemetode": "24",
+        "nøyaktighet": 22,
+        "synbarhet": "0",
+        "målemetodeHøyde": "24",
+        "nøyaktighetHøyde": 34
+    },
+    "datafangstdato": 20070503,
+    "identifikasjon": {
+        "navnerom": "http://data.geonorge.no/SFKB/FKB-Bygning/so",
+        "lokalId": "002c6f7f-fdbe-4a33-94b6-a6ee02e7941e",
+        "versjonId": "2019-03-27 09:10:42.712000"
+    },
+    "registreringsversjon": {
+        "produkt": "FKB",
+        "versjon": "4.0"
+    },
+    "verifiseringsdato": "2012-04-02",
+    "oppdateringsdato": "2019-10-25T09:13:21"
+}

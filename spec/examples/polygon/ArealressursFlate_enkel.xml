@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<gml:FeatureCollection xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:app="http://skjema.geonorge.no/SOSI/produktspesifikasjon/FKB-Ar5/4.6" xmlns:gml="http://www.opengis.net/gml/3.2" gml:id="_9b584bfc-0d41-438f-b4a2-cf0f6a10513f" xsi:schemaLocation="http://skjema.geonorge.no/SOSI/produktspesifikasjon/FKB-Ar5/4.6 http://skjema.geonorge.no/SOSI/produktspesifikasjon/FKB-Ar5/4.6/FKB-AR546.xsd">
+  <gml:boundedBy>
+    <gml:Envelope srsName="urn:ogc:def:crs:EPSG::25832" srsDimension="2">
+      <gml:lowerCorner>359677.16000000003 7217659.8099999996</gml:lowerCorner>
+      <gml:upperCorner>359684.81 7217675.9100000001</gml:upperCorner>
+    </gml:Envelope>
+  </gml:boundedBy>
+  <gml:featureMember>
+    <app:ArealressursFlate gml:id="app.ArealressursFlate_000608e9-611f-4983-ab9c-48a5ca6980a6">
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>000608e9-611f-4983-ab9c-48a5ca6980a6</app:lokalId>
+          <app:navnerom>AR5_test22</app:navnerom>
+          <app:versjonId>2019-11-11 11:57:18.918000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:datafangstdato>1999-04-30</app:datafangstdato>
+      <app:oppdateringsdato>2019-11-13T08:27:11</app:oppdateringsdato>
+      <app:opphav>FKB-Vann</app:opphav>
+      <app:registreringsversjon>
+        <app:Registreringsversjon>
+          <app:produkt>FKB-AR5</app:produkt>
+          <app:versjon>4.5 20140301</app:versjon>
+        </app:Registreringsversjon>
+      </app:registreringsversjon>
+      <app:verifiseringsdato>1999-04-30</app:verifiseringsdato>
+      <app:kvalitet>
+        <app:Posisjonskvalitet>
+          <app:målemetode>82</app:målemetode>
+          <app:nøyaktighet>1</app:nøyaktighet>
+          <app:synbarhet>0</app:synbarhet>
+        </app:Posisjonskvalitet>
+      </app:kvalitet>
+      <app:område>
+        <gml:Polygon gml:id="QMS_e931a3f9-6789-4622-b15f-4f443394f5d3_69820e35-8a6d-4b5d-b54c-a32fc760db61" srsName="urn:ogc:def:crs:EPSG::25832" srsDimension="2">
+          <gml:exterior>
+            <gml:Ring>
+              <gml:curveMember>
+                <gml:LineString gml:id="QMS_00270a11-4b2e-47de-9e36-6cfd496c155d_8bf0f84e-5103-4066-9cdc-e72ec351a913">
+                  <gml:posList>359677.16000000003 7217675.9100000001 359677.66999999998 7217665.2000000002 359681.01000000001 7217659.8099999996 359684.13 7217663.6200000001 359684.81 7217670.0999999996 359682.37 7217672.6699999999 359677.16000000003 7217675.9100000001</gml:posList>
+                </gml:LineString>
+              </gml:curveMember>
+            </gml:Ring>
+          </gml:exterior>
+        </gml:Polygon>
+      </app:område>
+      <app:posisjon>
+        <gml:Point gml:id="QMS_ad746394-f4f3-4d63-9c12-8d8aa2a603d0_70fd49d4-9d03-4eb6-828e-df116da53a91" srsName="urn:ogc:def:crs:EPSG::25832" srsDimension="2">
+          <gml:pos>359681.03000000003 7217667.6799999997</gml:pos>
+        </gml:Point>
+      </app:posisjon>
+      <app:arealtype>81</app:arealtype>
+      <app:treslag>98</app:treslag>
+      <app:skogbonitet>98</app:skogbonitet>
+      <app:grunnforhold>98</app:grunnforhold>
+      <app:kartstandard>AR5</app:kartstandard>
+    </app:ArealressursFlate>
+  </gml:featureMember>
+</gml:FeatureCollection>
