@@ -7,4 +7,6 @@ Spesifikasjonen ligger i `spec`-mappen
 
 OpenAPI definition Swagger: [API doc](https://gitcdn.link/repo/kartverket/SFKB-API/master/dist/index.html)
 
+redocly: [API-dokumentasjon](http://redocly.github.io/redoc/?url=https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/openapi.yaml&nocors)
+
 Slack: ngis-openapi.slack.com
