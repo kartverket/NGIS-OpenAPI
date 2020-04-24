@@ -12,7 +12,7 @@ Spesifikasjonen ligger i `spec`-mappen
 På mange måter "standard"-visning av API-dokumentasjon for OpenAPI-spesifikasjoner.
 
 [Ekstern API-dokumentasjon](http://editor.swagger.io/?url=https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/openapi.yaml) eller
-[intern API-dokumentasjon](https://gitcdn.link/repo/kartverket/SFKB-API/master/dist/index.html) - begge viser det samme i tilfelle intern lenke ikke fungerer.
+[intern API-dokumentasjon](https://gitcdn.link/repo/kartverket/SFKB-API/master/dist/index.html) - begge viser det samme innholdet (med unntak av at ekstern også er en editor) i tilfelle intern lenke ikke fungerer.
 
 ### redocly
 
