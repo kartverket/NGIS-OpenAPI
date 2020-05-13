@@ -37,8 +37,9 @@ info:
 servers:
   - description: Test-server Norkart
     url: https://qmsrest.westeurope.cloudapp.azure.com:8080/v1/
-  - url: http://sfkb.kartverket.no/v1
-    description: Server hos Kartverket
+  - description: Server hos Kartverket
+    url: https://openapi-test.kartverket.no/v1/
+    
 
 security:
   - basicAuth: []  # <-- use the same name here
