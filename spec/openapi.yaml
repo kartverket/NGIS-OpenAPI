@@ -95,8 +95,59 @@ paths:
           description: OK
           content:  # Response body
             application/vnd.kartverket.ngis.dataset+json:  # Media type
-             schema: 
+              schema: 
+                $ref: '#/components/schemas/Dataset'    # Reference to object definition
+              examples:
+                explicitSame:
+                  summary: |
+                    Dersom klienten ikke ber om et annet referansesystem enn
+                    datasetets referansesystem, leveres dataene i samme koordinatesystem
+                    som datasetet er lagret (her EPSG:5972).
+                  value:
+                    id: '07b59e3d-a4b6-4bae-ac4c-664d3dc3d778'
+                    name: 'AR5_22'
+                    resolution: 0.001
+                    coordinate_reference_system: 'EPSG:5972'
+                    access: read_write
+                    bbox:
+                      ll: [322361.85, 6424859.18]
+                      ur: [637396.44, 7296440.28]
+            application/vnd.kartverket.ngis.dataset+json; crs_EPSG=5972:  # Media type
+              schema: 
                $ref: '#/components/schemas/Dataset'    # Reference to object definition
+              examples:
+                explicitSame:
+                  summary: |
+                    Dersom klienten ber om samme referansesystem (her EPSG:5972) som
+                    datasetets referansesystem (her EPSG:5972), leveres dataene i samme koordinatesystem
+                    som datasetet er lagret.
+                  value:
+                    id: '07b59e3d-a4b6-4bae-ac4c-664d3dc3d778'
+                    name: 'AR5_22'
+                    resolution: 0.001
+                    coordinate_reference_system: 'EPSG:5972'
+                    access: read_write
+                    bbox:
+                      ll: [322361.85, 6424859.18]
+                      ur: [637396.44, 7296440.28]
+            application/vnd.kartverket.ngis.dataset+json; crs_EPSG=5973:  # Media type
+              schema: 
+               $ref: '#/components/schemas/Dataset'    # Reference to object definition
+              examples:
+                explicitSame:
+                  summary: |
+                    Dersom klienten ber om et annet referansesystem (her EPSG:5973) enn
+                    arkivets referansesystem (her EPSG:5972), blir koordinatene transformert
+                    til ønsket koordinatsystem dersom det er mulig.
+                  value:
+                    id: '07b59e3d-a4b6-4bae-ac4c-664d3dc3d778'
+                    name: 'AR5_22'
+                    resolution: 0.001
+                    coordinate_reference_system: 'EPSG:5972'
+                    access: read_write
+                    bbox:
+                      ll: [1032058.29, 6456442.29]
+                      ur: [1181943.07, 7375181.54]
         '401':
           description: Gyldig autentisering av brukeren mangler eller er ugyldig
         '403':
@@ -122,6 +173,7 @@ paths:
         - $ref: '#/components/parameters/datasetIdParam'
         - $ref: '#/components/parameters/lockingParam'
         - $ref: '#/components/parameters/bboxParam'
+        - $ref: '#/components/parameters/crsEPSGParam'
         - in: query
           name: query
           schema:
@@ -615,15 +667,6 @@ components:
           enum: [read_only, read_write]
         bbox: 
           $ref: '#/components/schemas/BoundingBox'
-      example:
-        id: '07b59e3d-a4b6-4bae-ac4c-664d3dc3d778'
-        name: 'AR5'
-        resolution: 0.001
-        coordinate_reference_system: 'EPSG:5972'
-        access: read_write
-        bbox:
-          ll: [10.0, 100.0]
-          ur: [20.0, 200.0]
     Locks:
       type: array
       items:
@@ -708,6 +751,24 @@ components:
         Henter ut objekter i et bestemt område (angitt med et rektangel)
         
         Dette kan være aktuelt for å få ut alle objekter som ikke er direkte knyttet til et objekt, som f.eks mønelinje og takkant til en bygning.
+    crsEPSGParam:
+      in: path
+      name: crs_EPSG
+      schema:
+        type: integer
+      required: true
+      description: |
+        Angir EPSG-kode for koordinatsystemet til koordinatene som sendes inn i spørringen (f.eks i bbox)
+      examples: 
+        epsg5975:
+          value: 5975
+          description: ETRS89 (EUREF89) i UTM zone 35N med høydeverdier angitt i NN2000
+        epsg5973:
+          value: 5973
+          description: ETRS89 (EUREF89) i UTM zone 33N med høydeverdier angitt i NN2000
+        epsg5972:
+          value: 5972
+          description: ETRS89 (EUREF89) i UTM zone 32N med høydeverdier angitt i NN2000
 
     lockingParam:
       in: query
