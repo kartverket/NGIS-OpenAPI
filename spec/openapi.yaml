@@ -162,11 +162,11 @@ paths:
               singlePoint:
                 description: |
                   Eksempel på uthentet punkt
-                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/point/Bygning.xml'
+                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/point/Bygning.xml'
               singleLineString:
                 description: | 
                   Eksempel på uthentet linje
-                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/linestring/Mønelinje.xml'
+                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/linestring/Mønelinje.xml'
               simplePolygon:
                 description: |
                   Eksempel på uthentet flate som refererer én enkel avgrensningslinje
@@ -178,7 +178,7 @@ paths:
                   Ytre avgrensningslinjer i en flate må ha retning mot klokka (CCW) og indre avgrensningslinjer må ha retning med klokka.
                   Det betyr at noen av linjene som brukes må brukes i motsatt retning - dette gjøres ved å angi `-` (minus) foran linjereferansen (lokalid).
 
-                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/polygon/ArealressursFlate_enkel.xml'
+                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/polygon/ArealressursFlate_enkel.xml'
               multipleLinesPolygon:
                 description: |
                   Eksempel på uthentet flate som refererer flere avgrensningslinjer der den ene bruker linjen i motsatt retning
@@ -190,7 +190,7 @@ paths:
                   Ytre avgrensningslinjer i en flate må ha retning mot klokka (CCW) og indre avgrensningslinjer må ha retning med klokka.
                   Det betyr at noen av linjene som brukes må brukes i motsatt retning - TODO: gml:id dette gjøres ved å angi `-` (minus) foran linjereferansen (lokalid).
 
-                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/polygon/ArealressursFlate.xml'
+                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/polygon/ArealressursFlate.xml'
             application/vnd.kartverket.sosi+json; version=1.0:
              schema:
               type: object
@@ -198,11 +198,11 @@ paths:
               singlePoint:
                 description: | 
                   Eksempel på uthentet punkt
-                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/point/Bygning.json'
+                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/point/Bygning.json'
               singleLineString:
                 description: |
                   Eksempel på uthentet linje
-                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/linestring/Mønelinje.json'
+                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/linestring/Mønelinje.json'
               singleArc:
                 description: |
                   Eksempel på uthentet bue (WIP)
@@ -211,7 +211,7 @@ paths:
                   
                   For at buer enkelt skal kunne leses av klienter, er derfor bue-geometrien konvertert til en linje med `is_arc=true` i `geometry_properties`.
                   Første, midtre og siste punkt beskriver buen dersom klienten vil implementere korrekt tegning av denne.
-                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/linestring/Mønelinje.json'
+                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/linestring/Mønelinje.json'
               simplePolygon:
                 description: |
                   Eksempel på uthentet flate som refererer én enkel avgrensningslinje
@@ -223,7 +223,7 @@ paths:
                   Ytre avgrensningslinjer i en flate må ha retning mot klokka (CCW) og indre avgrensningslinjer må ha retning med klokka.
                   Det betyr at noen av linjene som brukes må brukes i motsatt retning - dette gjøres ved å angi `-` (minus) foran linjereferansen (lokalid).
 
-                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/polygon/ArealressursFlate_enkel.json'
+                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/polygon/ArealressursFlate_enkel.json'
               multipleLinesPolygon:
                 description: |
                   Eksempel på uthentet flate som refererer flere avgrensningslinjer der den ene bruker linjen i motsatt retning
@@ -235,7 +235,7 @@ paths:
                   Ytre avgrensningslinjer i en flate må ha retning mot klokka (CCW) og indre avgrensningslinjer må ha retning med klokka.
                   Det betyr at noen av linjene som brukes må brukes i motsatt retning - dette gjøres ved å angi `-` (minus) foran linjereferansen (lokalid).
 
-                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/polygon/ArealressursFlate.json'
+                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/polygon/ArealressursFlate.json'
               multiplePolygonsSharedLine:
                 description: |
                   Eksempel på uthentede flater som refererer samme avgrensningslinje der én av flatene også har hull (`interiors`)
@@ -249,7 +249,7 @@ paths:
                   Ytre avgrensningslinjer i en flate må ha retning mot klokka (CCW) og indre avgrensningslinjer må ha retning med klokka.
                   Det betyr at noen av linjene som brukes må brukes i motsatt retning - dette gjøres ved å angi `-` (minus) foran linjereferansen (lokalid).
 
-                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/polygon/ArealressursFlater.json'            
+                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/polygon/ArealressursFlater.json'            
         '401':
           description: Gyldig autentisering av brukeren mangler eller er ugyldig
         '403':
@@ -294,7 +294,7 @@ paths:
 
                   Action kan være `Create`, `Replace` eller `Erase`. 
                   Ved `Replace` eller `Erase` med `user_lock` må objektet være hentet ut med `user_lock` før det kan endres.
-                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/point/Bygning_replace.json'
+                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/point/Bygning_replace.json'
               simplePolygon:
                 description: |
                   Eksempel på oppdatering av flate som refererer én enkel avgrensningslinje
@@ -313,7 +313,7 @@ paths:
 
                   Legg merke til at det sendes inn endring på både flaten og linjen som brukes i avgrensningen. Dette er nødvendig for å ivareta delt geometri.
 
-                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/polygon/ArealressursFlate_enkel_replace.json'
+                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/polygon/ArealressursFlate_enkel_replace.json'
               multiplePolygonsSharedLine:
                 description: |
                   Eksempel på oppdatering av avgrenseningslinje som refereres av to flater.
@@ -334,7 +334,7 @@ paths:
 
                   Legg merke til at det kun sendes inn endring på begge flatene og linjen med endring (punkt 2 i geometrien er endret fra `6.192145518765789,64.8340495192154` til `6.1921,64.8340496`) som er delt mellom dem og brukes i avgrensningen. Dette er nødvendig for å ivareta delt geometri.
 
-                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/polygon/ArealressursFlater_replace.json'   
+                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/polygon/ArealressursFlater_replace.json'   
 
            
       responses: #TODO: valideringsfeil
@@ -451,7 +451,7 @@ paths:
               singleLineStringAttributes:
                 description: |
                   Eksempel på egenskaper til linje
-                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/linestring/Mønelinje.attributes.json'
+                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/linestring/Mønelinje.attributes.json'
 
         '401':
           description: Gyldig autentisering av brukeren mangler eller er ugyldig
@@ -488,7 +488,7 @@ paths:
             singleLineStringAttributes:
               description: |
                 Eksempel på egenskaper til linje
-              externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/linestring/Mønelinje.attributes.json'  
+              externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/linestring/Mønelinje.attributes.json'  
       responses:
         '200':
           description: OK
@@ -500,7 +500,7 @@ paths:
               singleLineStringAttributes:
                 description: |
                   Eksempel på egenskaper til linje
-                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/meastp_fix_examples/spec/examples/linestring/Mønelinje.attributes.json'
+                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/linestring/Mønelinje.attributes.json'
 
         '401':
           description: Gyldig autentisering av brukeren mangler eller er ugyldig
