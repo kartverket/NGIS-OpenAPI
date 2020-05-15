@@ -18,6 +18,7 @@ namespace SFKB_clientTests
         private static readonly Guid WrongDatasetId = new Guid();
         private static readonly Guid WrongLokalId = new Guid();
         private const string Ar5DatasetName = "ar5_test_23";
+        private const int epsg25833 = 25833;
         private const string ExampleFeatures = "ExampleFeatures";
         private Guid Ar5FlateFeatureLokalId = new Guid("20f893f2-5c8c-466f-b25b-d51ae98f1399");
         private Guid Ar5GrenseFeatureLokalId = new Guid("0003f094-b524-4a5a-bb05-d69881df853a");
@@ -237,7 +238,7 @@ namespace SFKB_clientTests
 
         private async Task<string> LockAndSaveFeatureByLokalIdAsync(Guid lokalId, Locking locking)
         {
-            var fileResponse = await Client.GetDatasetFeaturesAsync(clientString, DatasetId, locking, null, GetLokalIdQuery(lokalId));
+            var fileResponse = await Client.GetDatasetFeaturesAsync(clientString, DatasetId, locking, null, epsg25833, GetLokalIdQuery(lokalId));
 
             return General.WriteStreamToDisk(fileResponse);
         }
