@@ -173,6 +173,7 @@ paths:
         - $ref: '#/components/parameters/datasetIdParam'
         - $ref: '#/components/parameters/lockingParam'
         - $ref: '#/components/parameters/bboxParam'
+        - $ref: '#/components/parameters/referencesParam'
         - $ref: '#/components/parameters/crsEPSGParam'
         - in: query
           name: query
@@ -432,30 +433,7 @@ paths:
         - $ref: '#/components/parameters/datasetIdParam'
         - $ref: '#/components/parameters/lokalIdParam'
         - $ref: '#/components/parameters/lockingParam'
-        - in: query
-          name: references
-          schema:
-            type: string
-            enum: [none, direct, all]
-          required: true
-          description: |
-            Angir hvilke refererte features som skal hentes ut i tillegg til feature det spørres direkte etter med lokalid.
-            
-            Punkter har ingen referanser, og parameteret påvirker derfor ikke uthenting av et punkt.
-            
-            `none` - Ingen refererte features hentes ut. Ingen ekstra features låses.
-            - Flater får *ikke* med linje-features til avgrensningskurver.
-            
-            `direct` - Features med direkte referanser hentes ut. Kun direkte referanser låses.
-            - Kurver får med features til flater som bruker kurven i avgrensningen, samt de andre linje-features til avgrensningskurvene i flatene. Både kurven og alle flatene låses, men ikke de andre linje-features i avgrensningen i flatene.
-            - Flater får med alle linje-features til avgrensningskurvene i flaten. Kun flaten låses.
-            
-            `all` - Features med direkte og indirekte tilhørende referanser hentes ut. Alle referanser som hentes ut låses.
-            - Kurver får i tillegg til referanser fra `direct` også med:
-              - flate-features som har avgrensningskurver som begynner eller slutter i valgt linjes endepunkter 
-              - linje-features i flate-features i forrige pkt som begynner eller slutter i valgt linjes endepunkter
-              
-            - Flater får samme referanser som i `direct`. Både flaten og alle avgrensningskurvene låses.
+        - $ref: '#/components/parameters/referencesParam'
       responses:
         '200':      # Response
           description: OK
@@ -751,6 +729,33 @@ components:
         Henter ut objekter i et bestemt område (angitt med et rektangel)
         
         Dette kan være aktuelt for å få ut alle objekter som ikke er direkte knyttet til et objekt, som f.eks mønelinje og takkant til en bygning.
+        
+        Merk: I kombinasjon med `bbox` blir alltid `references` satt til `none`
+    referencesParam:  
+      in: query
+      name: references
+      schema:
+        type: string
+        enum: [none, direct, all]
+      required: true
+      description: |
+        Angir hvilke refererte features som skal hentes ut i tillegg til feature det spørres direkte etter med lokalid.
+
+        Punkter har ingen referanser, og parameteret påvirker derfor ikke uthenting av et punkt.
+
+        `none` - Ingen refererte features hentes ut. Ingen ekstra features låses.
+        - Flater får *ikke* med linje-features til avgrensningskurver.
+
+        `direct` - Features med direkte referanser hentes ut. Kun direkte referanser låses.
+        - Kurver får med features til flater som bruker kurven i avgrensningen, samt de andre linje-features til avgrensningskurvene i flatene. Både kurven og alle flatene låses, men ikke de andre linje-features i avgrensningen i flatene.
+        - Flater får med alle linje-features til avgrensningskurvene i flaten. Kun flaten låses.
+
+        `all` - Features med direkte og indirekte tilhørende referanser hentes ut. Alle referanser som hentes ut låses.
+        - Kurver får i tillegg til referanser fra `direct` også med:
+          - flate-features som har avgrensningskurver som begynner eller slutter i valgt linjes endepunkter 
+          - linje-features i flate-features i forrige pkt som begynner eller slutter i valgt linjes endepunkter
+
+        - Flater får samme referanser som i `direct`. Både flaten og alle avgrensningskurvene låses.
     crsEPSGParam:
       in: path
       name: crs_EPSG
