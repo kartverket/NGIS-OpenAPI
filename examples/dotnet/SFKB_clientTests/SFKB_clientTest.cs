@@ -238,7 +238,7 @@ namespace SFKB_clientTests
 
         private async Task<string> LockAndSaveFeatureByLokalIdAsync(Guid lokalId, Locking locking)
         {
-            var fileResponse = await Client.GetDatasetFeaturesAsync(clientString, DatasetId, locking, null, epsg25833, GetLokalIdQuery(lokalId));
+            var fileResponse = await Client.GetDatasetFeaturesAsync(clientString, DatasetId, locking, null, References.Direct, epsg25833, GetLokalIdQuery(lokalId));
 
             return General.WriteStreamToDisk(fileResponse);
         }
