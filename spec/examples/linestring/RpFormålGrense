@@ -1,0 +1,63 @@
+{
+    "type": "FeatureCollection",
+    "crs": {
+        "type": "name",
+        "properties": {
+            "name": "EPSG:4258"
+        }
+    },
+    "features": [
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        5.262338502754899,
+                        60.47656590759229
+                    ],
+                    [
+                        5.26234263899507,
+                        60.476567934901918
+                    ],
+                    [
+                        5.262345819421458,
+                        60.47657034607576
+                    ],
+                    [
+                        5.262347901909228,
+                        60.476573033365
+                    ],
+                    [
+                        5.262348793397429,
+                        60.476575876681987
+                    ],
+                    [
+                        5.262348454047459,
+                        60.47657874896649
+                    ],
+                    [
+                        5.262346899023729,
+                        60.476581521863938
+                    ]
+                ]
+            },
+            "properties": {
+                "featuretype": "RpFormålGrense",
+                "identifikasjon": {
+                    "navnerom": "http://data.geonorge.no/4601/Reguleringsplaner/so",
+                    "lokalId": "0018a704-4abc-459d-95eb-86046eb7bec0",
+                    "versjonId": "2019-11-06 09:58:44.546328100"
+                },
+                "førsteDigitaliseringsdato": "2008-02-21T00:00:00",
+                "kvalitet": {
+                    "målemetode": "18"
+                },
+                "oppdateringsdato": "2020-06-05T10:43:41"
+            },
+            "geometry_properties": {
+                "is_circular": true
+            }
+        }
+    ]
+}
