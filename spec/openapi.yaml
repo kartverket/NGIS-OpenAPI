@@ -258,13 +258,13 @@ paths:
                 externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/linestring/Mønelinje.json'
               singleArc:
                 description: |
-                  Eksempel på uthentet bue (WIP)
+                  Eksempel på uthentet bue
                   
                   Standarden GeoJSON har ingen egen type for bue. 
                   
-                  For at buer enkelt skal kunne leses av klienter, er derfor bue-geometrien konvertert til en linje med `is_arc=true` i `geometry_properties`.
+                  For at buer enkelt skal kunne leses av klienter, er derfor bue-geometrien konvertert til en linje med `is_circular=true` i `geometry_properties`.
                   Første, midtre og siste punkt beskriver buen dersom klienten vil implementere korrekt tegning av denne.
-                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/linestring/Mønelinje.json'
+                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/linestring/RpFormålGrense.json'
               simplePolygon:
                 description: |
                   Eksempel på uthentet flate som refererer én enkel avgrensningslinje
