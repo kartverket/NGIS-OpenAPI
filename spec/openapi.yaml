@@ -322,7 +322,7 @@ paths:
        - features
       summary: Endre features i et dataset
       description: >-
-        Henter en liste over alle dataset som brukeren har lese- eller skrivetilgang til.
+        Lagrer endringer i features i et dataset. Endringene kan være en kombinasjon av create, replace og delete.
       operationId: updateDatasetFeatures
       parameters:
         - $ref: '#/components/parameters/clientHeaderParam'
