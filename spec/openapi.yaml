@@ -260,10 +260,11 @@ paths:
                 description: |
                   Eksempel på uthentet bue
                   
-                  Standarden GeoJSON har ingen egen type for bue. 
+                  En bue beskrives av tre punkter (første, midtre og siste), men standarden GeoJSON har ingen egen type for bue.
                   
-                  For at buer enkelt skal kunne leses av klienter, er derfor bue-geometrien konvertert til en linje med `is_circular=true` i `geometry_properties`.
-                  Første, midtre og siste punkt beskriver buen dersom klienten vil implementere korrekt tegning av denne.
+                  For å støtte enkel lesing/tegning av buer med eksisterende verktøy som støtter standard GeoJSON, ligger en bue derfor som en "vanlig" linje med `is_circular=true` i `geometry_properties` og flere punkter langs linjen som beskriver buen.
+                  
+                  Ved oppdatering av buen - eller dersom klienten vil tegne eksakte buer - må klienten forholde seg til første, midtre og siste punkt (og kan da fjerne/overse de andre punktene).
                 externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/linestring/RpFormålGrense.json'
               simplePolygon:
                 description: |
