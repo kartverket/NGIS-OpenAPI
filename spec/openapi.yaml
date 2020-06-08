@@ -761,7 +761,7 @@ components:
 
         - Flater får samme referanser som i `direct`. Både flaten og alle avgrensningskurvene låses.
     crsEPSGParam:
-      in: path
+      in: query
       name: crs_EPSG
       schema:
         type: integer
