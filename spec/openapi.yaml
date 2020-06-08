@@ -473,8 +473,7 @@ paths:
       operationId: getDatasetFeatureAttributes
       parameters:
         - $ref: '#/components/parameters/datasetIdParam'
-        - $ref: '#/components/parameters/lokalIdParam'
-        - $ref: '#/components/parameters/lockingParam'     
+        - $ref: '#/components/parameters/lokalIdParam' 
       responses:
         '200':      # Response
           description: OK
@@ -512,7 +511,6 @@ paths:
       parameters:
         - $ref: '#/components/parameters/datasetIdParam'
         - $ref: '#/components/parameters/lokalIdParam'
-        - $ref: '#/components/parameters/lockingParam'
       requestBody:
         required: true
         content:
