@@ -819,6 +819,7 @@ components:
       name: limit
       schema:
         type: integer
+      required: true
       description: |
         Angir grense for antall objekter som skal returneres av gangen. Hvert dataset har en øvre grense som vil overstyre det klienten ber om, eller brukes dersom klienten ikke angir dette parameteret.
         
