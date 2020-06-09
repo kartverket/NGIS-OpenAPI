@@ -27,10 +27,10 @@ jobs:
         with:
           ref: master
           path: base
-      - name: OpenAPI Diff
-        uses: mvegter/openapi-diff-action@v0.3.0
-        with:
-          # Path to the BASE Swagger or OpenApi specification file.
-          base-spec: base/spec/openapi.yaml
-          # Path to the HEAD Swagger or OpenApi specification file.
-          head-spec: head/spec/openapi.yaml
+      # - name: OpenAPI Diff
+      #   uses: mvegter/openapi-diff-action@v0.3.0
+      #   with:
+      #     # Path to the BASE Swagger or OpenApi specification file.
+      #     base-spec: base/spec/openapi.yaml
+      #     # Path to the HEAD Swagger or OpenApi specification file.
+      #     head-spec: head/spec/openapi.yaml
