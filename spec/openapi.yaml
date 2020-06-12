@@ -102,10 +102,9 @@ paths:
                 $ref: '#/components/schemas/Dataset'    # Reference to object definition
               examples:
                 explicitSame:
-                  summary: |
-                    Dersom klienten ikke ber om et annet referansesystem enn
-                    datasetets referansesystem, leveres dataene i samme koordinatesystem
-                    som datasetet er lagret (her EPSG:5972).
+                  summary: Implisitt crs_EPSG-parameter
+                  description: |
+                    Dersom klienten ikke ber om et annet referansesystem enn datasetets referansesystem, leveres dataene i samme koordinatesystem som datasetet er lagret (her EPSG:5972).
                   value:
                     id: '07b59e3d-a4b6-4bae-ac4c-664d3dc3d778'
                     name: 'AR5_22'
@@ -120,10 +119,9 @@ paths:
                $ref: '#/components/schemas/Dataset'    # Reference to object definition
               examples:
                 explicitSame:
-                  summary: |
-                    Dersom klienten ber om samme referansesystem (her EPSG:5972) som
-                    datasetets referansesystem (her EPSG:5972), leveres dataene i samme koordinatesystem
-                    som datasetet er lagret.
+                  summary: Med samme crs_EPSG-parameter som arkivet
+                  description: |
+                    Dersom klienten ber om samme referansesystem (her EPSG:5972) som datasetets  referansesystem (her EPSG:5972), leveres dataene i samme koordinatesystem som datasetet er lagret.
                   value:
                     id: '07b59e3d-a4b6-4bae-ac4c-664d3dc3d778'
                     name: 'AR5_22'
@@ -138,10 +136,9 @@ paths:
                $ref: '#/components/schemas/Dataset'    # Reference to object definition
               examples:
                 explicitSame:
-                  summary: |
-                    Dersom klienten ber om et annet referansesystem (her EPSG:5973) enn
-                    arkivets referansesystem (her EPSG:5972), blir koordinatene transformert
-                    til ønsket koordinatsystem dersom det er mulig.
+                  summary: Med annet crs_EPSG enn arkivet
+                  description: |
+                    Dersom klienten ber om et annet referansesystem (her EPSG:5973) enn arkivets referansesystem (her EPSG:5972), blir koordinatene transformert til ønsket koordinatsystem dersom det er mulig.
                   value:
                     id: '07b59e3d-a4b6-4bae-ac4c-664d3dc3d778'
                     name: 'AR5_22'
@@ -184,26 +181,35 @@ paths:
           schema:
             type: string
           description: |
-            Filter på egenskaper og/eller objekttype for å begrense hvilke features som hentes ut.
+            ### Filter på egenskaper og/eller objekttype for å begrense hvilke features som hentes ut.
             
-            Spørringer er foreløpig begrenset til bygningsnummer og lokalid.
+            Spørrespråket er basert på [RQL](https://github.com/persvr/rql).
             
-            Generell regel for egenskapsspørringer:
+            Det er eksempler på alle støttede spørringer.
+            
+            #### Generell regel for egenskapsspørringer:
             
             For å angi hvilken objekttype og hvilket attributt (full struktur med struct-/liste-egenskaper) det spørres etter, bruker vi
             
-            > \<objekttypenavn\>/\<attributtnavn\> [ / \<attributtnavn\> …]
-          
-            Hvis vi ikke ønsker å begrense spørringen til en bestemt objekttype, kan vi angi * som <objekttypenavn>.
+            > `\<objekttypenavn\>`/`\<attributtnavn\>` [ / `\<attributtnavn\>` …]
+            
+            Hvis vi ikke ønsker å begrense spørringen til en bestemt objekttype, kan vi angi `*` i stedet for `\<objekttypenavn\>`.
           examples:
             bygningsnummer:
               value: 'eq(Bygning/bygningsnummer,1234)'
-              summary: Spørring etter et bestemt bygningsnummer for objekttypen Bygning
+              summary: Spørring etter ett bestemt bygningsnummer for objekttypen Bygning
+              description: |
+               Spørringen henter ut alle objekter med objekttypen Bygning med egenskapen bygningsnummer = 1234.
             lokalid:
               value: 'eq(*/identifikasjon/lokalid,000a7b9b-7088-482f-a3cf-9761b97a54b6)'
-              summary: |
-                Spørring etter et bestemt objekt med gitt lokalid
+              summary: Spørring etter ett bestemt objekt med gitt lokalid
+              description: |
                 Når et objekt hentes ut med lokalid er det normalt ikke nødvendig å filtrere på objekttype, derfor er objekttypen angitt med `*`.
+            lokalid_multi:
+              value: 'in(*/identifikasjon/lokalid,000a7b9b-7088-482f-a3cf-9761b97a54b6,023a7b9b-7088-482f-a3cf-9761b9700000)'
+              summary: Spørring etter flere objekter med lokalid
+              description: |
+                Når objekt(er) hentes ut med lokalid er det normalt ikke nødvendig å filtrere på objekttype, derfor er objekttypen angitt med `*`.
 
             
             
