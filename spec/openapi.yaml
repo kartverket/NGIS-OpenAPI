@@ -185,15 +185,9 @@ paths:
             
             Spørrespråket er basert på [RQL](https://github.com/persvr/rql).
             
-            Det er eksempler på alle støttede spørringer.
+            Foreløpig støttes kun `eq` og `in` for bestemte objekttyper og egenskaper.
             
-            #### Generell regel for egenskapsspørringer:
-            
-            For å angi hvilken objekttype og hvilket attributt (full struktur med struct-/liste-egenskaper) det spørres etter, bruker vi
-            
-            > `\<objekttypenavn\>`/`\<attributtnavn\>` [ / `\<attributtnavn\>` …]
-            
-            Hvis vi ikke ønsker å begrense spørringen til en bestemt objekttype, kan vi angi `*` i stedet for `\<objekttypenavn\>`.
+            Eksemplene inneholder alle støttede spørringer.
           examples:
             bygningsnummer:
               value: 'eq(Bygning/bygningsnummer,1234)'
@@ -223,17 +217,16 @@ paths:
               type: object
              examples: 
               singlePoint:
-                description: |
+                summary: |
                   Eksempel på uthentet punkt
                 externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/point/Bygning.xml'
               singleLineString:
-                description: | 
+                summary: | 
                   Eksempel på uthentet linje
                 externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/linestring/Mønelinje.xml'
               simplePolygon:
+                summary: Eksempel på uthentet flate som refererer én enkel avgrensningslinje
                 description: |
-                  Eksempel på uthentet flate som refererer én enkel avgrensningslinje
-
                   Representasjonspunktet som ligger inne i flaten ligger i `geometry_properties` som `position`.
 
                   Lenkene til avgrensningslinjer (bruker linjenes lokalid) ligger i `geometry_properties` under `exterior`. 
@@ -243,9 +236,8 @@ paths:
 
                 externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/polygon/ArealressursFlate_enkel.xml'
               multipleLinesPolygon:
+                summary: Eksempel på uthentet flate som refererer flere avgrensningslinjer der den ene bruker linjen i motsatt retning
                 description: |
-                  Eksempel på uthentet flate som refererer flere avgrensningslinjer der den ene bruker linjen i motsatt retning
-
                   Representasjonspunktet som ligger inne i flaten ligger i `<app:posisjon>` som `<gml:Point>`.
 
                   TODO: gml:id : Lenkene til avgrensningslinjer (bruker linjenes lokalid) ligger i `geometry_properties` under `exterior`. 
@@ -259,17 +251,16 @@ paths:
               type: object
              examples: 
               singlePoint:
-                description: | 
+                summary: | 
                   Eksempel på uthentet punkt
                 externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/point/Bygning.json'
               singleLineString:
-                description: |
+                summary: |
                   Eksempel på uthentet linje
                 externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/linestring/Mønelinje.json'
               singleArc:
+                summary: Eksempel på uthentet bue
                 description: |
-                  Eksempel på uthentet bue
-                  
                   En bue beskrives av tre punkter (første, midtre og siste), men standarden GeoJSON har ingen egen type for bue.
                   
                   For å støtte enkel lesing/tegning av buer med eksisterende verktøy som støtter standard GeoJSON, ligger en bue derfor som en "vanlig" linje med `is_circular=true` i `geometry_properties` og flere punkter langs linjen som beskriver buen.
@@ -277,9 +268,8 @@ paths:
                   Ved oppdatering av buen - eller dersom klienten vil tegne eksakte buer - må klienten forholde seg til første, midtre og siste punkt (og kan da fjerne/overse de andre punktene).
                 externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/linestring/RpFormålGrense.json'
               simplePolygon:
+                summary: Eksempel på uthentet flate som refererer én enkel avgrensningslinje
                 description: |
-                  Eksempel på uthentet flate som refererer én enkel avgrensningslinje
-
                   Representasjonspunktet som ligger inne i flaten ligger i `geometry_properties` som `position`.
 
                   Lenkene til avgrensningslinjer (bruker linjenes lokalid) ligger i `geometry_properties` under `exterior`. 
@@ -289,9 +279,8 @@ paths:
 
                 externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/polygon/ArealressursFlate_enkel.json'
               multipleLinesPolygon:
+                summary: Eksempel på uthentet flate som refererer flere avgrensningslinjer der den ene bruker linjen i motsatt retning
                 description: |
-                  Eksempel på uthentet flate som refererer flere avgrensningslinjer der den ene bruker linjen i motsatt retning
-
                   Representasjonspunktet som ligger inne i flaten ligger i `geometry_properties` som `position`.
 
                   Lenkene til avgrensningslinjer (bruker linjenes lokalid) ligger i `geometry_properties` under `exterior`. 
@@ -301,9 +290,8 @@ paths:
 
                 externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/polygon/ArealressursFlate.json'
               multiplePolygonsSharedLine:
+                summary: Eksempel på uthentede flater som refererer samme avgrensningslinje der én av flatene også har hull
                 description: |
-                  Eksempel på uthentede flater som refererer samme avgrensningslinje der én av flatene også har hull (`interiors`)
-
                   Representasjonspunktet som ligger inne i flaten ligger i `geometry_properties` som `position`.
 
                   Lenkene til avgrensningslinjer (bruker linjenes lokalid) ligger i `geometry_properties` under `exterior`. 
@@ -351,18 +339,16 @@ paths:
               type: object
             examples: 
               singlePoint:
+                summary: Eksempel på oppdatering av punkt
                 description: | 
-                  Eksempel på oppdatering av punkt
-
                   Den eneste forskjellen fra uthentet punkt i innholdet er `update : { action : "Replace" }` som angir at objektet skal erstattes.
 
                   Action kan være `Create`, `Replace` eller `Erase`. 
                   Ved `Replace` eller `Erase` med `user_lock` må objektet være hentet ut med `user_lock` før det kan endres.
                 externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/point/Bygning_replace.json'
               simplePolygon:
+                summary: Eksempel på oppdatering av flate som refererer én enkel avgrensningslinje
                 description: |
-                  Eksempel på oppdatering av flate som refererer én enkel avgrensningslinje
-
                   Den eneste forskjellen fra uthentet punkt i innholdet er `update : { action : "Replace" }` som angir at objektet skal erstattes.
 
                   Action kan være `Create`, `Replace` eller `Erase`. 
@@ -379,9 +365,8 @@ paths:
 
                 externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/polygon/ArealressursFlate_enkel_replace.json'
               multiplePolygonsSharedLine:
+                summary: Eksempel på oppdatering av avgrenseningslinje som refereres av to flater
                 description: |
-                  Eksempel på oppdatering av avgrenseningslinje som refereres av to flater.
-
                   Den eneste forskjellen fra uthentet punkt i innholdet er `update : { action : "Replace" }` som angir at objektet skal erstattes.
 
                   Action kan være `Create`, `Replace` eller `Erase`. 
@@ -490,8 +475,7 @@ paths:
               type: object
              examples:
               singleLineStringAttributes:
-                description: |
-                  Eksempel på egenskaper til linje
+                summary: Eksempel på egenskaper til linje
                 externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/linestring/Mønelinje.attributes.json'
 
         '401':
@@ -526,8 +510,7 @@ paths:
             type: object 
            examples:
             singleLineStringAttributes:
-              description: |
-                Eksempel på egenskaper til linje
+              summary: Eksempel på egenskaper til linje
               externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/linestring/Mønelinje.attributes.json'  
       responses:
         '200':
@@ -538,8 +521,7 @@ paths:
               type: object  
              examples:
               singleLineStringAttributes:
-                description: |
-                  Eksempel på egenskaper til linje
+                summary: Eksempel på egenskaper til linje
                 externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/linestring/Mønelinje.attributes.json'
 
         '401':
@@ -711,6 +693,7 @@ components:
       schema:
         type: string
       required: true
+      description: Brukes for å kunne identifisere klienten som er brukt
       example: 'ExampleApp 10.0.0 (Build 54321)'
     datasetIdParam:
       in: path
@@ -730,10 +713,9 @@ components:
         $ref: '#/components/schemas/BoundingBox'
       examples:
         smallbbox:
-          summary: |
-            Et 10x10m vindu
-
-            NB! Koordinatene må være i dataset'ets koordinatsystem
+          summary: Et 10x10m vindu
+          description: |
+            NB! Koordinatene må være i dataset'ets koordinatsystem eller angi crs_EPSG-parameteret
           value: [10.0, 100.0, 20.0, 200.0] # ?bbox=10.0,100.0,20.0,200.0
       description: |
         Henter ut objekter i et bestemt område (angitt med et rektangel)
@@ -775,16 +757,33 @@ components:
       description: |
         Angir EPSG-kode for koordinatsystemet til koordinatene som sendes inn i spørringen (f.eks i bbox)
       examples: 
-        epsg5975:
+        epsg5975_NN2000:
           value: 5975
-          description: ETRS89 (EUREF89) i UTM zone 35N med høydeverdier angitt i NN2000
-        epsg5973:
+          summary: ETRS89 (EUREF89) i UTM zone 35N med høydeverdier angitt i NN2000
+        epsg5975_NN1954:
+          value: 6175
+          summary: ETRS89 (EUREF89) i UTM zone 35N med høydeverdier angitt i NN1954
+        epsg5975:
+          value: 25835
+          summary: ETRS89 (EUREF89) i UTM zone 35N uten høyde
+        epsg5973_NN2000:
           value: 5973
-          description: ETRS89 (EUREF89) i UTM zone 33N med høydeverdier angitt i NN2000
-        epsg5972:
+          summary: ETRS89 (EUREF89) i UTM zone 33N med høydeverdier angitt i NN2000
+        epsg5973_NN1954:
+          value: 6173
+          summary: ETRS89 (EUREF89) i UTM zone 33N med høydeverdier angitt i NN1954
+        epsg5973:
+          value: 25833
+          summary: ETRS89 (EUREF89) i UTM zone 33N uten høyde
+        epsg5972_NN2000:
           value: 5972
-          description: ETRS89 (EUREF89) i UTM zone 32N med høydeverdier angitt i NN2000
-
+          summary: ETRS89 (EUREF89) i UTM zone 32N med høydeverdier angitt i NN2000
+        epsg5972_NN1954:
+          value: 6172
+          summary: ETRS89 (EUREF89) i UTM zone 32N med høydeverdier angitt i NN1954
+        epsg5972:
+          value: 25832
+          summary: ETRS89 (EUREF89) i UTM zone 32N uten høyde
     lockingParam:
       in: query
       name: locking
@@ -830,4 +829,4 @@ components:
       description: |
         Angir grense for antall objekter som skal returneres av gangen. Hvert dataset har en øvre grense som vil overstyre det klienten ber om, eller brukes dersom klienten ikke angir dette parameteret.
         
-        Dersom resultatet inneholder flere objekter enn grensen, vil responsen inneholde en lenke med `rel=next` i [`Link`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Link)-header. Denne lenken skal brukes direkte (det er ikke tillatt å tolke lenken ytterligere) for å hente ut neste del av resultatet, som vil være tilsvarende.
+        Dersom resultatet inneholder flere objekter enn grensen, vil responsen inneholde en lenke med `rel=next` i [`Link`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Link)-header. Denne lenken skal brukes direkte (det er ikke tillatt å tolke lenken ytterligere) for å hente ut neste del av resultatet, som vil være tilsvarende. De siste objektene fra operasjonen er hentet ut når resultatet ikke lenger inneholder en [`Link`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Link)-header med `rel=next`.
