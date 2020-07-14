@@ -36,6 +36,12 @@ info:
     
     All uthenting av feature-objekter vil kunne bli porsjonert av serveren, se `limit`-parameteret. 
     
+    ### Koordinatsystemer og transformasjon
+    
+    For å sende inn koordinater i uri-spørringen (f.eks med `bbox`-parameteret) må koordinatsystemet angis med `crs_EPSG`-parameteret.
+    
+    For å hente ut koordinater på annet koordinatsystem enn i dataset'et kan ønsket koordinatsystem angis i `Accept`-headeren med `crs_EPSG`. Se eksempler på dette i kallene.
+    
     
 servers:
   - description: Test-server Norkart
@@ -75,6 +81,8 @@ paths:
                 $ref: '#/components/schemas/DatasetList'    # Reference to object definition
         '401':
           description: Gyldig autentisering av brukeren mangler eller er ugyldig
+        '406':
+          description: Formatet klienten ønsker på data er ugyldig. Klienten har f.eks en ugyldig Accept-header og kan ikke motta data på et format som serveren kan levere
         '500':
           description: Intern feil på serveren
         '501':
@@ -150,6 +158,8 @@ paths:
                       ur: [1181943.07, 7375181.54]
         '401':
           description: Gyldig autentisering av brukeren mangler eller er ugyldig
+        '406':
+          description: Formatet klienten ønsker på data er ugyldig. Klienten har f.eks en ugyldig Accept-header og kan ikke motta data på et format som serveren kan levere
         '403':
           description: Ugyldig brukernavn og/eller passord
         '404':
@@ -173,8 +183,8 @@ paths:
         - $ref: '#/components/parameters/datasetIdParam'
         - $ref: '#/components/parameters/lockingParam'
         - $ref: '#/components/parameters/bboxParam'
-        - $ref: '#/components/parameters/referencesParam'
         - $ref: '#/components/parameters/crsEPSGParam'
+        - $ref: '#/components/parameters/referencesParam'
         - $ref: '#/components/parameters/limitParam'
         - in: query
           name: query
@@ -304,12 +314,12 @@ paths:
                 externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/polygon/ArealressursFlater.json'            
         '401':
           description: Gyldig autentisering av brukeren mangler eller er ugyldig
+        '406':
+          description: Formatet klienten ønsker på data er ugyldig. Klienten har f.eks en ugyldig Accept-header og kan ikke motta data på et format som serveren kan levere
         '403':
           description: Ugyldig brukernavn og/eller passord
         '404':
           description: Fant ikke angitt dataset
-        '406':
-          description: Klienten har ugyldig Accept-header og kan ikke motta data på et format som serveren kan levere
         '500':
           description: Intern feil på serveren
         '501':
@@ -409,6 +419,8 @@ paths:
           description: Ugyldig brukernavn og/eller passord
         '404':
           description: Fant ikke angitt dataset
+        '406':
+          description: Formatet klienten ønsker på data er ugyldig. Klienten har f.eks en ugyldig Accept-header og kan ikke motta data på et format som serveren kan levere
         '500':
           description: Intern feil på serveren
         '501':
@@ -448,7 +460,7 @@ paths:
         '404':
           description: Fant ikke angitt dataset
         '406':
-          description: Klienten har ugyldig Accept-header og kan ikke motta data på et format som serveren kan levere
+          description: Formatet klienten ønsker på data er ugyldig. Klienten har f.eks en ugyldig Accept-header og kan ikke motta data på et format som serveren kan levere
         '500':
           description: Intern feil på serveren
         '501':
@@ -485,7 +497,7 @@ paths:
         '404':
           description: Fant ikke angitt dataset
         '406':
-          description: Klienten har ugyldig Accept-header og kan ikke motta data på et format som serveren kan levere
+          description: Formatet klienten ønsker på data er ugyldig. Klienten har f.eks en ugyldig Accept-header og kan ikke motta data på et format som serveren kan levere
         '500':
           description: Intern feil på serveren
         '501':
@@ -530,6 +542,8 @@ paths:
           description: Ugyldig brukernavn og/eller passord
         '404':
           description: Fant ikke angitt dataset
+        '406':
+          description: Formatet klienten ønsker på data er ugyldig. Klienten har f.eks en ugyldig Accept-header og kan ikke motta data på et format som serveren kan levere
         '500':
           description: Intern feil på serveren
         '501':
@@ -561,6 +575,8 @@ paths:
           description: Ugyldig brukernavn og/eller passord
         '404':
           description: Fant ikke angitt dataset
+        '406':
+          description: Formatet klienten ønsker på data er ugyldig. Klienten har f.eks en ugyldig Accept-header og kan ikke motta data på et format som serveren kan levere
     delete:
       tags:
         - locks
@@ -723,39 +739,13 @@ components:
         Dette kan være aktuelt for å få ut alle objekter som ikke er direkte knyttet til et objekt, som f.eks mønelinje og takkant til en bygning.
         
         Merk: I kombinasjon med `bbox` blir alltid `references` satt til `none`
-    referencesParam:  
-      in: query
-      name: references
-      schema:
-        type: string
-        enum: [none, direct, all]
-      required: true
-      description: |
-        Angir hvilke refererte features som skal hentes ut i tillegg til feature det spørres direkte etter med lokalid.
-
-        Punkter har ingen referanser, og parameteret påvirker derfor ikke uthenting av et punkt.
-
-        `none` - Ingen refererte features hentes ut. Ingen ekstra features låses.
-        - Flater får *ikke* med linje-features til avgrensningskurver.
-
-        `direct` - Features med direkte referanser hentes ut. Kun direkte referanser låses.
-        - Kurver får med features til flater som bruker kurven i avgrensningen, samt de andre linje-features til avgrensningskurvene i flatene. Både kurven og alle flatene låses, men ikke de andre linje-features i avgrensningen i flatene.
-        - Flater får med alle linje-features til avgrensningskurvene i flaten. Kun flaten låses.
-
-        `all` - Features med direkte og indirekte tilhørende referanser hentes ut. Alle referanser som hentes ut låses.
-        - Kurver får i tillegg til referanser fra `direct` også med:
-          - flate-features som har avgrensningskurver som begynner eller slutter i valgt linjes endepunkter 
-          - linje-features i flate-features i forrige pkt som begynner eller slutter i valgt linjes endepunkter
-
-        - Flater får samme referanser som i `direct`. Både flaten og alle avgrensningskurvene låses.
     crsEPSGParam:
       in: query
       name: crs_EPSG
       schema:
         type: integer
-      required: true
       description: |
-        Angir EPSG-kode for koordinatsystemet til koordinatene som sendes inn i spørringen (f.eks i bbox)
+        Angir EPSG-kode for koordinatsystemet til koordinatene som sendes inn i spørringen (f.eks i bbox). Påkrevd dersom bbox-parameteret brukes.
       examples: 
         epsg5975_NN2000:
           value: 5975
@@ -784,6 +774,40 @@ components:
         epsg5972:
           value: 25832
           summary: ETRS89 (EUREF89) i UTM zone 32N uten høyde
+        epsg4258_NN2000:
+          value: 5942
+          summary: ETRS89 (EUREF89) i geografiske koordinater med høydeverdier angitt i NN2000
+        epsg4258_NN1954:
+          value: 6144
+          summary: ETRS89 (EUREF89) i geografiske koordinater med høydeverdier angitt i NN1954
+        epsg4258:
+          value: 4258
+          summary: ETRS89 (EUREF89) i geografiske koordinater uten høyde
+    referencesParam:  
+      in: query
+      name: references
+      schema:
+        type: string
+        enum: [none, direct, all]
+      required: true
+      description: |
+        Angir hvilke refererte features som skal hentes ut i tillegg til feature det spørres direkte etter med lokalid.
+
+        Punkter har ingen referanser, og parameteret påvirker derfor ikke uthenting av et punkt.
+
+        `none` - Ingen refererte features hentes ut. Ingen ekstra features låses.
+        - Flater får *ikke* med linje-features til avgrensningskurver.
+
+        `direct` - Features med direkte referanser hentes ut. Kun direkte referanser låses.
+        - Kurver får med features til flater som bruker kurven i avgrensningen, samt de andre linje-features til avgrensningskurvene i flatene. Både kurven og alle flatene låses, men ikke de andre linje-features i avgrensningen i flatene.
+        - Flater får med alle linje-features til avgrensningskurvene i flaten. Kun flaten låses.
+
+        `all` - Features med direkte og indirekte tilhørende referanser hentes ut. Alle referanser som hentes ut låses.
+        - Kurver får i tillegg til referanser fra `direct` også med:
+          - flate-features som har avgrensningskurver som begynner eller slutter i valgt linjes endepunkter 
+          - linje-features i flate-features i forrige pkt som begynner eller slutter i valgt linjes endepunkter
+
+        - Flater får samme referanser som i `direct`. Både flaten og alle avgrensningskurvene låses.
     lockingParam:
       in: query
       name: locking
