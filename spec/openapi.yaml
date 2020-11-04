@@ -214,6 +214,16 @@ paths:
               summary: Spørring etter flere objekter med lokalid
               description: |
                 Når objekt(er) hentes ut med lokalid er det normalt ikke nødvendig å filtrere på objekttype, derfor er objekttypen angitt med `*`.
+            feature_type:
+              value: 'eq(*,Bygning)'
+              summary: Spørring etter alle objekter med en bestemt objekttype
+              description: |
+                Vi bruker `*` for å angi at vi kun filtrerer på objekttype.
+            feature_type_multi:
+              value: 'in(*,Bygning,AnnenBygning)'
+              summary: Spørring etter flere objekter med lokalid
+              description: |
+                Vi bruker `*` for å angi at vi kun filtrerer på objekttype.
 
             
             
