@@ -224,28 +224,6 @@ paths:
               summary: Spørring etter flere objekter med lokalid
               description: |
                 Vi bruker `*` for å angi at vi kun filtrerer på objekttype.
-
-            
-            
-
-        - in: query
-          name: feature_types
-          style: form
-          explode: false
-          schema:
-            type: array
-            minItems: 1
-            items:
-              type: string
-          examples:
-            feature_types1:
-              summary: Spesifikke Bygninger
-              description: |
-                NB! Bruk references-parameteret for å styre om også tilhørende linjer skal tas med
-              value: ['Bygning', 'AnnenBygning']
-          description: |
-            Henter kun ut objekter med en bestemt objekttype.
-      
       responses:
         '200':      # Response
           description: OK
