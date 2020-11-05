@@ -40,7 +40,7 @@ info:
     
     For å sende inn koordinater i uri-spørringen (f.eks med `bbox`-parameteret) må koordinatsystemet angis med `crs_EPSG`-parameteret.
     
-    For å hente ut koordinater på annet koordinatsystem enn i dataset'et kan ønsket koordinatsystem angis i `Accept`-headeren med `crs_EPSG`. Se eksempler på dette i kallene.
+    For å hente ut koordinater på annet koordinatsystem enn i dataset'et kan ønsket koordinatsystem angis i `Accept`-headeren med `crs_EPSG`. Dersom aksene er/skal byttes om kan `normalized_for_visualization=true` brukes. Se eksempler på dette i kallene.
     
     
 servers:
@@ -139,14 +139,14 @@ paths:
                     bbox:
                       ll: [322361.85, 6424859.18]
                       ur: [637396.44, 7296440.28]
-            application/vnd.kartverket.ngis.dataset+json; crs_EPSG=5973:  # Media type
+            application/vnd.kartverket.ngis.dataset+json; crs_EPSG=5973; crs_normalized_for_visualization=true:  # Media type
               schema: 
                $ref: '#/components/schemas/Dataset'    # Reference to object definition
               examples:
                 explicitSame:
-                  summary: Med annet crs_EPSG enn arkivet
+                  summary: Med annet crs_EPSG enn arkivet og normalized_for_visualization=true
                   description: |
-                    Dersom klienten ber om et annet referansesystem (her EPSG:5973) enn arkivets referansesystem (her EPSG:5972), blir koordinatene transformert til ønsket koordinatsystem dersom det er mulig.
+                    Dersom klienten ber om et annet referansesystem (her EPSG:5973) enn arkivets referansesystem (her EPSG:5972), blir koordinatene transformert til ønsket koordinatsystem dersom det er mulig. I tillegg er aksene snudd pga. normalized_for_visualization=true.
                   value:
                     id: '07b59e3d-a4b6-4bae-ac4c-664d3dc3d778'
                     name: 'AR5_22'
@@ -154,8 +154,8 @@ paths:
                     coordinate_reference_system: 'EPSG:5972'
                     access: read_write
                     bbox:
-                      ll: [1032058.29, 6456442.29]
-                      ur: [1181943.07, 7375181.54]
+                      ll: [6456442.29, 1032058.29]
+                      ur: [7375181.54, 1181943.07]
         '401':
           description: Gyldig autentisering av brukeren mangler eller er ugyldig
         '406':
@@ -184,6 +184,7 @@ paths:
         - $ref: '#/components/parameters/lockingParam'
         - $ref: '#/components/parameters/bboxParam'
         - $ref: '#/components/parameters/crsEPSGParam'
+        - $ref: '#/components/parameters/crsNormalizedForVisualizationParam'
         - $ref: '#/components/parameters/referencesParam'
         - $ref: '#/components/parameters/limitParam'
         - in: query
@@ -790,6 +791,13 @@ components:
         epsg4258:
           value: 4258
           summary: ETRS89 (EUREF89) i geografiske koordinater uten høyde
+    crsNormalizedForVisualizationParam:
+      in: query
+      name: crs_normalized_for_visualization
+      schema:
+        type: boolean
+      description: |
+        Angir normalt at aksene er snudd ift. det som er spesifisert i EPSG-koden (crs_EPSG). Noen GIS-systemer forventer koordinatene på denne måten.
     referencesParam:  
       in: query
       name: references
