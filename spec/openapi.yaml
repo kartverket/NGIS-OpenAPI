@@ -820,6 +820,7 @@ components:
       name: locking
       style: deepObject
       explode: true
+      allowReserved: false
       schema:
         type: object
         properties:
