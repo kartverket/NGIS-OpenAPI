@@ -153,6 +153,7 @@ paths:
         - $ref: '#/components/parameters/crsNormalizedForVisualizationParam'
         - $ref: '#/components/parameters/referencesParam'
         - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/cursorParam'
         - in: query
           name: query
           schema:
@@ -698,6 +699,13 @@ components:
       required: true
       description: UUID of the dataset to get
       example: dc3507da-a95f-4482-b762-f140f5a11788
+    cursorParam:
+      in: query
+      name: cursor
+      schema:
+        type: string
+        format: byte
+      description: Brukes til porsjonering av data
     bboxParam:
       in: query
       name: bbox
