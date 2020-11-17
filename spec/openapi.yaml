@@ -38,9 +38,7 @@ info:
     
     ### Koordinatsystemer og transformasjon
     
-    For å sende inn koordinater i uri-spørringen (f.eks med `bbox`-parameteret) må koordinatsystemet angis med `crs_EPSG`-parameteret.
-    
-    For å hente ut koordinater på annet koordinatsystem enn i dataset'et kan ønsket koordinatsystem angis i `Accept`-headeren med `crs_EPSG`. Se eksempler på dette i kallene.
+    Dersom annet koordinatsystem enn det som ligger i dataset skal brukes (se `GET /datasets/{datasetId}`) må koordinatsystem angis med `crs_EPSG`-parameteret. Dette styrer data som sendes inn, data som hentes ut og koordinatsystemet i `bbox`-parameteret i kallet. For å bytte rekkefølge på aksene brukes `crs_normalized_for_visualization`-parameteret.
     
     
 servers:
@@ -101,6 +99,8 @@ paths:
       parameters:
         - $ref: '#/components/parameters/clientHeaderParam'
         - $ref: '#/components/parameters/datasetIdParam'
+        - $ref: '#/components/parameters/crsEPSGParam'
+        - $ref: '#/components/parameters/crsNormalizedForVisualizationParam'
       responses:
         '200':      # Response
           description: OK
@@ -112,50 +112,16 @@ paths:
                 explicitSame:
                   summary: Implisitt crs_EPSG-parameter
                   description: |
-                    Dersom klienten ikke ber om et annet referansesystem enn datasetets referansesystem, leveres dataene i samme koordinatesystem som datasetet er lagret (her EPSG:5972).
+                    Dersom klienten ikke ber om et annet referansesystem enn datasetets referansesystem, leveres dataene i samme koordinatesystem som datasetet er lagret.
                   value:
                     id: '07b59e3d-a4b6-4bae-ac4c-664d3dc3d778'
                     name: 'AR5_22'
                     resolution: 0.001
-                    coordinate_reference_system: 'EPSG:5972'
+                    crs_EPSG: '5972'
                     access: read_write
                     bbox:
                       ll: [322361.85, 6424859.18]
                       ur: [637396.44, 7296440.28]
-            application/vnd.kartverket.ngis.dataset+json; crs_EPSG=5972:  # Media type
-              schema: 
-               $ref: '#/components/schemas/Dataset'    # Reference to object definition
-              examples:
-                explicitSame:
-                  summary: Med samme crs_EPSG-parameter som arkivet
-                  description: |
-                    Dersom klienten ber om samme referansesystem (her EPSG:5972) som datasetets  referansesystem (her EPSG:5972), leveres dataene i samme koordinatesystem som datasetet er lagret.
-                  value:
-                    id: '07b59e3d-a4b6-4bae-ac4c-664d3dc3d778'
-                    name: 'AR5_22'
-                    resolution: 0.001
-                    coordinate_reference_system: 'EPSG:5972'
-                    access: read_write
-                    bbox:
-                      ll: [322361.85, 6424859.18]
-                      ur: [637396.44, 7296440.28]
-            application/vnd.kartverket.ngis.dataset+json; crs_EPSG=5973:  # Media type
-              schema: 
-               $ref: '#/components/schemas/Dataset'    # Reference to object definition
-              examples:
-                explicitSame:
-                  summary: Med annet crs_EPSG enn arkivet
-                  description: |
-                    Dersom klienten ber om et annet referansesystem (her EPSG:5973) enn arkivets referansesystem (her EPSG:5972), blir koordinatene transformert til ønsket koordinatsystem dersom det er mulig.
-                  value:
-                    id: '07b59e3d-a4b6-4bae-ac4c-664d3dc3d778'
-                    name: 'AR5_22'
-                    resolution: 0.001
-                    coordinate_reference_system: 'EPSG:5972'
-                    access: read_write
-                    bbox:
-                      ll: [1032058.29, 6456442.29]
-                      ur: [1181943.07, 7375181.54]
         '401':
           description: Gyldig autentisering av brukeren mangler eller er ugyldig
         '406':
@@ -184,6 +150,7 @@ paths:
         - $ref: '#/components/parameters/lockingParam'
         - $ref: '#/components/parameters/bboxParam'
         - $ref: '#/components/parameters/crsEPSGParam'
+        - $ref: '#/components/parameters/crsNormalizedForVisualizationParam'
         - $ref: '#/components/parameters/referencesParam'
         - $ref: '#/components/parameters/limitParam'
         - in: query
@@ -344,6 +311,8 @@ paths:
         - $ref: '#/components/parameters/clientHeaderParam'
         - $ref: '#/components/parameters/datasetIdParam'
         - $ref: '#/components/parameters/lockingParam'
+        - $ref: '#/components/parameters/crsEPSGParam'
+        - $ref: '#/components/parameters/crsNormalizedForVisualizationParam'
       requestBody:
         description: Optional description in *Markdown*
         required: true
@@ -450,6 +419,8 @@ paths:
         - $ref: '#/components/parameters/lockingParam'
         - $ref: '#/components/parameters/referencesParam'
         - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/crsEPSGParam'
+        - $ref: '#/components/parameters/crsNormalizedForVisualizationParam'
       responses:
         '200':      # Response
           description: OK
@@ -752,7 +723,7 @@ components:
       schema:
         type: integer
       description: |
-        Angir EPSG-kode for koordinatsystemet til koordinatene som sendes inn i spørringen (f.eks i bbox). Påkrevd dersom bbox-parameteret brukes.
+        Angir EPSG-kode for koordinatsystemet til koordinatene som sendes inn i spørringen (f.eks i bbox), som sendes inn som data, og som sendes tilbake. Påkrevd dersom bbox-parameteret brukes.
       examples: 
         epsg5975_NN2000:
           value: 5975
@@ -790,6 +761,13 @@ components:
         epsg4258:
           value: 4258
           summary: ETRS89 (EUREF89) i geografiske koordinater uten høyde
+    crsNormalizedForVisualizationParam:
+      in: query
+      name: normalized_for_visualization
+      schema:
+        type: boolean
+      description: |
+        Angir at rekkefølgen på x- og y-aksen skal være snudd mot det som er spesifisert i EPSG-koden.
     referencesParam:  
       in: query
       name: references
@@ -817,20 +795,10 @@ components:
         - Flater får samme referanser som i `direct`. Både flaten og alle avgrensningskurvene låses.
     lockingParam:
       in: query
-      name: locking
-      style: deepObject
-      explode: true
+      name: locking_type
       schema:
-        type: object
-        properties:
-          type:
-            type: string
-            enum: [user_lock,lock_id,optimistic_locking]
-          id:
-            type: integer
-            minimum: 1
-        required:
-          - type
+        type: string
+        enum: [user_lock] # future: lock_id,optimistic_locking
       description: |
         Angir låsetype som skal brukes (foreløpig er kun `user_lock` støttet). Krever at brukeren har skrivetilgang mot dataset'et.
         
@@ -840,8 +808,6 @@ components:
         Alle objekter i låsen låses opp neste gang brukeren skriver data til dataset'et.
 
         Låsen vil fjernes neste gang brukeren skriver data til dataset'et med `user_lock`, eller dersom låsen slettes.
-
-        Feltet `id` er ikke i bruk for `user_lock`.
     lokalIdParam:
       in: path
       name: lokalId
