@@ -117,7 +117,7 @@ paths:
                     id: '07b59e3d-a4b6-4bae-ac4c-664d3dc3d778'
                     name: 'AR5_22'
                     resolution: 0.001
-                    crs_EPSG: '5972'
+                    crs_EPSG: 5972
                     access: read_write
                     bbox:
                       ll: [322361.85, 6424859.18]
@@ -621,9 +621,8 @@ components:
         resolution:
           type: number
           format: double
-        coordinate_reference_system:
-          type: string
-          pattern: '^EPSG:\d+$'
+        crs_EPSG:
+          type: integer
         schema_url:
           type: string
           format: uri
