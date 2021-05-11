@@ -136,6 +136,93 @@ paths:
           description: Intern feil på serveren (kallet er ikke implementert)
         '503':
           description: Intern feil på serveren (tjenesten er utilgjengelig)
+  /datasets/{datasetId}/job_status:
+    post:
+      tags:
+       - metadata
+      summary: Send fremdriftsinformasjon
+      description: |
+        Gir klienten mulighet til å sende inn fremdriftsinformasjon slik at serveren f.eks
+        kan følge med på status for klienten, valideringsfeil o.l.
+      operationId: sendDatasetJobStatus
+      parameters:
+        - $ref: '#/components/parameters/clientHeaderParam'
+        - $ref: '#/components/parameters/datasetIdParam'
+      requestBody:
+        description: Klienten kan f.eks sende informasjon underveis i oppdateringen
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              id: '07b59e3d-a4b6-4bae-ac4c-664d3dc3d778'
+              status: 'SUCCEEDED'
+              metadata:
+                copy_transaction_token: 1000
+                source_copy_transaction_token: 1100
+                current_operation: 'getDatasetMetadata'
+              
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Gyldig autentisering av brukeren mangler eller er ugyldig
+        '403':
+          description: Ugyldig brukernavn og/eller passord
+        '404':
+          description: Fant ikke angitt dataset
+        '500':
+          description: Intern feil på serveren
+        '501':
+          description: Intern feil på serveren (kallet er ikke implementert)
+        '503':
+          description: Intern feil på serveren (tjenesten er utilgjengelig)
+  /datasets/{datasetId}/job_status/{jobId}:
+    get:
+      tags:
+       - metadata
+      summary: Hent fremdriftsstatus for en bestemt prosess
+      description: |
+        Mulighet for å følge med på fremdriften til f.eks en asynkron oppdatering
+      operationId: getDatasetJobStatus
+      parameters:
+        - $ref: '#/components/parameters/clientHeaderParam'
+        - $ref: '#/components/parameters/datasetIdParam'
+        - in: path
+          name: jobId
+          schema:
+            type: string
+            format: uuid
+          required: true
+          description: UUID of the job
+          example: dc3507da-a95f-4482-b762-f140f5a11788
+      responses:
+        '200':      # Response
+          description: OK
+          content:  # Response body
+            application/json:  # Media type
+              schema: 
+                type: object
+              example:
+                id: '07b59e3d-a4b6-4bae-ac4c-664d3dc3d778'
+                status: 'RUNNING'
+                metadata:
+                  validation_status: 'SUCCEEDED'
+        '401':
+          description: Gyldig autentisering av brukeren mangler eller er ugyldig
+        '406':
+          description: Formatet klienten ønsker på data er ugyldig. Klienten har f.eks en ugyldig Accept-header og kan ikke motta data på et format som serveren kan levere
+        '403':
+          description: Ugyldig brukernavn og/eller passord
+        '404':
+          description: Fant ikke angitt dataset
+        '500':
+          description: Intern feil på serveren
+        '501':
+          description: Intern feil på serveren (kallet er ikke implementert)
+        '503':
+          description: Intern feil på serveren (tjenesten er utilgjengelig)
   /datasets/{datasetId}/features:
     get:
       tags:
@@ -314,10 +401,27 @@ paths:
         - $ref: '#/components/parameters/lockingParam'
         - $ref: '#/components/parameters/crsEPSGParam'
         - $ref: '#/components/parameters/crsNormalizedForVisualizationParam'
+        - in: query
+          name: async
+          schema:
+            type: boolean
+          description: |
+            Angir at dataene skal behandles asynkront, slik at klienten slipper å vente til skriving er ferdig. Påkrevet ved større datamengder.
+        - in: query
+          name: copy_transaction_token
+          schema:
+            type: string
+          description: |
+            Angir at dataene som skrives er kopidata, og at hele identifikasjons-egenskapen skal beholdes.
+            
+            Verdien angir versjonsnummer for oppdatering fra originalarkivet
       requestBody:
         description: Optional description in *Markdown*
         required: true
         content:
+          application/vnd.kartverket.geosynkronisering+zip; version=1.0:
+            schema:
+              type: object
           application/vnd.kartverket.sosi+wfs-t; version=1.0:
             schema:
               type: object
@@ -390,6 +494,8 @@ paths:
                   features_erased:
                     type: integer
                     example: 5
+        '202':
+          description: Serveren bearbeider innsjekken asynkront. Svaret inneholder Location-header som peker til endepunktet der fremdriftsstatus kan hentes.
         '401':
           description: Gyldig autentisering av brukeren mangler eller er ugyldig
         '403':
@@ -631,6 +737,8 @@ components:
           enum: [read_only, read_write]
         bbox: 
           $ref: '#/components/schemas/BoundingBox'
+        copy_transaction_token:
+          type: string
     Locks:
       type: array
       items:
