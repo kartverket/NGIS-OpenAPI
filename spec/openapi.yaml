@@ -40,6 +40,11 @@ info:
     
     Dersom annet koordinatsystem enn det som ligger i dataset skal brukes (se `GET /datasets/{datasetId}`) må koordinatsystem angis med `crs_EPSG`-parameteret. Dette styrer data som sendes inn, data som hentes ut og koordinatsystemet i `bbox`-parameteret i kallet. For å bytte rekkefølge på aksene brukes `crs_normalized_for_visualization`-parameteret.
     
+    ### Historikk og historiske endringer
+    
+    Det er mulig å hente ut data for et gitt tidspunkt (for hele datasettet eller begrenset til et område, et objekt etc.). Se etter parameteret `dataset_at`.
+    
+    Det er også mulig å hente ut historikken som endringer, f.eks som endringer fra et tidligere uthentet område, objekt eller helt dataset. Se etter parameteret `dataset_modified`.
     
 servers:
   - description: Test-server Norkart
@@ -119,6 +124,7 @@ paths:
                     resolution: 0.001
                     crs_EPSG: 5972
                     access: read_write
+                    dataset_last_modified: '2021-03-15T09:57:41.915094000Z'
                     bbox:
                       ll: [322361.85, 6424859.18]
                       ur: [637396.44, 7296440.28]
@@ -192,9 +198,49 @@ paths:
               summary: Spørring etter flere objekter med lokalid
               description: |
                 Vi bruker `*` for å angi at vi kun filtrerer på objekttype.
+        - in: query
+          name: dataset_at
+          schema:
+            type: string
+            format: date-time
+          description: |
+            Angir hvilket tidspunkt man ønsker å hente ut data på.
+            
+            Kan kombineres med andre parametre, f.eks `bbox`, `query`, `crs_EPSG` osv.
+        - in: query
+          name: dataset_modified
+          schema:
+            type: string
+          description: |
+            ### Intervall for uthenting av historiske endringer
+            
+            Må kombineres med `Accept`-header med samme dataformat som ved lagring av endringer.
+            
+            Kan kombineres med andre parametre, f.eks `bbox`, `query`, `crs_EPSG` osv.
+            
+            Formatet er <fra>/<til> hvor `..` er det samme som hhv. "fra og med første endring" eller "til og med siste endring".
+            
+            Hvis man ikke angir `..` må man angi et tidspunkt i henhold til ISO 8601, eks. `2020-01-30 12:13:14`. Man kan også angi høyere oppløsning enn sekund og tidssone med `Z` (betyr UTC) eller offset f.eks `+02:00`.
+            
+          examples:
+            open_range:
+              value: '../..'
+              summary: Alle endringer i datasetet fra og med første og til og med siste.
+            all_changes_since:
+              value: '../..'
+              summary: Alle endringer i datasetet fra gitt tidspunkt. Dette kan f.eks komme fra datasetets `dataset_last_modified` eller `Dataset-Last-Modified`-headeren hvis man ønsker å hente ut alle endringer etter hvert som de blir gjort i datasetet.
+            january_2020:
+              value: '2020-01-01 00:00:00/2020-01-31 23:59:59.999999'
+              summary: Spørring etter alle endringer i januar 2020
       responses:
         '200':      # Response
           description: OK
+          headers:
+            Dataset-Last-Modified:
+              schema:
+                type: string
+                format: date-time
+              description: Tidspunkt for siste endring som kan brukes ved uthenting av historiske endringer gjort på objekter etter denne lesingen.
           content: # Response body
             
             application/vnd.kartverket.sosi+gml; version=1.0:
@@ -623,6 +669,9 @@ components:
           format: double
         crs_EPSG:
           type: integer
+        dataset_last_modified:
+          type: string
+          format: datetime
         schema_url:
           type: string
           format: uri
