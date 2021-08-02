@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Newtonsoft.Json.Linq;
 using SFKB_API;
 
 namespace SFKB_clientTests
@@ -55,7 +56,7 @@ namespace SFKB_clientTests
 
             try
             {
-                var result = Client.GetDatasetMetadataAsync(clientString, WrongDatasetId).Result;
+                var result = Client.GetDatasetMetadataAsync(clientString, WrongDatasetId, null, null).Result;
             }
             catch (Exception e)
             {
@@ -128,7 +129,7 @@ namespace SFKB_clientTests
             }
         }
 
-        private static async Task<Response> Execute(Locking locking, string xmlFile)
+        private static async Task<Response> Execute(Locking_type locking, string xmlFile)
         {
             using (var featureStream = File.OpenRead(xmlFile))
             {
@@ -136,7 +137,7 @@ namespace SFKB_clientTests
                 
                 timer.Start();
 
-                var response = await Client.UpdateDatasetFeaturesAsync(clientString, DatasetId, locking, featureStream);
+                var response = await Client.UpdateDatasetFeaturesAsync(clientString, DatasetId, locking ,null, null, featureStream);
 
                 timer.Stop();
 
@@ -149,22 +150,22 @@ namespace SFKB_clientTests
         [TestMethod]
         public async Task TestNonExistingLokalIdAsync()
         {
-            var tempFile = await LockAndSaveFeatureByLokalIdAsync(WrongLokalId, null);
+            var tempFile = await LockAndSaveFeatureByLokalIdAsync(WrongLokalId, GetLocking());
 
             Assert.IsFalse(FileHasFeatures(tempFile), $"Query with lokalId {WrongLokalId} gave unexpected result");
         }
 
-        internal static Locking GetLocking()
+        internal static Locking_type GetLocking()
         {
-            return new Locking { Type = LockingType.User_lock };
+            return Locking_type.User_lock;
         }
 
-        private async Task DeleteByLokalIdAsync(string tempFile, Guid lokalId, Locking locking)
+        private async Task DeleteByLokalIdAsync(string tempFile, Guid lokalId, Locking_type locking)
         {
             await DeleteByLokalIdAsync(tempFile, new List <Guid> { lokalId }, locking);
         }
 
-        private async Task DeleteByLokalIdAsync(string tempFile, List<Guid> lokalIds, Locking locking)
+        private async Task DeleteByLokalIdAsync(string tempFile, List<Guid> lokalIds, Locking_type locking)
         {
             string deleteXmlPath = Wfs.CreateDeleteTransaction(tempFile, lokalIds);
 
@@ -177,9 +178,13 @@ namespace SFKB_clientTests
 
         private bool FileHasFeatures(string tempFile)
         {
-            var xml = XElement.Load(tempFile);
+            var jObject =  JObject.Parse(File.ReadAllText(tempFile));
 
-            return xml.HasElements && xml.Descendants().Count() > 0;
+            return jObject.HasValues && jObject["features"].Count() > 0;
+
+            //var xml = XElement.Load(tempFile);
+
+            //return xml.HasElements && xml.Descendants().Count() > 0;
         }
 
         //private Task<Dataset> GetDataset()
@@ -233,12 +238,22 @@ namespace SFKB_clientTests
 
             locks = await Client.GetDatasetLocksAsync(clientString, DatasetId, locking);
 
-            Assert.IsTrue(locks.Count() == 0, "Locks not deleted");
+            Assert.IsTrue(locks.Count == 0, "Locks not deleted");
         }
 
-        private async Task<string> LockAndSaveFeatureByLokalIdAsync(Guid lokalId, Locking locking)
+        private async Task<string> LockAndSaveFeatureByLokalIdAsync(Guid lokalId, Locking_type? locking)
         {
-            var fileResponse = await Client.GetDatasetFeaturesAsync(clientString, DatasetId, locking, null, null, References.Direct, 100, GetLokalIdQuery(lokalId));
+            var fileResponse = await Client.GetDatasetFeaturesAsync(
+                clientString, 
+                DatasetId, 
+                locking,
+                null,
+                null,
+                null, 
+                References.Direct, 
+                100,
+                null,
+                GetLokalIdQuery(lokalId));
 
             return General.WriteStreamToDisk(fileResponse);
         }
@@ -248,14 +263,21 @@ namespace SFKB_clientTests
             return $"eq(*/identifikasjon/lokalid,{lokalid})";
         }
 
-        //private BoundingBox GetExampleBbox()
+        //private List<double> GetExampleBbox()
         //{
         //    var ll1 = 365600;
         //    var ll2 = 7217500;
         //    var ur1 = 366100;
         //    var ur2 = 7217850;
 
-        //    return new BoundingBox { Ll = new List<double> { ll1,  ll2 }, Ur = new List<double> { ur1, ur2 } };
+        //    return new List<double>
+        //    {
+        //        ll1, 
+        //        ll2,
+        //        ur1, 
+        //        ur2
+        //    };
+        //    //return new BoundingBox { Ll = new List<double> { ll1, ll2 }, Ur = new List<double> { ur1, ur2 } };
         //}
 
         //private Stream GetExampleFeatureStream(string fileName)
