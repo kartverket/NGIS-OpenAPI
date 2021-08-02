@@ -196,41 +196,6 @@ paths:
         '200':      # Response
           description: OK
           content: # Response body
-            
-            application/vnd.kartverket.sosi+gml; version=1.0:
-             schema:
-              type: object
-             examples: 
-              singlePoint:
-                summary: |
-                  Eksempel på uthentet punkt
-                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/point/Bygning.xml'
-              singleLineString:
-                summary: | 
-                  Eksempel på uthentet linje
-                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/linestring/Mønelinje.xml'
-              simplePolygon:
-                summary: Eksempel på uthentet flate som refererer én enkel avgrensningslinje
-                description: |
-                  Representasjonspunktet som ligger inne i flaten ligger i `geometry_properties` som `position`.
-
-                  Lenkene til avgrensningslinjer (bruker linjenes lokalid) ligger i `geometry_properties` under `exterior`. 
-
-                  Ytre avgrensningslinjer i en flate må ha retning mot klokka (CCW) og indre avgrensningslinjer må ha retning med klokka.
-                  Det betyr at noen av linjene som brukes må brukes i motsatt retning - dette gjøres ved å angi `-` (minus) foran linjereferansen (lokalid).
-
-                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/polygon/ArealressursFlate_enkel.xml'
-              multipleLinesPolygon:
-                summary: Eksempel på uthentet flate som refererer flere avgrensningslinjer der den ene bruker linjen i motsatt retning
-                description: |
-                  Representasjonspunktet som ligger inne i flaten ligger i `<app:posisjon>` som `<gml:Point>`.
-
-                  TODO: gml:id : Lenkene til avgrensningslinjer (bruker linjenes lokalid) ligger i `geometry_properties` under `exterior`. 
-
-                  Ytre avgrensningslinjer i en flate må ha retning mot klokka (CCW) og indre avgrensningslinjer må ha retning med klokka.
-                  Det betyr at noen av linjene som brukes må brukes i motsatt retning - TODO: gml:id dette gjøres ved å angi `-` (minus) foran linjereferansen (lokalid).
-
-                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/polygon/ArealressursFlate.xml'
             application/vnd.kartverket.sosi+json; version=1.0:
              schema:
               type: object
@@ -286,7 +251,41 @@ paths:
                   Ytre avgrensningslinjer i en flate må ha retning mot klokka (CCW) og indre avgrensningslinjer må ha retning med klokka.
                   Det betyr at noen av linjene som brukes må brukes i motsatt retning - dette gjøres ved å angi `-` (minus) foran linjereferansen (lokalid).
 
-                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/polygon/ArealressursFlater.json'            
+                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/polygon/ArealressursFlater.json'    
+            application/vnd.kartverket.sosi+gml; version=1.0:
+             schema:
+              type: object
+             examples: 
+              singlePoint:
+                summary: |
+                  Eksempel på uthentet punkt
+                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/point/Bygning.xml'
+              singleLineString:
+                summary: | 
+                  Eksempel på uthentet linje
+                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/linestring/Mønelinje.xml'
+              simplePolygon:
+                summary: Eksempel på uthentet flate som refererer én enkel avgrensningslinje
+                description: |
+                  Representasjonspunktet som ligger inne i flaten ligger i `geometry_properties` som `position`.
+
+                  Lenkene til avgrensningslinjer (bruker linjenes lokalid) ligger i `geometry_properties` under `exterior`. 
+
+                  Ytre avgrensningslinjer i en flate må ha retning mot klokka (CCW) og indre avgrensningslinjer må ha retning med klokka.
+                  Det betyr at noen av linjene som brukes må brukes i motsatt retning - dette gjøres ved å angi `-` (minus) foran linjereferansen (lokalid).
+
+                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/polygon/ArealressursFlate_enkel.xml'
+              multipleLinesPolygon:
+                summary: Eksempel på uthentet flate som refererer flere avgrensningslinjer der den ene bruker linjen i motsatt retning
+                description: |
+                  Representasjonspunktet som ligger inne i flaten ligger i `<app:posisjon>` som `<gml:Point>`.
+
+                  TODO: gml:id : Lenkene til avgrensningslinjer (bruker linjenes lokalid) ligger i `geometry_properties` under `exterior`. 
+
+                  Ytre avgrensningslinjer i en flate må ha retning mot klokka (CCW) og indre avgrensningslinjer må ha retning med klokka.
+                  Det betyr at noen av linjene som brukes må brukes i motsatt retning - TODO: gml:id dette gjøres ved å angi `-` (minus) foran linjereferansen (lokalid).
+
+                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/polygon/ArealressursFlate.xml'                    
         '401':
           description: Gyldig autentisering av brukeren mangler eller er ugyldig
         '406':
@@ -426,10 +425,10 @@ paths:
         '200':      # Response
           description: OK
           content: # Response body
-            application/vnd.kartverket.sosi+gml; version=1.0:
+            application/vnd.kartverket.sosi+json; version=1.0:
               schema:
                 type: object
-            application/vnd.kartverket.sosi+json; version=1.0:
+            application/vnd.kartverket.sosi+gml; version=1.0:
               schema:
                 type: object
         '401':
