@@ -32,7 +32,7 @@ jobs:
       - name: Build
         run: |
           cd examples/dotnet/SFKB_clientTests
-          dotnet build
+          dotnet build --configuration Release --no-restore
       - name: Run tests
         env:
           api_user: ${{ secrets.API_USER }}
