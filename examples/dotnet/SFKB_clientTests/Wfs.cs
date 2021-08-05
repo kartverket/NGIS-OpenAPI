@@ -14,11 +14,9 @@ namespace SFKB_clientTests
         static string ar5SchemaLocation = "http://skjema.geonorge.no/SOSI/produktspesifikasjon/FKB-Ar5/4.6/FKB-AR546.xsd";
         static string ar5Namespace = "http://skjema.geonorge.no/SOSI/produktspesifikasjon/FKB-Ar5/4.6";
 
-        internal static string CreateInsertTransaction(string tempFile, List<Guid> lokalIds)
+        internal static string CreateInsertTransaction(XElement insertXml, List<Guid> lokalIds)
         {
             var newTempFile = Path.GetTempFileName();
-
-            var insertXml = XElement.Load(tempFile);
 
             SetActiveNamespaceConstants(insertXml);
 
@@ -47,15 +45,11 @@ namespace SFKB_clientTests
             return jObject["features"].Where(f => f["properties"]["identifikasjon"]["lokalId"].ToString() == lokalid.ToString()).FirstOrDefault();
         }
 
-        internal static string CreateReplaceTransaction(string tempFile, List<Guid> lockedLokalIds)
+        internal static string CreateReplaceTransaction(XElement featureXml, List<Guid> lockedLokalIds)
         {
             var newTempFile = Path.GetTempFileName();
 
-            var featureJson = JObject.Parse(File.ReadAllText(tempFile));
-            
-            //var featureXml = XElement.Load(tempFile);
-
-            var replaceXml = GetReplaceXml(featureJson, lockedLokalIds);
+            var replaceXml = GetReplaceXml(featureXml, lockedLokalIds);
 
             replaceXml.Save(newTempFile);
 
@@ -136,7 +130,7 @@ namespace SFKB_clientTests
 
 
 
-        private static void SetActiveNamespaceConstants(XElement featureXml)
+        internal static void SetActiveNamespaceConstants(XElement featureXml)
         {
             GetActiveNamespacePrefix(featureXml);
 
@@ -253,7 +247,7 @@ namespace SFKB_clientTests
                 new XAttribute("service", "WFS"));
         }
 
-        private static Guid GetLokalId(XElement feature)
+        internal static Guid GetLokalId(XElement feature)
         {
             return new Guid(feature.Descendants(Constants.activeNamespace + "lokalId").Nodes().FirstOrDefault().ToString());
         }

@@ -20,7 +20,6 @@ namespace SFKB_clientTests
         private static readonly Guid WrongLokalId = new Guid();
         private const string Ar5DatasetName = "ar5_test_23";
         private const int epsg25833 = 25833;
-        private const string ExampleFeatures = "ExampleFeatures";
         private Guid Ar5FlateFeatureLokalId = new Guid("20f893f2-5c8c-466f-b25b-d51ae98f1399");
         private Guid Ar5GrenseFeatureLokalId = new Guid("0003f094-b524-4a5a-bb05-d69881df853a");
         private const string clientString = "SystemTestClient";
@@ -73,13 +72,13 @@ namespace SFKB_clientTests
         [TestMethod]
         public async Task TestReplacePolygonFeatureAsync()
         {
-            await ReplaceByLokalIdAsync(DatasetId, Ar5FlateFeatureLokalId);
+            await ReplaceByLokalIdAsync(DatasetId, Ar5FlateFeatureLokalId, "ArealressursFlate_ForReplace");
         }
 
         [TestMethod]
         public async Task TestReplaceReferencedLineFeatureAsync()
         {
-            await ReplaceByLokalIdAsync(DatasetId, Ar5GrenseFeatureLokalId);
+            await ReplaceByLokalIdAsync(DatasetId, Ar5GrenseFeatureLokalId, "ArealressursGrense_ForReplace");
         }
 
         [TestMethod]
@@ -103,30 +102,27 @@ namespace SFKB_clientTests
         [TestMethod]
         public async Task TestInsertAndDeleteNewFeaturesAsync()
         {
-            var examplesDir = new DirectoryInfo(ExampleFeatures);
+            var xml = General.GetExampleFile("ArealressursGrense");
 
+            var lokalId = Wfs.GetLokalId(xml);
+            
             var locking = GetLocking();
 
-            foreach (var exampleFile in examplesDir.GetFiles())
-            {
-                var lokalId = new Guid(exampleFile.Name.Split('.')[0]);
+            var existingFeature = await LockAndSaveFeatureByLokalIdAsync(lokalId, locking);
 
-                var existingFeature = await LockAndSaveFeatureByLokalIdAsync(lokalId, locking);
+            if (FileHasFeatures(existingFeature)) await DeleteByLokalIdAsync(existingFeature, lokalId, locking);
 
-                if (FileHasFeatures(existingFeature)) await DeleteByLokalIdAsync(existingFeature, lokalId, locking);
+            var insertXml = Wfs.CreateInsertTransaction(xml, new List<Guid> { lokalId });
 
-                var insertXml = Wfs.CreateInsertTransaction(exampleFile.FullName, new List<Guid> { lokalId });
+            Console.WriteLine($"Executing Insert");
 
-                Console.WriteLine($"Executing Insert");
+            var response = await Execute(locking, insertXml);
 
-                var response = await Execute(locking, insertXml);
+            Assert.IsTrue(response.Features_created > 0, "No features updated");
 
-                Assert.IsTrue(response.Features_created > 0, "No features updated");
+            var newFeature = await LockAndSaveFeatureByLokalIdAsync(lokalId, locking);
 
-                var newFeature = await LockAndSaveFeatureByLokalIdAsync(lokalId, locking);
-
-                await DeleteByLokalIdAsync(newFeature, lokalId, locking);
-            }
+            await DeleteByLokalIdAsync(newFeature, lokalId, locking);
         }
 
         private static async Task<Response> Execute(Locking_type locking, string xmlFile)
@@ -203,7 +199,7 @@ namespace SFKB_clientTests
             return datasets;
         }
 
-        private async Task ReplaceByLokalIdAsync(Guid datasetId, Guid lokalId)
+        private async Task ReplaceByLokalIdAsync(Guid datasetId, Guid lokalId, string fileName)
         {
             var locking = GetLocking();
 
@@ -215,9 +211,11 @@ namespace SFKB_clientTests
 
             var lockedLokalIds = datasetLocks.SelectMany(l => l?.Features?.Select(f => f.Lokalid))?.ToList();
 
-            Assert.IsTrue(lockedLokalIds!= null && lockedLokalIds.Count > 0, $"No features locked for datasetId {datasetId} and lokalId {lokalId}");
+            Assert.IsTrue(lockedLokalIds != null && lockedLokalIds.Count > 0, $"No features locked for datasetId {datasetId} and lokalId {lokalId}");
 
-            var wfsReplaceFile = Wfs.CreateReplaceTransaction(tempFile, lockedLokalIds);
+            var xml = General.GetExampleFile(fileName);
+
+            var wfsReplaceFile = Wfs.CreateReplaceTransaction(xml, lockedLokalIds);
 
             Console.WriteLine($"Executing Replace");
 

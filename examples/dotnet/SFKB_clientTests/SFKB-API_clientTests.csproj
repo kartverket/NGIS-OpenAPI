@@ -16,8 +16,4 @@
 	</Content>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="ExampleFeatures\" />
-  </ItemGroup>
-
 </Project>

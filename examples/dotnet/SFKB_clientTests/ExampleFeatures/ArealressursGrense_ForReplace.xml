@@ -1,0 +1,1009 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<gml:FeatureCollection xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:app="http://skjema.geonorge.no/SOSI/produktspesifikasjon/FKB-Ar5/4.6" xmlns:gml="http://www.opengis.net/gml/3.2" gml:id="_e25958ca-88e0-4b39-9107-5c26b21774f6" xsi:schemaLocation="http://skjema.geonorge.no/SOSI/produktspesifikasjon/FKB-Ar5/4.6 http://skjema.geonorge.no/SOSI/produktspesifikasjon/FKB-Ar5/4.6/FKB-AR546.xsd">
+  <gml:boundedBy>
+    <gml:Envelope srsName="urn:ogc:def:crs:EPSG::25833" srsDimension="2">
+      <gml:lowerCorner>365700.39000000001 7217596.6799999997</gml:lowerCorner>
+      <gml:upperCorner>366066.62 7217802.6399999997</gml:upperCorner>
+    </gml:Envelope>
+  </gml:boundedBy>
+  <gml:featureMember>
+    <app:ArealressursGrense gml:id="app.ArealressursGrense_2e8925a7-db0c-4d14-b899-652683a5ce4c">
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>2e8925a7-db0c-4d14-b899-652683a5ce4c</app:lokalId>
+          <app:navnerom>AR5_test23</app:navnerom>
+          <app:versjonId>2019-11-11 11:57:47.371000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:datafangstdato>2014-07-13</app:datafangstdato>
+      <app:oppdateringsdato>2019-11-12T14:02:26</app:oppdateringsdato>
+      <app:opphav>FKB-Veg</app:opphav>
+      <app:registreringsversjon>
+        <app:Registreringsversjon>
+          <app:produkt>FKB-AR5</app:produkt>
+          <app:versjon>4.5 20140301</app:versjon>
+        </app:Registreringsversjon>
+      </app:registreringsversjon>
+      <app:verifiseringsdato>2014-07-13</app:verifiseringsdato>
+      <app:kvalitet>
+        <app:Posisjonskvalitet>
+          <app:målemetode>24</app:målemetode>
+          <app:nøyaktighet>39</app:nøyaktighet>
+          <app:synbarhet>0</app:synbarhet>
+        </app:Posisjonskvalitet>
+      </app:kvalitet>
+      <app:grense>
+        <gml:Curve gml:id="QMS_476eadb5-16db-4916-bdb1-2413eb886f30_2e8925a7-db0c-4d14-b899-652683a5ce4c" srsName="urn:ogc:def:crs:EPSG::25833" srsDimension="2">
+          <gml:segments>
+            <gml:LineStringSegment>
+              <gml:posList>365730.76000000001 7217690.8600000003 365736.88 7217691.8200000003 365744.78000000003 7217691.96 365751.90000000002 7217691.1399999997 365767.07000000001 7217687.9800000004 365791.95000000001 7217680.5999999996 365797.64000000001 7217678.7300000004 365802.76000000001 7217676.5300000003 365809.12 7217671.6900000004 365817.44 7217663.0300000003 365841.63 7217634.2599999998 365850.85999999999 7217624.4500000002 365855.02000000002 7217620.6200000001 365858.41999999998 7217617.9400000004 365864.54999999999 7217614.5599999996 365874.16000000003 7217611.2000000002 365892.48999999999 7217606.0599999996 365909.87 7217601.3200000003 365925.39000000001 7217597.4900000002 365932.35000000003 7217596.6799999997 365939.97999999998 7217596.7199999997 365946.66999999998 7217597.6799999997 365951.25 7217599.0700000003 365959.91999999998 7217603.1600000001 365968.92999999999 7217609.3499999996 365983.31 7217620.3600000003 366004.14000000001 7217637.96 366021.28000000003 7217654.0099999998 366035.97999999998 7217669.0300000003 366049.91000000003 7217683.8600000003 366064.14000000001 7217699.5999999996 366066.62 7217702.0099999998</gml:posList>
+            </gml:LineStringSegment>
+          </gml:segments>
+        </gml:Curve>
+      </app:grense>
+      <app:avgrensingType>7200</app:avgrensingType>
+    </app:ArealressursGrense>
+  </gml:featureMember>
+  <gml:featureMember>
+    <app:ArealressursGrense gml:id="app.ArealressursGrense_4a10b724-35e4-4187-9e7f-0d29ebe472e6">
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>4a10b724-35e4-4187-9e7f-0d29ebe472e6</app:lokalId>
+          <app:navnerom>AR5_test23</app:navnerom>
+          <app:versjonId>2019-11-11 11:57:47.371000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:datafangstdato>1987-07-01</app:datafangstdato>
+      <app:oppdateringsdato>2019-11-12T14:02:26</app:oppdateringsdato>
+      <app:opphav>NIBIO</app:opphav>
+      <app:registreringsversjon>
+        <app:Registreringsversjon>
+          <app:produkt>FKB-AR5</app:produkt>
+          <app:versjon>4.5 20140301</app:versjon>
+        </app:Registreringsversjon>
+      </app:registreringsversjon>
+      <app:verifiseringsdato>1987-07-01</app:verifiseringsdato>
+      <app:kvalitet>
+        <app:Posisjonskvalitet>
+          <app:målemetode>32</app:målemetode>
+          <app:nøyaktighet>200</app:nøyaktighet>
+          <app:synbarhet>0</app:synbarhet>
+        </app:Posisjonskvalitet>
+      </app:kvalitet>
+      <app:grense>
+        <gml:Curve gml:id="QMS_7573ac30-ea19-4c97-b135-65d01edc939b_4a10b724-35e4-4187-9e7f-0d29ebe472e6" srsName="urn:ogc:def:crs:EPSG::25833" srsDimension="2">
+          <gml:segments>
+            <gml:LineStringSegment>
+              <gml:posList>365893.88 7217757.1600000001 365903.31 7217751 365906.83000000002 7217748.0999999996 365914.41000000003 7217740.4800000004 365917.81 7217736.79 365922.81 7217733.3499999996 365924.16999999998 7217732.9199999999</gml:posList>
+            </gml:LineStringSegment>
+          </gml:segments>
+        </gml:Curve>
+      </app:grense>
+      <app:avgrensingType>4206</app:avgrensingType>
+    </app:ArealressursGrense>
+  </gml:featureMember>
+  <gml:featureMember>
+    <app:ArealressursGrense gml:id="app.ArealressursGrense_5adb0855-e467-4260-b3f8-cfd3dd38bfc3">
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>5adb0855-e467-4260-b3f8-cfd3dd38bfc3</app:lokalId>
+          <app:navnerom>AR5_test23</app:navnerom>
+          <app:versjonId>2019-11-11 11:57:47.371000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:datafangstdato>1987-07-01</app:datafangstdato>
+      <app:oppdateringsdato>2019-11-12T14:02:26</app:oppdateringsdato>
+      <app:opphav>NIBIO</app:opphav>
+      <app:registreringsversjon>
+        <app:Registreringsversjon>
+          <app:produkt>FKB-AR5</app:produkt>
+          <app:versjon>4.5 20140301</app:versjon>
+        </app:Registreringsversjon>
+      </app:registreringsversjon>
+      <app:verifiseringsdato>1987-07-01</app:verifiseringsdato>
+      <app:kvalitet>
+        <app:Posisjonskvalitet>
+          <app:målemetode>32</app:målemetode>
+          <app:nøyaktighet>200</app:nøyaktighet>
+          <app:synbarhet>0</app:synbarhet>
+        </app:Posisjonskvalitet>
+      </app:kvalitet>
+      <app:grense>
+        <gml:Curve gml:id="QMS_d2c4551f-44e3-4ae5-b72a-35b0b2e7fff6_5adb0855-e467-4260-b3f8-cfd3dd38bfc3" srsName="urn:ogc:def:crs:EPSG::25833" srsDimension="2">
+          <gml:segments>
+            <gml:LineStringSegment>
+              <gml:posList>366032.71000000002 7217750.1500000004 366039.22999999998 7217747.3700000001 366044.85999999999 7217744.71 366050.66999999998 7217741.5499999998 366052.66000000003 7217737.4900000002 366053.53999999998 7217733.4699999997 366052.65000000002 7217726.4900000002 366051.69 7217720.9199999999 366051.37 7217716.8200000003 366049.90000000002 7217706.3799999999</gml:posList>
+            </gml:LineStringSegment>
+          </gml:segments>
+        </gml:Curve>
+      </app:grense>
+      <app:avgrensingType>4206</app:avgrensingType>
+    </app:ArealressursGrense>
+  </gml:featureMember>
+  <gml:featureMember>
+    <app:ArealressursGrense gml:id="app.ArealressursGrense_679a1d39-9451-48b9-bd24-09ad34ef8f86">
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>679a1d39-9451-48b9-bd24-09ad34ef8f86</app:lokalId>
+          <app:navnerom>AR5_test23</app:navnerom>
+          <app:versjonId>2019-11-11 11:57:47.371000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:datafangstdato>2005-07-05</app:datafangstdato>
+      <app:oppdateringsdato>2019-11-12T14:02:26</app:oppdateringsdato>
+      <app:opphav>NIBIO</app:opphav>
+      <app:registreringsversjon>
+        <app:Registreringsversjon>
+          <app:produkt>FKB-AR5</app:produkt>
+          <app:versjon>4.5 20140301</app:versjon>
+        </app:Registreringsversjon>
+      </app:registreringsversjon>
+      <app:verifiseringsdato>2014-06-30</app:verifiseringsdato>
+      <app:kvalitet>
+        <app:Posisjonskvalitet>
+          <app:målemetode>45</app:målemetode>
+          <app:nøyaktighet>200</app:nøyaktighet>
+          <app:synbarhet>0</app:synbarhet>
+        </app:Posisjonskvalitet>
+      </app:kvalitet>
+      <app:grense>
+        <gml:Curve gml:id="QMS_e761c71d-2b37-45a7-8d49-787e8cd792a0_679a1d39-9451-48b9-bd24-09ad34ef8f86" srsName="urn:ogc:def:crs:EPSG::25833" srsDimension="2">
+          <gml:segments>
+            <gml:LineStringSegment>
+              <gml:posList>365756.87 7217738.6699999999 365755.22000000003 7217742.5300000003 365748.83000000002 7217749.7400000002 365744.23999999999 7217753.3099999996 365739.16000000003 7217756.6200000001 365729 7217759.2400000002 365720.81 7217759.5700000003 365711.31 7217760.5499999998 365708.35999999999 7217762.6799999997 365706.84000000003 7217767.1699999999</gml:posList>
+            </gml:LineStringSegment>
+          </gml:segments>
+        </gml:Curve>
+      </app:grense>
+      <app:avgrensingType>4206</app:avgrensingType>
+    </app:ArealressursGrense>
+  </gml:featureMember>
+  <gml:featureMember>
+    <app:ArealressursGrense gml:id="app.ArealressursGrense_9c8dc26f-6a38-4657-8de7-1c47b47379d5">
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>9c8dc26f-6a38-4657-8de7-1c47b47379d5</app:lokalId>
+          <app:navnerom>AR5_test23</app:navnerom>
+          <app:versjonId>2019-11-11 11:57:47.371000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:datafangstdato>1987-07-01</app:datafangstdato>
+      <app:oppdateringsdato>2019-11-12T14:02:26</app:oppdateringsdato>
+      <app:opphav>NIBIO</app:opphav>
+      <app:registreringsversjon>
+        <app:Registreringsversjon>
+          <app:produkt>FKB-AR5</app:produkt>
+          <app:versjon>4.5 20140301</app:versjon>
+        </app:Registreringsversjon>
+      </app:registreringsversjon>
+      <app:verifiseringsdato>1987-07-01</app:verifiseringsdato>
+      <app:kvalitet>
+        <app:Posisjonskvalitet>
+          <app:målemetode>32</app:målemetode>
+          <app:nøyaktighet>200</app:nøyaktighet>
+          <app:synbarhet>0</app:synbarhet>
+        </app:Posisjonskvalitet>
+      </app:kvalitet>
+      <app:grense>
+        <gml:Curve gml:id="QMS_992b481d-5f04-4b5a-9546-f7db8f0967a6_9c8dc26f-6a38-4657-8de7-1c47b47379d5" srsName="urn:ogc:def:crs:EPSG::25833" srsDimension="2">
+          <gml:segments>
+            <gml:LineStringSegment>
+              <gml:posList>365899.03999999998 7217802.1299999999 365902.26000000001 7217802.6399999997 365905.31 7217800.8499999996 365909.87 7217799.3200000003 365914.89000000001 7217796.3799999999 365919.87 7217792.2400000002 365924.08000000002 7217789.1200000001 365933.83000000002 7217783.4299999997 365939.22999999998 7217780.0899999999 365949.60999999999 7217775.7000000002 365960.64000000001 7217769.6900000004 365965.78999999998 7217767.7400000002 365971.70000000001 7217764.5700000003 365977.54999999999 7217762.71 365989.41999999998 7217757.8300000001 365995.17999999999 7217756.6100000003 365999.94 7217754.9800000004 366013.84000000003 7217751.4900000002 366020.03000000003 7217751.1100000003 366027.22999999998 7217750.9100000001 366032.71000000002 7217750.1500000004</gml:posList>
+            </gml:LineStringSegment>
+          </gml:segments>
+        </gml:Curve>
+      </app:grense>
+      <app:avgrensingType>4206</app:avgrensingType>
+    </app:ArealressursGrense>
+  </gml:featureMember>
+  <gml:featureMember>
+    <app:ArealressursGrense gml:id="app.ArealressursGrense_a0a7c72e-e2a5-47e3-94f1-bcc9c87525be">
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>a0a7c72e-e2a5-47e3-94f1-bcc9c87525be</app:lokalId>
+          <app:navnerom>AR5_test23</app:navnerom>
+          <app:versjonId>2019-11-11 11:57:47.371000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:datafangstdato>1987-07-01</app:datafangstdato>
+      <app:oppdateringsdato>2019-11-12T14:02:26</app:oppdateringsdato>
+      <app:opphav>NIBIO</app:opphav>
+      <app:registreringsversjon>
+        <app:Registreringsversjon>
+          <app:produkt>FKB-AR5</app:produkt>
+          <app:versjon>4.5 20140301</app:versjon>
+        </app:Registreringsversjon>
+      </app:registreringsversjon>
+      <app:verifiseringsdato>1987-07-01</app:verifiseringsdato>
+      <app:kvalitet>
+        <app:Posisjonskvalitet>
+          <app:målemetode>32</app:målemetode>
+          <app:nøyaktighet>200</app:nøyaktighet>
+          <app:synbarhet>0</app:synbarhet>
+        </app:Posisjonskvalitet>
+      </app:kvalitet>
+      <app:grense>
+        <gml:Curve gml:id="QMS_5e18f8ce-dbfc-4341-9879-09c910b95972_a0a7c72e-e2a5-47e3-94f1-bcc9c87525be" srsName="urn:ogc:def:crs:EPSG::25833" srsDimension="2">
+          <gml:segments>
+            <gml:LineStringSegment>
+              <gml:posList>365924.16999999998 7217732.9199999999 365918.81 7217715.3499999996 365916.81 7217711.9100000001 365912.77000000002 7217706.9199999999 365907.92999999999 7217702.8600000003 365902.97000000003 7217699.9000000004 365898.38 7217696.6299999999 365892.90000000002 7217697.3799999999 365880.82000000001 7217701.7199999997 365874.25 7217702.8099999996 365867.89000000001 7217704.29 365862.01000000001 7217705.0499999998 365855.32000000001 7217705.6399999997 365841.91999999998 7217705.8200000003 365834 7217705.04 365828.10000000003 7217705.0099999998 365821.81 7217705.5800000001 365817.29999999999 7217706.9100000001 365813.72999999998 7217709.6100000003 365812.25 7217714.1500000004 365811.5 7217718.0899999999</gml:posList>
+            </gml:LineStringSegment>
+          </gml:segments>
+        </gml:Curve>
+      </app:grense>
+      <app:avgrensingType>4206</app:avgrensingType>
+    </app:ArealressursGrense>
+  </gml:featureMember>
+  <gml:featureMember>
+    <app:ArealressursGrense gml:id="app.ArealressursGrense_c09c5596-b025-44c0-a578-33ec72beaaba">
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>c09c5596-b025-44c0-a578-33ec72beaaba</app:lokalId>
+          <app:navnerom>AR5_test23</app:navnerom>
+          <app:versjonId>2019-11-11 11:57:47.371000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:datafangstdato>1987-07-01</app:datafangstdato>
+      <app:oppdateringsdato>2019-11-12T14:02:26</app:oppdateringsdato>
+      <app:opphav>NIBIO</app:opphav>
+      <app:registreringsversjon>
+        <app:Registreringsversjon>
+          <app:produkt>FKB-AR5</app:produkt>
+          <app:versjon>4.5 20140301</app:versjon>
+        </app:Registreringsversjon>
+      </app:registreringsversjon>
+      <app:verifiseringsdato>1987-07-01</app:verifiseringsdato>
+      <app:kvalitet>
+        <app:Posisjonskvalitet>
+          <app:målemetode>32</app:målemetode>
+          <app:nøyaktighet>200</app:nøyaktighet>
+          <app:synbarhet>0</app:synbarhet>
+        </app:Posisjonskvalitet>
+      </app:kvalitet>
+      <app:grense>
+        <gml:Curve gml:id="QMS_43365384-f04e-44b2-8ce6-980c62f5d634_c09c5596-b025-44c0-a578-33ec72beaaba" srsName="urn:ogc:def:crs:EPSG::25833" srsDimension="2">
+          <gml:segments>
+            <gml:LineStringSegment>
+              <gml:posList>365706.84000000003 7217767.1699999999 365703.10000000003 7217762.8399999999 365700.81 7217759.5 365700.39000000001 7217744.8099999996 365702 7217737.46 365702.27000000002 7217733.4500000002 365702.04999999999 7217728.5999999996</gml:posList>
+            </gml:LineStringSegment>
+          </gml:segments>
+        </gml:Curve>
+      </app:grense>
+      <app:avgrensingType>4206</app:avgrensingType>
+    </app:ArealressursGrense>
+  </gml:featureMember>
+  <gml:featureMember>
+    <app:ArealressursGrense gml:id="app.ArealressursGrense_c10762c1-91b9-47ee-b32e-7879900cc401">
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>c10762c1-91b9-47ee-b32e-7879900cc401</app:lokalId>
+          <app:navnerom>AR5_test23</app:navnerom>
+          <app:versjonId>2019-11-11 11:57:47.371000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:datafangstdato>2005-07-05</app:datafangstdato>
+      <app:oppdateringsdato>2019-11-12T14:02:26</app:oppdateringsdato>
+      <app:opphav>NIBIO</app:opphav>
+      <app:registreringsversjon>
+        <app:Registreringsversjon>
+          <app:produkt>FKB-AR5</app:produkt>
+          <app:versjon>4.5 20140301</app:versjon>
+        </app:Registreringsversjon>
+      </app:registreringsversjon>
+      <app:verifiseringsdato>2014-06-30</app:verifiseringsdato>
+      <app:kvalitet>
+        <app:Posisjonskvalitet>
+          <app:målemetode>45</app:målemetode>
+          <app:nøyaktighet>200</app:nøyaktighet>
+          <app:synbarhet>0</app:synbarhet>
+        </app:Posisjonskvalitet>
+      </app:kvalitet>
+      <app:grense>
+        <gml:Curve gml:id="QMS_46a47793-762a-43c1-9011-556206344ea8_c10762c1-91b9-47ee-b32e-7879900cc401" srsName="urn:ogc:def:crs:EPSG::25833" srsDimension="2">
+          <gml:segments>
+            <gml:LineStringSegment>
+              <gml:posList>366066.62 7217702.0099999998 366062.31 7217703.0599999996</gml:posList>
+            </gml:LineStringSegment>
+          </gml:segments>
+        </gml:Curve>
+      </app:grense>
+      <app:avgrensingType>4206</app:avgrensingType>
+    </app:ArealressursGrense>
+  </gml:featureMember>
+  <gml:featureMember>
+    <app:ArealressursGrense gml:id="app.ArealressursGrense_e44b5162-d0da-4e43-b556-e3b3e9af0112">
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>e44b5162-d0da-4e43-b556-e3b3e9af0112</app:lokalId>
+          <app:navnerom>AR5_test23</app:navnerom>
+          <app:versjonId>2019-11-11 11:57:47.371000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:datafangstdato>2014-06-30</app:datafangstdato>
+      <app:oppdateringsdato>2019-11-12T14:02:26</app:oppdateringsdato>
+      <app:opphav>NIBIO</app:opphav>
+      <app:registreringsversjon>
+        <app:Registreringsversjon>
+          <app:produkt>FKB-AR5</app:produkt>
+          <app:versjon>4.5 20140301</app:versjon>
+        </app:Registreringsversjon>
+      </app:registreringsversjon>
+      <app:verifiseringsdato>2014-06-30</app:verifiseringsdato>
+      <app:kvalitet>
+        <app:Posisjonskvalitet>
+          <app:målemetode>45</app:målemetode>
+          <app:nøyaktighet>200</app:nøyaktighet>
+          <app:synbarhet>0</app:synbarhet>
+        </app:Posisjonskvalitet>
+      </app:kvalitet>
+      <app:grense>
+        <gml:Curve gml:id="QMS_581f989b-8a9e-4344-95b2-019131d31ab2_e44b5162-d0da-4e43-b556-e3b3e9af0112" srsName="urn:ogc:def:crs:EPSG::25833" srsDimension="2">
+          <gml:segments>
+            <gml:LineStringSegment>
+              <gml:posList>365934.41999999998 7217599.54 365948.16000000003 7217601.7000000002 365955.22000000003 7217605.2400000002 365982.29999999999 7217623.8799999999 366013.89000000001 7217652.3399999999 366049.60000000003 7217688.6500000004 366062.31 7217703.0599999996</gml:posList>
+            </gml:LineStringSegment>
+          </gml:segments>
+        </gml:Curve>
+      </app:grense>
+      <app:avgrensingType>4206</app:avgrensingType>
+    </app:ArealressursGrense>
+  </gml:featureMember>
+  <gml:featureMember>
+    <app:ArealressursGrense gml:id="app.ArealressursGrense_fd9e9960-580d-476a-9771-bca1763efad4">
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>fd9e9960-580d-476a-9771-bca1763efad4</app:lokalId>
+          <app:navnerom>AR5_test23</app:navnerom>
+          <app:versjonId>2019-11-11 11:57:47.371000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:datafangstdato>1987-07-01</app:datafangstdato>
+      <app:oppdateringsdato>2019-11-12T14:02:26</app:oppdateringsdato>
+      <app:opphav>NIBIO</app:opphav>
+      <app:registreringsversjon>
+        <app:Registreringsversjon>
+          <app:produkt>FKB-AR5</app:produkt>
+          <app:versjon>4.5 20140301</app:versjon>
+        </app:Registreringsversjon>
+      </app:registreringsversjon>
+      <app:verifiseringsdato>1987-07-01</app:verifiseringsdato>
+      <app:kvalitet>
+        <app:Posisjonskvalitet>
+          <app:målemetode>32</app:målemetode>
+          <app:nøyaktighet>200</app:nøyaktighet>
+          <app:synbarhet>0</app:synbarhet>
+        </app:Posisjonskvalitet>
+      </app:kvalitet>
+      <app:grense>
+        <gml:Curve gml:id="QMS_194759b1-d604-4df0-8263-c752a4657813_fd9e9960-580d-476a-9771-bca1763efad4" srsName="urn:ogc:def:crs:EPSG::25833" srsDimension="2">
+          <gml:segments>
+            <gml:LineStringSegment>
+              <gml:posList>365899.03999999998 7217802.1299999999 365902.41000000003 7217790.0300000003 365902.47999999998 7217785.4299999997 365900.38 7217774.9699999997 365898.41999999998 7217769.1399999997 365896.08000000002 7217764.2999999998 365893.45000000001 7217759.5800000001 365893.88 7217757.1600000001</gml:posList>
+            </gml:LineStringSegment>
+          </gml:segments>
+        </gml:Curve>
+      </app:grense>
+      <app:avgrensingType>4206</app:avgrensingType>
+    </app:ArealressursGrense>
+  </gml:featureMember>
+  <gml:featureMember>
+    <app:ArealressursGrense gml:id="app.ArealressursGrense_013636ff-1b10-4ba9-9c73-4a46cfdb1e47">
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>013636ff-1b10-4ba9-9c73-4a46cfdb1e47</app:lokalId>
+          <app:navnerom>AR5_test23</app:navnerom>
+          <app:versjonId>2019-11-11 11:57:47.371000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:datafangstdato>2005-07-05</app:datafangstdato>
+      <app:oppdateringsdato>2019-11-12T14:02:26</app:oppdateringsdato>
+      <app:opphav>NIBIO</app:opphav>
+      <app:registreringsversjon>
+        <app:Registreringsversjon>
+          <app:produkt>FKB-AR5</app:produkt>
+          <app:versjon>4.5 20140301</app:versjon>
+        </app:Registreringsversjon>
+      </app:registreringsversjon>
+      <app:verifiseringsdato>2014-06-30</app:verifiseringsdato>
+      <app:kvalitet>
+        <app:Posisjonskvalitet>
+          <app:målemetode>45</app:målemetode>
+          <app:nøyaktighet>200</app:nøyaktighet>
+          <app:synbarhet>0</app:synbarhet>
+        </app:Posisjonskvalitet>
+      </app:kvalitet>
+      <app:grense>
+        <gml:Curve gml:id="QMS_01ae8e83-2ebf-44f6-89b4-ee2536ce6050_013636ff-1b10-4ba9-9c73-4a46cfdb1e47" srsName="urn:ogc:def:crs:EPSG::25833" srsDimension="2">
+          <gml:segments>
+            <gml:LineStringSegment>
+              <gml:posList>365811.5 7217718.0899999999 365806.98999999999 7217715.6600000001</gml:posList>
+            </gml:LineStringSegment>
+          </gml:segments>
+        </gml:Curve>
+      </app:grense>
+      <app:avgrensingType>4206</app:avgrensingType>
+    </app:ArealressursGrense>
+  </gml:featureMember>
+  <gml:featureMember>
+    <app:ArealressursGrense gml:id="app.ArealressursGrense_07d3bb28-5d0e-46c8-b986-57d0a0503ffd">
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>07d3bb28-5d0e-46c8-b986-57d0a0503ffd</app:lokalId>
+          <app:navnerom>AR5_test23</app:navnerom>
+          <app:versjonId>2019-11-11 11:57:47.371000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:datafangstdato>2005-07-05</app:datafangstdato>
+      <app:oppdateringsdato>2019-11-12T14:02:26</app:oppdateringsdato>
+      <app:opphav>NIBIO</app:opphav>
+      <app:registreringsversjon>
+        <app:Registreringsversjon>
+          <app:produkt>FKB-AR5</app:produkt>
+          <app:versjon>4.5 20140301</app:versjon>
+        </app:Registreringsversjon>
+      </app:registreringsversjon>
+      <app:verifiseringsdato>2014-06-30</app:verifiseringsdato>
+      <app:kvalitet>
+        <app:Posisjonskvalitet>
+          <app:målemetode>45</app:målemetode>
+          <app:nøyaktighet>200</app:nøyaktighet>
+          <app:synbarhet>0</app:synbarhet>
+        </app:Posisjonskvalitet>
+      </app:kvalitet>
+      <app:grense>
+        <gml:Curve gml:id="QMS_18e90d9a-aa9d-4ddf-be37-60764adea486_07d3bb28-5d0e-46c8-b986-57d0a0503ffd" srsName="urn:ogc:def:crs:EPSG::25833" srsDimension="2">
+          <gml:segments>
+            <gml:LineStringSegment>
+              <gml:posList>365993.23999999999 7217663.5499999998 365989.91999999998 7217665.2300000004 365986.51000000001 7217669.0899999999 365983.56 7217675.1699999999 365983.25 7217681.2300000004 365980.60999999999 7217684.8200000003 365975.48999999999 7217685.2599999998 365967.88 7217686.8099999996 365961.04999999999 7217689.4500000002 365943.02000000002 7217688.9800000004 365935.60000000003 7217687.5800000001 365926.13 7217683.0800000001 365923.02000000002 7217677.4900000002 365919.29999999999 7217668.96 365899.69 7217660.3899999997</gml:posList>
+            </gml:LineStringSegment>
+          </gml:segments>
+        </gml:Curve>
+      </app:grense>
+      <app:avgrensingType>4206</app:avgrensingType>
+    </app:ArealressursGrense>
+  </gml:featureMember>
+  <gml:featureMember>
+    <app:ArealressursGrense gml:id="app.ArealressursGrense_0e258bfb-0b10-44c9-bec5-0a44b1d795a9">
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>0e258bfb-0b10-44c9-bec5-0a44b1d795a9</app:lokalId>
+          <app:navnerom>AR5_test23</app:navnerom>
+          <app:versjonId>2019-11-11 11:57:47.371000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:datafangstdato>2005-07-05</app:datafangstdato>
+      <app:oppdateringsdato>2019-11-12T14:02:26</app:oppdateringsdato>
+      <app:opphav>NIBIO</app:opphav>
+      <app:registreringsversjon>
+        <app:Registreringsversjon>
+          <app:produkt>FKB-AR5</app:produkt>
+          <app:versjon>4.5 20140301</app:versjon>
+        </app:Registreringsversjon>
+      </app:registreringsversjon>
+      <app:verifiseringsdato>2014-06-30</app:verifiseringsdato>
+      <app:kvalitet>
+        <app:Posisjonskvalitet>
+          <app:målemetode>45</app:målemetode>
+          <app:nøyaktighet>200</app:nøyaktighet>
+          <app:synbarhet>0</app:synbarhet>
+        </app:Posisjonskvalitet>
+      </app:kvalitet>
+      <app:grense>
+        <gml:Curve gml:id="QMS_e6aaf243-ea33-487c-a56d-9b9af3b3f674_0e258bfb-0b10-44c9-bec5-0a44b1d795a9" srsName="urn:ogc:def:crs:EPSG::25833" srsDimension="2">
+          <gml:segments>
+            <gml:LineStringSegment>
+              <gml:posList>365971.20000000001 7217712.6900000004 365975.25 7217714.3799999999 365982.26000000001 7217714.5 365988.40000000002 7217713.7699999996 366016.66999999998 7217696.4400000004 366027.23999999999 7217693.6100000003 366041.98999999999 7217694.4699999997</gml:posList>
+            </gml:LineStringSegment>
+          </gml:segments>
+        </gml:Curve>
+      </app:grense>
+      <app:avgrensingType>4206</app:avgrensingType>
+    </app:ArealressursGrense>
+  </gml:featureMember>
+  <gml:featureMember>
+    <app:ArealressursGrense gml:id="app.ArealressursGrense_3595dc1f-4221-4232-afe1-c308452bd76b">
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>3595dc1f-4221-4232-afe1-c308452bd76b</app:lokalId>
+          <app:navnerom>AR5_test23</app:navnerom>
+          <app:versjonId>2019-11-11 11:57:47.371000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:datafangstdato>2014-06-30</app:datafangstdato>
+      <app:oppdateringsdato>2019-11-12T14:02:26</app:oppdateringsdato>
+      <app:opphav>NIBIO</app:opphav>
+      <app:registreringsversjon>
+        <app:Registreringsversjon>
+          <app:produkt>FKB-AR5</app:produkt>
+          <app:versjon>4.5 20140301</app:versjon>
+        </app:Registreringsversjon>
+      </app:registreringsversjon>
+      <app:verifiseringsdato>2014-06-30</app:verifiseringsdato>
+      <app:kvalitet>
+        <app:Posisjonskvalitet>
+          <app:målemetode>45</app:målemetode>
+          <app:nøyaktighet>200</app:nøyaktighet>
+          <app:synbarhet>0</app:synbarhet>
+        </app:Posisjonskvalitet>
+      </app:kvalitet>
+      <app:grense>
+        <gml:Curve gml:id="QMS_e757b16a-8bfe-47cb-bbf5-04d6d295eceb_3595dc1f-4221-4232-afe1-c308452bd76b" srsName="urn:ogc:def:crs:EPSG::25833" srsDimension="2">
+          <gml:segments>
+            <gml:LineStringSegment>
+              <gml:posList>365904.40000000002 7217649.9800000004 365899.69 7217649.4000000004 365897.34000000003 7217650.9699999997 365895.57000000001 7217656.0700000003 365895.77000000002 7217657.4400000004 365899.69 7217660.3899999997</gml:posList>
+            </gml:LineStringSegment>
+          </gml:segments>
+        </gml:Curve>
+      </app:grense>
+      <app:avgrensingType>4206</app:avgrensingType>
+    </app:ArealressursGrense>
+  </gml:featureMember>
+  <gml:featureMember>
+    <app:ArealressursGrense gml:id="app.ArealressursGrense_aa9dba4c-0902-4bf9-a415-e32fd3f39ffa">
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>aa9dba4c-0902-4bf9-a415-e32fd3f39ffa</app:lokalId>
+          <app:navnerom>AR5_test23</app:navnerom>
+          <app:versjonId>2019-11-11 11:57:47.371000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:datafangstdato>2005-07-05</app:datafangstdato>
+      <app:oppdateringsdato>2019-11-12T14:02:26</app:oppdateringsdato>
+      <app:opphav>NIBIO</app:opphav>
+      <app:registreringsversjon>
+        <app:Registreringsversjon>
+          <app:produkt>FKB-AR5</app:produkt>
+          <app:versjon>4.5 20140301</app:versjon>
+        </app:Registreringsversjon>
+      </app:registreringsversjon>
+      <app:verifiseringsdato>2014-06-30</app:verifiseringsdato>
+      <app:kvalitet>
+        <app:Posisjonskvalitet>
+          <app:målemetode>45</app:målemetode>
+          <app:nøyaktighet>200</app:nøyaktighet>
+          <app:synbarhet>0</app:synbarhet>
+        </app:Posisjonskvalitet>
+      </app:kvalitet>
+      <app:grense>
+        <gml:Curve gml:id="QMS_9d86e2f3-8a11-41f8-b2ea-549f4faf22e5_aa9dba4c-0902-4bf9-a415-e32fd3f39ffa" srsName="urn:ogc:def:crs:EPSG::25833" srsDimension="2">
+          <gml:segments>
+            <gml:LineStringSegment>
+              <gml:posList>365702.04999999999 7217728.5999999996 365708.47999999998 7217726.0800000001 365718.35999999999 7217723.5700000003 365729.23999999999 7217720.1200000001</gml:posList>
+            </gml:LineStringSegment>
+          </gml:segments>
+        </gml:Curve>
+      </app:grense>
+      <app:avgrensingType>4206</app:avgrensingType>
+    </app:ArealressursGrense>
+  </gml:featureMember>
+  <gml:featureMember>
+    <app:ArealressursGrense gml:id="app.ArealressursGrense_d2975618-3215-46ac-aa02-a8717b263a24">
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>d2975618-3215-46ac-aa02-a8717b263a24</app:lokalId>
+          <app:navnerom>AR5_test23</app:navnerom>
+          <app:versjonId>2019-11-11 11:57:47.371000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:datafangstdato>2014-06-30</app:datafangstdato>
+      <app:oppdateringsdato>2019-11-12T14:02:26</app:oppdateringsdato>
+      <app:opphav>NIBIO</app:opphav>
+      <app:registreringsversjon>
+        <app:Registreringsversjon>
+          <app:produkt>FKB-AR5</app:produkt>
+          <app:versjon>4.5 20140301</app:versjon>
+        </app:Registreringsversjon>
+      </app:registreringsversjon>
+      <app:verifiseringsdato>2014-06-30</app:verifiseringsdato>
+      <app:kvalitet>
+        <app:Posisjonskvalitet>
+          <app:målemetode>45</app:målemetode>
+          <app:nøyaktighet>200</app:nøyaktighet>
+          <app:synbarhet>0</app:synbarhet>
+        </app:Posisjonskvalitet>
+      </app:kvalitet>
+      <app:grense>
+        <gml:Curve gml:id="QMS_53b162ea-3cb9-4ce0-a8b0-57789de3e344_d2975618-3215-46ac-aa02-a8717b263a24" srsName="urn:ogc:def:crs:EPSG::25833" srsDimension="2">
+          <gml:segments>
+            <gml:LineStringSegment>
+              <gml:posList>365730.76000000001 7217690.8600000003 365743.89000000001 7217699.1600000001 365745.54999999999 7217703.4299999997 365741.10000000003 7217716.9699999997 365739.06 7217718.0800000001 365729.23999999999 7217720.1200000001</gml:posList>
+            </gml:LineStringSegment>
+          </gml:segments>
+        </gml:Curve>
+      </app:grense>
+      <app:avgrensingType>4206</app:avgrensingType>
+    </app:ArealressursGrense>
+  </gml:featureMember>
+  <gml:featureMember>
+    <app:ArealressursGrense gml:id="app.ArealressursGrense_d99e2411-8c17-4b5a-9562-9b5b922ad909">
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>d99e2411-8c17-4b5a-9562-9b5b922ad909</app:lokalId>
+          <app:navnerom>AR5_test23</app:navnerom>
+          <app:versjonId>2019-11-11 11:57:47.371000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:datafangstdato>2005-07-05</app:datafangstdato>
+      <app:oppdateringsdato>2019-11-12T14:02:26</app:oppdateringsdato>
+      <app:opphav>NIBIO</app:opphav>
+      <app:registreringsversjon>
+        <app:Registreringsversjon>
+          <app:produkt>FKB-AR5</app:produkt>
+          <app:versjon>4.5 20140301</app:versjon>
+        </app:Registreringsversjon>
+      </app:registreringsversjon>
+      <app:verifiseringsdato>2014-06-30</app:verifiseringsdato>
+      <app:kvalitet>
+        <app:Posisjonskvalitet>
+          <app:målemetode>45</app:målemetode>
+          <app:nøyaktighet>200</app:nøyaktighet>
+          <app:synbarhet>0</app:synbarhet>
+        </app:Posisjonskvalitet>
+      </app:kvalitet>
+      <app:grense>
+        <gml:Curve gml:id="QMS_d6c4146a-f84c-442b-a156-9425c566e110_d99e2411-8c17-4b5a-9562-9b5b922ad909" srsName="urn:ogc:def:crs:EPSG::25833" srsDimension="2">
+          <gml:segments>
+            <gml:LineStringSegment>
+              <gml:posList>365904.40000000002 7217649.9800000004 365911.38 7217651.1100000003 365927.35999999999 7217636.6399999997 365930.29999999999 7217630.75 365925.47000000003 7217628.9000000004 365917.35999999999 7217628.29 365911.58000000002 7217629.2699999996 365903.47000000003 7217630.9299999997 365892.53000000003 7217630.5599999996 365881.10000000003 7217629.9400000004 365866.72000000003 7217628.3499999996 365865.12 7217626.9900000002 365865.12 7217622.4500000002 365866.85000000003 7217618.0300000003 365871.64000000001 7217615.8099999996 365878.89000000001 7217613.8399999999 365900.28000000003 7217610.5199999996 365910.47999999998 7217607.21 365923.14000000001 7217603.6399999997 365934.41999999998 7217599.54</gml:posList>
+            </gml:LineStringSegment>
+          </gml:segments>
+        </gml:Curve>
+      </app:grense>
+      <app:avgrensingType>4206</app:avgrensingType>
+    </app:ArealressursGrense>
+  </gml:featureMember>
+  <gml:featureMember>
+    <app:ArealressursGrense gml:id="app.ArealressursGrense_1d8faea5-35e4-4567-ad9c-cb3ca1542a1f">
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>1d8faea5-35e4-4567-ad9c-cb3ca1542a1f</app:lokalId>
+          <app:navnerom>AR5_test23</app:navnerom>
+          <app:versjonId>2019-11-11 11:57:47.371000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:datafangstdato>2014-06-30</app:datafangstdato>
+      <app:oppdateringsdato>2019-11-12T14:02:26</app:oppdateringsdato>
+      <app:opphav>NIBIO</app:opphav>
+      <app:registreringsversjon>
+        <app:Registreringsversjon>
+          <app:produkt>FKB-AR5</app:produkt>
+          <app:versjon>4.5 20140301</app:versjon>
+        </app:Registreringsversjon>
+      </app:registreringsversjon>
+      <app:verifiseringsdato>2014-06-30</app:verifiseringsdato>
+      <app:kvalitet>
+        <app:Posisjonskvalitet>
+          <app:målemetode>45</app:målemetode>
+          <app:nøyaktighet>200</app:nøyaktighet>
+          <app:synbarhet>0</app:synbarhet>
+        </app:Posisjonskvalitet>
+      </app:kvalitet>
+      <app:grense>
+        <gml:Curve gml:id="QMS_aa9e0d12-0373-4db8-ad26-f7fe1e35c858_1d8faea5-35e4-4567-ad9c-cb3ca1542a1f" srsName="urn:ogc:def:crs:EPSG::25833" srsDimension="2">
+          <gml:segments>
+            <gml:LineStringSegment>
+              <gml:posList>365993.23999999999 7217663.5499999998 366001.33000000002 7217668.2400000002 365999.76000000001 7217675.5 365996.03000000003 7217681.5800000001 365989.75 7217684.9199999999 365975.42999999999 7217693.75 365967.58000000002 7217701.5999999996 365966.01000000001 7217705.7199999997 365971.20000000001 7217712.6900000004</gml:posList>
+            </gml:LineStringSegment>
+          </gml:segments>
+        </gml:Curve>
+      </app:grense>
+      <app:avgrensingType>4206</app:avgrensingType>
+    </app:ArealressursGrense>
+  </gml:featureMember>
+  <gml:featureMember>
+    <app:ArealressursGrense gml:id="app.ArealressursGrense_516a978f-ec6c-4247-a7d0-ec5c804d5a08">
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>516a978f-ec6c-4247-a7d0-ec5c804d5a08</app:lokalId>
+          <app:navnerom>AR5_test23</app:navnerom>
+          <app:versjonId>2019-11-11 11:57:47.371000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:datafangstdato>2014-06-30</app:datafangstdato>
+      <app:oppdateringsdato>2019-11-12T14:02:26</app:oppdateringsdato>
+      <app:opphav>NIBIO</app:opphav>
+      <app:registreringsversjon>
+        <app:Registreringsversjon>
+          <app:produkt>FKB-AR5</app:produkt>
+          <app:versjon>4.5 20140301</app:versjon>
+        </app:Registreringsversjon>
+      </app:registreringsversjon>
+      <app:verifiseringsdato>2014-06-30</app:verifiseringsdato>
+      <app:kvalitet>
+        <app:Posisjonskvalitet>
+          <app:målemetode>45</app:målemetode>
+          <app:nøyaktighet>200</app:nøyaktighet>
+          <app:synbarhet>0</app:synbarhet>
+        </app:Posisjonskvalitet>
+      </app:kvalitet>
+      <app:grense>
+        <gml:Curve gml:id="QMS_9752b7cb-ffbc-4641-95f0-9ee936aa9bb9_516a978f-ec6c-4247-a7d0-ec5c804d5a08" srsName="urn:ogc:def:crs:EPSG::25833" srsDimension="2">
+          <gml:segments>
+            <gml:LineStringSegment>
+              <gml:posList>366041.98999999999 7217694.4699999997 366042.72999999998 7217696.4400000004 366040.88 7217698.4000000004 366037.92999999999 7217700.8600000003 366019.58000000002 7217706.5099999998 366008.59000000003 7217711.0199999996 366008.78999999998 7217711.8099999996 366010.94 7217714.75 366014.87 7217715.7300000004 366019.38 7217715.1399999997 366031.94 7217711.0199999996 366042.72999999998 7217707.7400000002 366049.90000000002 7217706.3799999999</gml:posList>
+            </gml:LineStringSegment>
+          </gml:segments>
+        </gml:Curve>
+      </app:grense>
+      <app:avgrensingType>4206</app:avgrensingType>
+    </app:ArealressursGrense>
+  </gml:featureMember>
+  <gml:featureMember>
+    <app:ArealressursGrense gml:id="app.ArealressursGrense_afa16658-215f-4bcd-9c3a-90162c0f87c0">
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>afa16658-215f-4bcd-9c3a-90162c0f87c0</app:lokalId>
+          <app:navnerom>AR5_test23</app:navnerom>
+          <app:versjonId>2019-11-11 11:57:47.371000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:datafangstdato>2014-06-30</app:datafangstdato>
+      <app:oppdateringsdato>2019-11-12T14:02:26</app:oppdateringsdato>
+      <app:opphav>NIBIO</app:opphav>
+      <app:registreringsversjon>
+        <app:Registreringsversjon>
+          <app:produkt>FKB-AR5</app:produkt>
+          <app:versjon>4.5 20140301</app:versjon>
+        </app:Registreringsversjon>
+      </app:registreringsversjon>
+      <app:verifiseringsdato>2014-06-30</app:verifiseringsdato>
+      <app:kvalitet>
+        <app:Posisjonskvalitet>
+          <app:målemetode>45</app:målemetode>
+          <app:nøyaktighet>200</app:nøyaktighet>
+          <app:synbarhet>0</app:synbarhet>
+        </app:Posisjonskvalitet>
+      </app:kvalitet>
+      <app:grense>
+        <gml:Curve gml:id="QMS_8ec1c185-0acf-4d6f-a97b-67ef63fdb6bd_afa16658-215f-4bcd-9c3a-90162c0f87c0" srsName="urn:ogc:def:crs:EPSG::25833" srsDimension="2">
+          <gml:segments>
+            <gml:LineStringSegment>
+              <gml:posList>365806.98999999999 7217715.6600000001 365804.53000000003 7217714.6799999997 365801.73999999999 7217714.5599999996 365798.59000000003 7217719.3799999999 365795.98999999999 7217730.3200000003 365792.65000000002 7217733.29 365789.29999999999 7217735.3200000003 365780.45000000001 7217735.6500000004 365765.02000000002 7217733.8499999996 365756.87 7217738.6699999999</gml:posList>
+            </gml:LineStringSegment>
+          </gml:segments>
+        </gml:Curve>
+      </app:grense>
+      <app:avgrensingType>4206</app:avgrensingType>
+    </app:ArealressursGrense>
+  </gml:featureMember>
+  <gml:featureMember>
+    <app:ArealressursGrense gml:id="app.ArealressursGrense_0003f094-b524-4a5a-bb05-d69881df853a">
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>0003f094-b524-4a5a-bb05-d69881df853a</app:lokalId>
+          <app:navnerom>AR5_test23</app:navnerom>
+          <app:versjonId>2020-08-20 10:13:42.947601100</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:datafangstdato>1987-07-01</app:datafangstdato>
+      <app:oppdateringsdato>2020-08-20T10:13:42</app:oppdateringsdato>
+      <app:opphav>NIBIO</app:opphav>
+      <app:registreringsversjon>
+        <app:Registreringsversjon>
+          <app:produkt>FKB-AR5</app:produkt>
+          <app:versjon>4.5 20140301</app:versjon>
+        </app:Registreringsversjon>
+      </app:registreringsversjon>
+      <app:verifiseringsdato>1987-07-01</app:verifiseringsdato>
+      <app:kvalitet>
+        <app:Posisjonskvalitet>
+          <app:målemetode>32</app:målemetode>
+          <app:nøyaktighet>200</app:nøyaktighet>
+          <app:synbarhet>0</app:synbarhet>
+        </app:Posisjonskvalitet>
+      </app:kvalitet>
+      <app:grense>
+        <gml:Curve gml:id="QMS_f228b830-06b0-4251-9f52-6e63b5a1c654_0003f094-b524-4a5a-bb05-d69881df853a" srsName="urn:ogc:def:crs:EPSG::25833" srsDimension="2">
+          <gml:segments>
+            <gml:LineStringSegment>
+              <gml:posList>365924.16999999998 7217732.9199999999 365927.48999999999 7217732.5099999998 365932.98999999999 7217732.46 365939.47000000003 7217731.7800000003 365944.23999999999 7217730.54 365955.33000000002 7217726.5300000003 365965.13 7217719.25 365971.20000000001 7217712.6900000004</gml:posList>
+            </gml:LineStringSegment>
+          </gml:segments>
+        </gml:Curve>
+      </app:grense>
+      <app:avgrensingType>4206</app:avgrensingType>
+    </app:ArealressursGrense>
+  </gml:featureMember>
+  <gml:featureMember>
+    <app:ArealressursFlate gml:id="app.ArealressursFlate_2b763751-78eb-43e8-a0b6-5883813db53d">
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>2b763751-78eb-43e8-a0b6-5883813db53d</app:lokalId>
+          <app:navnerom>AR5_test23</app:navnerom>
+          <app:versjonId>2020-08-20 10:13:42.947601100</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:datafangstdato>1987-07-01</app:datafangstdato>
+      <app:oppdateringsdato>2020-08-20T10:13:42</app:oppdateringsdato>
+      <app:opphav>NIBIO</app:opphav>
+      <app:registreringsversjon>
+        <app:Registreringsversjon>
+          <app:produkt>FKB-AR5</app:produkt>
+          <app:versjon>4.5 20140301</app:versjon>
+        </app:Registreringsversjon>
+      </app:registreringsversjon>
+      <app:verifiseringsdato>1987-07-01</app:verifiseringsdato>
+      <app:kvalitet>
+        <app:Posisjonskvalitet>
+          <app:målemetode>32</app:målemetode>
+          <app:nøyaktighet>1</app:nøyaktighet>
+          <app:synbarhet>0</app:synbarhet>
+        </app:Posisjonskvalitet>
+      </app:kvalitet>
+      <app:område>
+        <gml:Polygon gml:id="QMS_70a78a0a-34c8-4b00-931f-6647f7739186_a083a4ac-c4bb-4315-b1fb-6d56c895b600" srsName="urn:ogc:def:crs:EPSG::25833" srsDimension="2">
+          <gml:exterior>
+            <gml:Ring>
+              <gml:curveMember>
+                <gml:LineString gml:id="QMS_7eaeb0ec-a5c0-42ad-b707-130c2817c231_4a10b724-35e4-4187-9e7f-0d29ebe472e6">
+                  <gml:posList>365893.88 7217757.1600000001 365903.31 7217751 365906.83000000002 7217748.0999999996 365914.41000000003 7217740.4800000004 365917.81 7217736.79 365922.81 7217733.3499999996 365924.16999999998 7217732.9199999999</gml:posList>
+                </gml:LineString>
+              </gml:curveMember>
+              <gml:curveMember>
+                <gml:LineString gml:id="QMS_cb848d3f-708a-4748-96f7-5ad8c38ae156_0003f094-b524-4a5a-bb05-d69881df853a">
+                  <gml:posList>365924.16999999998 7217732.9199999999 365927.48999999999 7217732.5099999998 365932.98999999999 7217732.46 365939.47000000003 7217731.7800000003 365944.23999999999 7217730.54 365955.33000000002 7217726.5300000003 365965.13 7217719.25 365971.20000000001 7217712.6900000004</gml:posList>
+                </gml:LineString>
+              </gml:curveMember>
+              <gml:curveMember>
+                <gml:LineString gml:id="QMS_5e68e361-ecc1-40f7-a055-96ca7d8e3528_0e258bfb-0b10-44c9-bec5-0a44b1d795a9">
+                  <gml:posList>365971.20000000001 7217712.6900000004 365975.25 7217714.3799999999 365982.26000000001 7217714.5 365988.40000000002 7217713.7699999996 366016.66999999998 7217696.4400000004 366027.23999999999 7217693.6100000003 366041.98999999999 7217694.4699999997</gml:posList>
+                </gml:LineString>
+              </gml:curveMember>
+              <gml:curveMember>
+                <gml:LineString gml:id="QMS_0ae97abb-4b84-4018-affe-487e54da02ed_516a978f-ec6c-4247-a7d0-ec5c804d5a08">
+                  <gml:posList>366041.98999999999 7217694.4699999997 366042.72999999998 7217696.4400000004 366040.88 7217698.4000000004 366037.92999999999 7217700.8600000003 366019.58000000002 7217706.5099999998 366008.59000000003 7217711.0199999996 366008.78999999998 7217711.8099999996 366010.94 7217714.75 366014.87 7217715.7300000004 366019.38 7217715.1399999997 366031.94 7217711.0199999996 366042.72999999998 7217707.7400000002 366049.90000000002 7217706.3799999999</gml:posList>
+                </gml:LineString>
+              </gml:curveMember>
+              <gml:curveMember>
+                <gml:LineString gml:id="QMS_-_5624c22b-80ff-4fc7-a0d9-dc148d22c33f_5adb0855-e467-4260-b3f8-cfd3dd38bfc3">
+                  <gml:posList>366049.90000000002 7217706.3799999999 366051.37 7217716.8200000003 366051.69 7217720.9199999999 366052.65000000002 7217726.4900000002 366053.53999999998 7217733.4699999997 366052.66000000003 7217737.4900000002 366050.66999999998 7217741.5499999998 366044.85999999999 7217744.71 366039.22999999998 7217747.3700000001 366032.71000000002 7217750.1500000004</gml:posList>
+                </gml:LineString>
+              </gml:curveMember>
+              <gml:curveMember>
+                <gml:LineString gml:id="QMS_-_81957bfe-885d-4fcd-a56c-0c445f0d0a4a_9c8dc26f-6a38-4657-8de7-1c47b47379d5">
+                  <gml:posList>366032.71000000002 7217750.1500000004 366027.22999999998 7217750.9100000001 366020.03000000003 7217751.1100000003 366013.84000000003 7217751.4900000002 365999.94 7217754.9800000004 365995.17999999999 7217756.6100000003 365989.41999999998 7217757.8300000001 365977.54999999999 7217762.71 365971.70000000001 7217764.5700000003 365965.78999999998 7217767.7400000002 365960.64000000001 7217769.6900000004 365949.60999999999 7217775.7000000002 365939.22999999998 7217780.0899999999 365933.83000000002 7217783.4299999997 365924.08000000002 7217789.1200000001 365919.87 7217792.2400000002 365914.89000000001 7217796.3799999999 365909.87 7217799.3200000003 365905.31 7217800.8499999996 365902.26000000001 7217802.6399999997 365899.03999999998 7217802.1299999999</gml:posList>
+                </gml:LineString>
+              </gml:curveMember>
+              <gml:curveMember>
+                <gml:LineString gml:id="QMS_0fe841f9-6cc4-472c-8673-20faa2f3cd9d_fd9e9960-580d-476a-9771-bca1763efad4">
+                  <gml:posList>365899.03999999998 7217802.1299999999 365902.41000000003 7217790.0300000003 365902.47999999998 7217785.4299999997 365900.38 7217774.9699999997 365898.41999999998 7217769.1399999997 365896.08000000002 7217764.2999999998 365893.45000000001 7217759.5800000001 365893.88 7217757.1600000001</gml:posList>
+                </gml:LineString>
+              </gml:curveMember>
+            </gml:Ring>
+          </gml:exterior>
+        </gml:Polygon>
+      </app:område>
+      <app:posisjon>
+        <gml:Point gml:id="QMS_9ecc31ab-c84e-474d-80b6-e1d4745a43ec_551ede5f-6a5c-4937-bdf3-44591b9f6721" srsName="urn:ogc:def:crs:EPSG::25833" srsDimension="2">
+          <gml:pos>365968.03999999998 7217748.1699999999</gml:pos>
+        </gml:Point>
+      </app:posisjon>
+      <app:arealtype>30</app:arealtype>
+      <app:treslag>33</app:treslag>
+      <app:skogbonitet>12</app:skogbonitet>
+      <app:grunnforhold>44</app:grunnforhold>
+      <app:kartstandard>AR5</app:kartstandard>
+    </app:ArealressursFlate>
+  </gml:featureMember>
+  <gml:featureMember>
+    <app:ArealressursFlate gml:id="app.ArealressursFlate_20f893f2-5c8c-466f-b25b-d51ae98f1399">
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>20f893f2-5c8c-466f-b25b-d51ae98f1399</app:lokalId>
+          <app:navnerom>AR5_test23</app:navnerom>
+          <app:versjonId>2020-08-20 10:13:42.947601100</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:datafangstdato>1987-07-01</app:datafangstdato>
+      <app:oppdateringsdato>2020-08-20T10:13:42</app:oppdateringsdato>
+      <app:opphav>NIBIO</app:opphav>
+      <app:registreringsversjon>
+        <app:Registreringsversjon>
+          <app:produkt>FKB-AR5</app:produkt>
+          <app:versjon>4.5 20140301</app:versjon>
+        </app:Registreringsversjon>
+      </app:registreringsversjon>
+      <app:verifiseringsdato>1987-07-01</app:verifiseringsdato>
+      <app:kvalitet>
+        <app:Posisjonskvalitet>
+          <app:målemetode>32</app:målemetode>
+          <app:nøyaktighet>1</app:nøyaktighet>
+          <app:synbarhet>0</app:synbarhet>
+        </app:Posisjonskvalitet>
+      </app:kvalitet>
+      <app:område>
+        <gml:Polygon gml:id="QMS_cd72b574-14b9-4893-b03e-8b102e9eead7_2fa17013-a31e-416b-a3b1-dea99381e0e5" srsName="urn:ogc:def:crs:EPSG::25833" srsDimension="2">
+          <gml:exterior>
+            <gml:Ring>
+              <gml:curveMember>
+                <gml:LineString gml:id="QMS_-_22803fc9-5087-4483-8a96-c3b6376fd73f_d2975618-3215-46ac-aa02-a8717b263a24">
+                  <gml:posList>365729.23999999999 7217720.1200000001 365739.06 7217718.0800000001 365741.10000000003 7217716.9699999997 365745.54999999999 7217703.4299999997 365743.89000000001 7217699.1600000001 365730.76000000001 7217690.8600000003</gml:posList>
+                </gml:LineString>
+              </gml:curveMember>
+              <gml:curveMember>
+                <gml:LineString gml:id="QMS_dd37bcec-f0c2-4141-9b02-7a394fa31f76_2e8925a7-db0c-4d14-b899-652683a5ce4c">
+                  <gml:posList>365730.76000000001 7217690.8600000003 365736.88 7217691.8200000003 365744.78000000003 7217691.96 365751.90000000002 7217691.1399999997 365767.07000000001 7217687.9800000004 365791.95000000001 7217680.5999999996 365797.64000000001 7217678.7300000004 365802.76000000001 7217676.5300000003 365809.12 7217671.6900000004 365817.44 7217663.0300000003 365841.63 7217634.2599999998 365850.85999999999 7217624.4500000002 365855.02000000002 7217620.6200000001 365858.41999999998 7217617.9400000004 365864.54999999999 7217614.5599999996 365874.16000000003 7217611.2000000002 365892.48999999999 7217606.0599999996 365909.87 7217601.3200000003 365925.39000000001 7217597.4900000002 365932.35000000003 7217596.6799999997 365939.97999999998 7217596.7199999997 365946.66999999998 7217597.6799999997 365951.25 7217599.0700000003 365959.91999999998 7217603.1600000001 365968.92999999999 7217609.3499999996 365983.31 7217620.3600000003 366004.14000000001 7217637.96 366021.28000000003 7217654.0099999998 366035.97999999998 7217669.0300000003 366049.91000000003 7217683.8600000003 366064.14000000001 7217699.5999999996 366066.62 7217702.0099999998</gml:posList>
+                </gml:LineString>
+              </gml:curveMember>
+              <gml:curveMember>
+                <gml:LineString gml:id="QMS_c30eafc7-8b20-4989-bea7-3e3e109b397e_c10762c1-91b9-47ee-b32e-7879900cc401">
+                  <gml:posList>366066.62 7217702.0099999998 366062.31 7217703.0599999996</gml:posList>
+                </gml:LineString>
+              </gml:curveMember>
+              <gml:curveMember>
+                <gml:LineString gml:id="QMS_-_87775eec-6f38-4475-986c-7995e945e51e_e44b5162-d0da-4e43-b556-e3b3e9af0112">
+                  <gml:posList>366062.31 7217703.0599999996 366049.60000000003 7217688.6500000004 366013.89000000001 7217652.3399999999 365982.29999999999 7217623.8799999999 365955.22000000003 7217605.2400000002 365948.16000000003 7217601.7000000002 365934.41999999998 7217599.54</gml:posList>
+                </gml:LineString>
+              </gml:curveMember>
+              <gml:curveMember>
+                <gml:LineString gml:id="QMS_-_4eefa2c0-32d5-490b-bb1c-de99fe7a37de_d99e2411-8c17-4b5a-9562-9b5b922ad909">
+                  <gml:posList>365934.41999999998 7217599.54 365923.14000000001 7217603.6399999997 365910.47999999998 7217607.21 365900.28000000003 7217610.5199999996 365878.89000000001 7217613.8399999999 365871.64000000001 7217615.8099999996 365866.85000000003 7217618.0300000003 365865.12 7217622.4500000002 365865.12 7217626.9900000002 365866.72000000003 7217628.3499999996 365881.10000000003 7217629.9400000004 365892.53000000003 7217630.5599999996 365903.47000000003 7217630.9299999997 365911.58000000002 7217629.2699999996 365917.35999999999 7217628.29 365925.47000000003 7217628.9000000004 365930.29999999999 7217630.75 365927.35999999999 7217636.6399999997 365911.38 7217651.1100000003 365904.40000000002 7217649.9800000004</gml:posList>
+                </gml:LineString>
+              </gml:curveMember>
+              <gml:curveMember>
+                <gml:LineString gml:id="QMS_92c46d9c-3f5c-436e-ab92-c57fca9e2f21_3595dc1f-4221-4232-afe1-c308452bd76b">
+                  <gml:posList>365904.40000000002 7217649.9800000004 365899.69 7217649.4000000004 365897.34000000003 7217650.9699999997 365895.57000000001 7217656.0700000003 365895.77000000002 7217657.4400000004 365899.69 7217660.3899999997</gml:posList>
+                </gml:LineString>
+              </gml:curveMember>
+              <gml:curveMember>
+                <gml:LineString gml:id="QMS_-_81235d35-ad2a-48b0-a182-8acb4fe97e62_07d3bb28-5d0e-46c8-b986-57d0a0503ffd">
+                  <gml:posList>365899.69 7217660.3899999997 365919.29999999999 7217668.96 365923.02000000002 7217677.4900000002 365926.13 7217683.0800000001 365935.60000000003 7217687.5800000001 365943.02000000002 7217688.9800000004 365961.04999999999 7217689.4500000002 365967.88 7217686.8099999996 365975.48999999999 7217685.2599999998 365980.60999999999 7217684.8200000003 365983.25 7217681.2300000004 365983.56 7217675.1699999999 365986.51000000001 7217669.0899999999 365989.91999999998 7217665.2300000004 365993.23999999999 7217663.5499999998</gml:posList>
+                </gml:LineString>
+              </gml:curveMember>
+              <gml:curveMember>
+                <gml:LineString gml:id="QMS_f71b4923-2855-4f0e-be9d-49aa267bb324_1d8faea5-35e4-4567-ad9c-cb3ca1542a1f">
+                  <gml:posList>365993.23999999999 7217663.5499999998 366001.33000000002 7217668.2400000002 365999.76000000001 7217675.5 365996.03000000003 7217681.5800000001 365989.75 7217684.9199999999 365975.42999999999 7217693.75 365967.58000000002 7217701.5999999996 365966.01000000001 7217705.7199999997 365971.20000000001 7217712.6900000004</gml:posList>
+                </gml:LineString>
+              </gml:curveMember>
+              <gml:curveMember>
+                <gml:LineString gml:id="QMS_-_104948c1-faa3-43cc-9525-eb903d774887_0003f094-b524-4a5a-bb05-d69881df853a">
+                  <gml:posList>365971.20000000001 7217712.6900000004 365965.13 7217719.25 365955.33000000002 7217726.5300000003 365944.23999999999 7217730.54 365939.47000000003 7217731.7800000003 365932.98999999999 7217732.46 365927.48999999999 7217732.5099999998 365924.16999999998 7217732.9199999999</gml:posList>
+                </gml:LineString>
+              </gml:curveMember>
+              <gml:curveMember>
+                <gml:LineString gml:id="QMS_ab4881f8-5eb9-4232-aa48-aaf96b5bfb43_a0a7c72e-e2a5-47e3-94f1-bcc9c87525be">
+                  <gml:posList>365924.16999999998 7217732.9199999999 365918.81 7217715.3499999996 365916.81 7217711.9100000001 365912.77000000002 7217706.9199999999 365907.92999999999 7217702.8600000003 365902.97000000003 7217699.9000000004 365898.38 7217696.6299999999 365892.90000000002 7217697.3799999999 365880.82000000001 7217701.7199999997 365874.25 7217702.8099999996 365867.89000000001 7217704.29 365862.01000000001 7217705.0499999998 365855.32000000001 7217705.6399999997 365841.91999999998 7217705.8200000003 365834 7217705.04 365828.10000000003 7217705.0099999998 365821.81 7217705.5800000001 365817.29999999999 7217706.9100000001 365813.72999999998 7217709.6100000003 365812.25 7217714.1500000004 365811.5 7217718.0899999999</gml:posList>
+                </gml:LineString>
+              </gml:curveMember>
+              <gml:curveMember>
+                <gml:LineString gml:id="QMS_ae5cdcf7-866b-425c-8456-56c5c62fbd08_013636ff-1b10-4ba9-9c73-4a46cfdb1e47">
+                  <gml:posList>365811.5 7217718.0899999999 365806.98999999999 7217715.6600000001</gml:posList>
+                </gml:LineString>
+              </gml:curveMember>
+              <gml:curveMember>
+                <gml:LineString gml:id="QMS_2be00d3e-6451-48dd-a173-9861a1066ad3_afa16658-215f-4bcd-9c3a-90162c0f87c0">
+                  <gml:posList>365806.98999999999 7217715.6600000001 365804.53000000003 7217714.6799999997 365801.73999999999 7217714.5599999996 365798.59000000003 7217719.3799999999 365795.98999999999 7217730.3200000003 365792.65000000002 7217733.29 365789.29999999999 7217735.3200000003 365780.45000000001 7217735.6500000004 365765.02000000002 7217733.8499999996 365756.87 7217738.6699999999</gml:posList>
+                </gml:LineString>
+              </gml:curveMember>
+              <gml:curveMember>
+                <gml:LineString gml:id="QMS_a9799d05-6b77-47be-8377-2f02fee71c55_679a1d39-9451-48b9-bd24-09ad34ef8f86">
+                  <gml:posList>365756.87 7217738.6699999999 365755.22000000003 7217742.5300000003 365748.83000000002 7217749.7400000002 365744.23999999999 7217753.3099999996 365739.16000000003 7217756.6200000001 365729 7217759.2400000002 365720.81 7217759.5700000003 365711.31 7217760.5499999998 365708.35999999999 7217762.6799999997 365706.84000000003 7217767.1699999999</gml:posList>
+                </gml:LineString>
+              </gml:curveMember>
+              <gml:curveMember>
+                <gml:LineString gml:id="QMS_fa7c8181-da63-4d14-a77c-bdbadf503092_c09c5596-b025-44c0-a578-33ec72beaaba">
+                  <gml:posList>365706.84000000003 7217767.1699999999 365703.10000000003 7217762.8399999999 365700.81 7217759.5 365700.39000000001 7217744.8099999996 365702 7217737.46 365702.27000000002 7217733.4500000002 365702.04999999999 7217728.5999999996</gml:posList>
+                </gml:LineString>
+              </gml:curveMember>
+              <gml:curveMember>
+                <gml:LineString gml:id="QMS_fd80acb3-3d7c-48dd-9c7a-0637cedcad6a_aa9dba4c-0902-4bf9-a415-e32fd3f39ffa">
+                  <gml:posList>365702.04999999999 7217728.5999999996 365708.47999999998 7217726.0800000001 365718.35999999999 7217723.5700000003 365729.23999999999 7217720.1200000001</gml:posList>
+                </gml:LineString>
+              </gml:curveMember>
+            </gml:Ring>
+          </gml:exterior>
+        </gml:Polygon>
+      </app:område>
+      <app:posisjon>
+        <gml:Point gml:id="QMS_4c94c558-5a09-4f0f-beaf-88d516396bc2_b8223cb0-e262-417f-83df-fcce6e58f8c8" srsName="urn:ogc:def:crs:EPSG::25833" srsDimension="2">
+          <gml:pos>365782.15000000002 7217710.7000000002</gml:pos>
+        </gml:Point>
+      </app:posisjon>
+      <app:arealtype>30</app:arealtype>
+      <app:treslag>33</app:treslag>
+      <app:skogbonitet>13</app:skogbonitet>
+      <app:grunnforhold>44</app:grunnforhold>
+      <app:kartstandard>AR5</app:kartstandard>
+    </app:ArealressursFlate>
+  </gml:featureMember>
+</gml:FeatureCollection>
