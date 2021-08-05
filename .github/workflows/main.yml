@@ -22,11 +22,17 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: Generate Client
-        env: # Or as an environment variable
+        run: |
+          cd examples/dotnet/SFKB_clientTests
+          sh generateClient.sh
+      - name: Restore
+        run: |
+          cd examples/dotnet/SFKB_clientTests
+          dotnet restore        
+      - name: Run tests
+        env:
           api_user: ${{ secrets.API_USER }}
           api_pass: ${{ secrets.API_PASS }}
         run: |
           cd examples/dotnet/SFKB_clientTests
-          sh generateClient.sh
-          dotnet restore
           dotnet test --no-restore --verbosity normal
