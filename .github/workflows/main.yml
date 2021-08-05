@@ -28,7 +28,11 @@ jobs:
       - name: Restore
         run: |
           cd examples/dotnet/SFKB_clientTests
-          dotnet restore        
+          dotnet restore
+      - name: Build
+        run: |
+          cd examples/dotnet/SFKB_clientTests
+          dotnet build
       - name: Run tests
         env:
           api_user: ${{ secrets.API_USER }}
