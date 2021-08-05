@@ -25,8 +25,8 @@ jobs:
         working-directory: ./examples/dotnet/SFKB_clientTests
         run: generateClient.sh
       - name: Install dependencies
+        working-directory: ./examples/dotnet/SFKB_clientTests
         run: dotnet restore
-      - name: Build
-        run: dotnet build --configuration Release --no-restore
       - name: Test
+        working-directory: ./examples/dotnet/SFKB_clientTests
         run: dotnet test --no-restore --verbosity normal
