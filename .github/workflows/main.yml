@@ -22,11 +22,8 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: Generate Client
-        working-directory: ./examples/dotnet/SFKB_clientTests
-        run: generateClient.sh
-      - name: Install dependencies
-        working-directory: ./examples/dotnet/SFKB_clientTests
-        run: dotnet restore
-      - name: Test
-        working-directory: ./examples/dotnet/SFKB_clientTests
-        run: dotnet test --no-restore --verbosity normal
+        run: |
+          cd examples/dotnet/SFKB_clientTests
+          generateClient.sh
+          dotnet restore
+          dotnet test --no-restore --verbosity normal
