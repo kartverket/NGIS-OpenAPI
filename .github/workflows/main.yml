@@ -24,6 +24,6 @@ jobs:
       - name: Generate Client
         run: |
           cd examples/dotnet/SFKB_clientTests
-          generateClient.sh
+          sh generateClient.sh
           dotnet restore
           dotnet test --no-restore --verbosity normal
