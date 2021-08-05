@@ -39,4 +39,4 @@ jobs:
           api_pass: ${{ secrets.API_PASS }}
         run: |
           cd examples/dotnet/SFKB_clientTests
-          dotnet test --no-restore --verbosity normal -c Release
+          dotnet test --no-build --verbosity normal -c Release
