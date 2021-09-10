@@ -204,7 +204,7 @@ paths:
             type: string
             format: date-time
           description: |
-            Angir hvilket tidspunkt man ønsker å hente ut data på.
+            Angir hvilket tidspunkt (i henhold til ISO 8601, eks. `2020-01-30T12:13:14`) man ønsker å hente ut data på.
             
             Kan kombineres med andre parametre, f.eks `bbox`, `query`, `crs_EPSG` osv.
         - in: query
@@ -220,7 +220,7 @@ paths:
             
             Formatet er <fra>/<til> hvor `..` er det samme som hhv. "fra og med første endring" eller "til og med siste endring".
             
-            Hvis man ikke angir `..` må man angi et tidspunkt i henhold til ISO 8601, eks. `2020-01-30 12:13:14`. Man kan også angi høyere oppløsning enn sekund og tidssone med `Z` (betyr UTC) eller offset f.eks `+02:00`.
+            Hvis man ikke angir `..` må man angi et tidspunkt i henhold til ISO 8601, eks. `2020-01-30T12:13:14`. Man kan også angi høyere oppløsning enn sekund og tidssone med `Z` (betyr UTC) eller offset f.eks `+02:00`.
             
           examples:
             open_range:
@@ -230,7 +230,7 @@ paths:
               value: '../..'
               summary: Alle endringer i datasetet fra gitt tidspunkt. Dette kan f.eks komme fra datasetets `dataset_last_modified` eller `Dataset-Last-Modified`-headeren hvis man ønsker å hente ut alle endringer etter hvert som de blir gjort i datasetet.
             january_2020:
-              value: '2020-01-01 00:00:00/2020-01-31 23:59:59.999999'
+              value: '2020-01-01T00:00:00/2020-01-31T23:59:59.999999'
               summary: Spørring etter alle endringer i januar 2020
       responses:
         '200':      # Response
