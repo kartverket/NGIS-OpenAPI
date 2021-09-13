@@ -3,6 +3,7 @@ using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Xml.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json.Linq;
 using SFKB_API;
@@ -12,7 +13,9 @@ namespace SFKB_clientTests
     internal class General
     {
         private const string ConfigLocation = @"../../../config.json";
-        
+
+        private const string ExampleFeatures = "ExampleFeatures";
+
         internal static Client GetClientWithBasicAuthentication()
         {
             var basicIdentification = File.Exists(ConfigLocation)
@@ -61,6 +64,20 @@ namespace SFKB_clientTests
 
             return tempFile;
         }
-        
+
+        internal static XElement GetExampleFile(string fileName)
+        {
+            var examplesDir = new DirectoryInfo(ExampleFeatures);
+            foreach (var exampleFile in examplesDir.GetFiles($"{fileName}.*"))
+            {
+                var xml = XElement.Load(exampleFile.FullName);
+
+                Wfs.SetActiveNamespaceConstants(xml);
+
+                return xml;
+            }
+
+            throw new FileNotFoundException($"File with name {fileName} not found");
+        }
     }
 }
