@@ -202,7 +202,7 @@ paths:
           name: dataset_at
           schema:
             type: string
-            format: iso-time
+            format: date-time
           description: |
             Angir hvilket tidspunkt (i henhold til ISO 8601, eks. `2020-01-30T12:13:14`) man ønsker å hente ut data på.
             
@@ -239,7 +239,7 @@ paths:
             Dataset-Last-Modified:
               schema:
                 type: string
-                format: iso-time
+                format: date-time
               description: Tidspunkt for siste endring som kan brukes ved uthenting av historiske endringer gjort på objekter etter denne lesingen.
           content: # Response body
             
