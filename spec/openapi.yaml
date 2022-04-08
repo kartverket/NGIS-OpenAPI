@@ -19,7 +19,37 @@ info:
         - Operasjoner som håndteres: nytt objekt, endre objekt og slett objekt
     
     ## Generelle prinsipper for systemet
+    
+    ### Versjonering og bakoverkompatibilitet
+    
+    #### Versjonsnummer i URL
+    
+    Vi har et versjonsnummer `v1` i URL for å gjøre det mulig å gjøre store endringer i APIet hvis det blir nødvendig, men i utgangspunktet ønsker vi å unngå å
+    endre dette versjonsnummeret.
+    
+    #### Versjonsnummer i media types ("media type versioning", content negotiation)
+    
+    APIet baserer seg på standard [HTTP content negotiation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept) ved utveksling av data med headerne `Accept` og `Content-Type`.
+    Dette gjør det veldig enkelt å introdusere nye dataformater i APIet uten endringer for eksisterende klienter.
+    I tillegg til dette inneholder også alle dataformater et versjonsparameter, eks. `version=1.0`, der klienten kan styre hvilket 
+    eller hvilke dataformater klienten kan håndtere. Dataformater angitt uten versjonsparameter vil tolkes som å be om siste versjon.
+    
+    `Accept: application/vnd.kartverket.sosi+json; version=1.0`
+    Klienten ønsker svar med versjon 1 av dataformatet
+        
+    `Accept: application/vnd.kartverket.sosi+json; version=2.0`
+    Klienten ønsker svar med versjon 2 av dataformatet
+    
+    `Accept: application/vnd.kartverket.sosi+json`
+    Klienten ønsker svar med siste versjon av dataformatet
+    
+    `Accept: application/vnd.kartverket.sosi+json; version=1.0, application/vnd.kartverket.sosi+json; version=2.0`
+    Klienten håndterer både versjon 1.0 og 2.0 av dataformatet, og gir derfor tjenesten mulighet til å velge hvilken som skal brukes
 
+    `Accept: */*`
+    Klienten håndterer alle dataformater, og gir derfor tjenesten mulighet til å velge hvilken som skal brukes. 
+    Der man kan velge mellom flere helt ulike dataformater som f.eks GML og JSON, må man faktisk håndtere begge.
+    
     ### Delt geometri
     
     Flater består av avgrensningslinjer som ligger lagret som egne objekter. På den måten kan en linje avgrense ingen, én eller flere flater.
