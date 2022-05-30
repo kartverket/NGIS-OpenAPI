@@ -63,9 +63,9 @@ namespace SFKB_clientTests
             }
             finally
             {
-                var httpStatusIs403 = exception?.InnerException?.Message?.Contains("403") ?? false;
+                var httpStatusIs404 = exception?.InnerException?.Message?.Contains("404") ?? false;
 
-                Assert.IsTrue(httpStatusIs403, $"Wrong result when asking for non-existing Dataset");
+                Assert.IsTrue(httpStatusIs404, $"Wrong result when asking for non-existing Dataset");
             }
         }
 
@@ -133,7 +133,7 @@ namespace SFKB_clientTests
                 
                 timer.Start();
 
-                var response = await Client.UpdateDatasetFeaturesAsync(clientString, DatasetId, locking ,null, null, featureStream);
+                var response = await Client.UpdateDatasetFeaturesAsync(clientString, DatasetId, locking ,null, null,null, "1000", featureStream);
 
                 timer.Stop();
 
@@ -247,11 +247,13 @@ namespace SFKB_clientTests
                 locking,
                 null,
                 null,
-                null, 
-                References.Direct, 
+                null,
+                References.Direct,
                 100,
                 null,
-                GetLokalIdQuery(lokalId));
+                GetLokalIdQuery(lokalId),
+                null,
+                null);
 
             return General.WriteStreamToDisk(fileResponse);
         }

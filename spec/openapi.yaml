@@ -464,10 +464,10 @@ paths:
         description: Optional description in *Markdown*
         required: true
         content:
-          application/vnd.kartverket.geosynkronisering+zip; version=1.0:
+          application/vnd.kartverket.sosi+wfs-t; version=1.0:
             schema:
               type: object
-          application/vnd.kartverket.sosi+wfs-t; version=1.0:
+          application/vnd.kartverket.geosynkronisering+zip; version=1.0:
             schema:
               type: object
           application/vnd.kartverket.sosi+json; version=1.0:
