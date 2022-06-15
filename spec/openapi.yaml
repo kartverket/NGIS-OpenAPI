@@ -642,6 +642,7 @@ paths:
         Oppdaterer alle egenskapene til en bestemt feature i et dataset.
       operationId: updateDatasetFeatureAttributes
       parameters:
+        - $ref: '#/components/parameters/clientHeaderParam'
         - $ref: '#/components/parameters/datasetIdParam'
         - $ref: '#/components/parameters/lokalIdParam'
       requestBody:
