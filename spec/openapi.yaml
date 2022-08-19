@@ -482,6 +482,15 @@ paths:
                   Action kan være `Create`, `Replace` eller `Erase`. 
                   Ved `Replace` eller `Erase` med `user_lock` må objektet være hentet ut med `user_lock` før det kan endres.
                 externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/point/Bygning_replace.json'
+              singlePointErase:
+                summary: Eksempel på sletting av punkt
+                description: | 
+                  Noden `update : { action : "Erase" }` angir at objektet skal slettes. 
+                  Det er valgfritt om man ønsker å sende inn flere detaljer av objektet enn featuretype og lokalid.
+
+                  Action kan være `Create`, `Replace` eller `Erase`. 
+                  Ved `Replace` eller `Erase` med `user_lock` må objektet være hentet ut med `user_lock` før det kan endres.
+                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/point/Bygning_erase.json'
               simplePolygon:
                 summary: Eksempel på oppdatering av flate som refererer én enkel avgrensningslinje
                 description: |
