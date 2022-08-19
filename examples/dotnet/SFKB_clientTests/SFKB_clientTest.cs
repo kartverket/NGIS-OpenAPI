@@ -94,7 +94,7 @@ namespace SFKB_clientTests
         {
             await LockAndSaveFeatureByLokalIdAsync(Ar5GrenseFeatureLokalId, null);
 
-            var locks = await Client.GetDatasetLocksAsync(clientString, DatasetId, GetLocking());
+            var locks = await Client.GetDatasetLocksAsync(clientString, DatasetId, GetLocking(), GetExampleBbox(), null, null);
 
             Assert.IsTrue(locks.Count() == 0, $"Locks exists on dataset {DatasetId}");
         }
@@ -205,7 +205,7 @@ namespace SFKB_clientTests
 
             var tempFile = await LockAndSaveFeatureByLokalIdAsync(lokalId, locking);
 
-            var datasetLocks = await Client.GetDatasetLocksAsync(clientString, datasetId, locking);
+            var datasetLocks = await Client.GetDatasetLocksAsync(clientString, datasetId, locking, GetExampleBbox(), null, null);
 
             Assert.IsTrue(datasetLocks?.Count() > 0, $"No dataset found for datasetId {datasetId}");
 
@@ -228,13 +228,13 @@ namespace SFKB_clientTests
         {
             var locking = GetLocking();
 
-            var locks = await Client.GetDatasetLocksAsync(clientString, DatasetId, locking);
+            var locks = await Client.GetDatasetLocksAsync(clientString, DatasetId, locking, GetExampleBbox(), null, null);
 
             if (locks.Count == 0) return;
 
             await Client.DeleteDatasetLocksAsync(clientString, DatasetId, locking);
 
-            locks = await Client.GetDatasetLocksAsync(clientString, DatasetId, locking);
+            locks = await Client.GetDatasetLocksAsync(clientString, DatasetId, locking, GetExampleBbox(), null, null);
 
             Assert.IsTrue(locks.Count == 0, "Locks not deleted");
         }
@@ -263,22 +263,24 @@ namespace SFKB_clientTests
             return $"eq(*/identifikasjon/lokalid,{lokalid})";
         }
 
-        //private List<double> GetExampleBbox()
-        //{
-        //    var ll1 = 365600;
-        //    var ll2 = 7217500;
-        //    var ur1 = 366100;
-        //    var ur2 = 7217850;
+        private IEnumerable<double> GetExampleBbox()
+        {
+            return null;
 
-        //    return new List<double>
-        //    {
-        //        ll1, 
-        //        ll2,
-        //        ur1, 
-        //        ur2
-        //    };
-        //    //return new BoundingBox { Ll = new List<double> { ll1, ll2 }, Ur = new List<double> { ur1, ur2 } };
-        //}
+            var ll1 = 365600;
+            var ll2 = 7217500;
+            var ur1 = 366100;
+            var ur2 = 7217850;
+
+            return new List<double>
+            {
+                ll1,
+                ll2,
+                ur1,
+                ur2
+            };
+            //return new BoundingBox { Ll = new List<double> { ll1, ll2 }, Ur = new List<double> { ur1, ur2 } };
+        }
 
         //private Stream GetExampleFeatureStream(string fileName)
         //{

@@ -694,7 +694,7 @@ paths:
     get:
       tags:
        - locks
-      summary: Hent informasjon om brukerens låste features i et bestemt dataset.
+      summary: Hent informasjon om brukerens låste features i et bestemt dataset. Bruk `application/vnd.kartverket.ngis.locks+json` for kun å se egne låser, og `application/vnd.kartverket.ngis.all_locks+json` for også å se andres låser.
       description: |
         Henter bl.a. informasjon om hvilke objekter brukeren har låst i et bestemt dataset.
       operationId: getDatasetLocks
@@ -702,6 +702,9 @@ paths:
         - $ref: '#/components/parameters/clientHeaderParam'
         - $ref: '#/components/parameters/datasetIdParam'
         - $ref: '#/components/parameters/lockingParam'
+        - $ref: '#/components/parameters/bboxParam'
+        - $ref: '#/components/parameters/crsEPSGParam'
+        - $ref: '#/components/parameters/crsNormalizedForVisualizationParam'
       responses:
         '200':      # Response
           description: OK
@@ -709,6 +712,9 @@ paths:
             application/vnd.kartverket.ngis.locks+json:  # Media type
              schema: 
                $ref: '#/components/schemas/Locks'    # Reference to object definition
+            application/vnd.kartverket.ngis.all_locks+json:
+             schema: 
+               $ref: '#/components/schemas/Locks'
         '401':
           description: Gyldig autentisering av brukeren mangler eller er ugyldig
         '403':
