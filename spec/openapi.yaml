@@ -468,7 +468,7 @@ paths:
        - features
       summary: Endre features i et dataset
       description: >-
-        Henter en liste over alle dataset som brukeren har lese- eller skrivetilgang til.
+        Modifisere/Lage/Fjerne en egenskap på et datasett med spesifisering av handlingstype i BODY.
       operationId: updateDatasetFeatures
       parameters:
         - $ref: '#/components/parameters/clientHeaderParam'
