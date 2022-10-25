@@ -1,0 +1,129 @@
+{
+  "type": "FeatureCollection",
+  "crs": {
+    "type": "name",
+    "properties": {
+      "name": "EPSG:4258"
+    }
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [6.01754754010633, 65.05301923611434],
+          [6.017569097434971, 65.05292348425292],
+          [6.017645372159186, 65.05287660053294],
+          [6.017707756998817, 65.05291206094099]
+        ]
+      },
+      "properties": {
+        "featuretype": "ArealressursGrense",
+        "datafangstdato": "1981-06-01",
+        "verifiseringsdato": "1981-06-01",
+        "kvalitet": {
+          "målemetode": "32",
+          "nøyaktighet": 400,
+          "synbarhet": "0"
+        },
+        "avgrensingType": "3000",
+        "oppdateringsdato": "2019-11-13T08:27:11",
+        "opphav": "FKB-Vann",
+        "registreringsversjon": {
+          "produkt": "FKB-AR5",
+          "versjon": "4.5 20140301"
+        },
+        "identifikasjon": {
+          "navnerom": "AR5_test22",
+          "lokalId": "fb3098b3-7f94-4c1c-83cb-8bf19bd29cda",
+          "versjonId": "2019-11-11 11:57:18.918000"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [6.01754754010633, 65.05301923611434],
+          [6.017661340026365, 65.05299240917614],
+          [6.017715690944305, 65.05297041328869],
+          [6.017707756998817, 65.05291206094099]
+        ]
+      },
+      "properties": {
+        "featuretype": "ArealressursGrense",
+        "datafangstdato": "1981-06-01",
+        "verifiseringsdato": "1981-06-01",
+        "kvalitet": {
+          "målemetode": "32",
+          "nøyaktighet": 400,
+          "synbarhet": "0"
+        },
+        "avgrensingType": "3000",
+        "oppdateringsdato": "2019-11-13T08:27:11",
+        "opphav": "FKB-Vann",
+        "registreringsversjon": {
+          "produkt": "FKB-AR5",
+          "versjon": "4.5 20140301"
+        },
+        "identifikasjon": {
+          "navnerom": "AR5_test22",
+          "lokalId": "gb3098b3-7f94-4c1c-83cb-8bf19bd29cda",
+          "versjonId": "2019-11-11 11:57:18.918000"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [6.01754754010633, 65.05301923611434],
+            [6.017569097434971, 65.05292348425292],
+            [6.017645372159186, 65.05287660053294],
+            [6.017707756998817, 65.05291206094099],
+            [6.017715690944305, 65.05297041328869],
+            [6.017661340026365, 65.05299240917614],
+            [6.01754754010633, 65.05301923611434]
+          ]
+        ]
+      },
+      "properties": {
+        "featuretype": "ArealressursFlate",
+        "datafangstdato": "1999-04-30",
+        "verifiseringsdato": "1999-04-30",
+        "kvalitet": {
+          "målemetode": "82",
+          "nøyaktighet": 1,
+          "synbarhet": "0"
+        },
+        "arealtype": "81",
+        "skogbonitet": "98",
+        "treslag": "98",
+        "grunnforhold": "98",
+        "kartstandard": "AR5",
+        "oppdateringsdato": "2019-11-13T08:27:11",
+        "opphav": "FKB-Vann",
+        "registreringsversjon": {
+          "produkt": "FKB-AR5",
+          "versjon": "4.5 20140301"
+        },
+        "identifikasjon": {
+          "navnerom": "AR5_test22",
+          "lokalId": "000608e9-611f-4983-ab9c-48a5ca6980a6",
+          "versjonId": "2019-11-11 11:57:18.918000"
+        }
+      },
+      "geometry_properties": {
+        "position": [6.017637908023553, 65.05294712871674],
+        "exterior": [
+          "fb3098b3-7f94-4c1c-83cb-8bf19bd29cda",
+          "-gb3098b3-7f94-4c1c-83cb-8bf19bd29cda"
+        ]
+      }
+    }
+  ]
+}
