@@ -415,6 +415,26 @@ paths:
                   Det betyr at noen av linjene som brukes må brukes i motsatt retning - dette gjøres ved å angi `-` (minus) foran linjereferansen (lokalid).
 
                 externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/polygon/ArealressursFlater.json' 
+            application/vnd.kartverket.sosi+json; version=2.0:
+             schema:
+               type: object
+             examples: 
+               singlePoint:
+                 summary: | 
+                   Eksempel på uthentet bue
+                 externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/linestring/RpJuridiskLinje_FKB5.json'
+               simplePolygonAssociation:
+                  summary: | 
+                    Eksempel på uthentet flate med flatepunkt og en assosiasjon
+                  externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/polygon/BygningEnkeltKurve_FBK5.json'
+               polygonFourAssociations:
+                  summary: | 
+                    Eksempel på uthentet flate med flatepunkt og flere assosiasjoner
+                  externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/polygon/BygningFireKurver_FBK5.json'
+               polygonWithHole:
+                    summary: | 
+                      Eksempel på uthentet flate med flatepunkt, assosiasjoner og hull i flaten
+                    externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/polygon/BygningMedHull_FBK5.json'
             application/vnd.kartverket.sosi+gml; version=1.0:
              schema:
               type: object

@@ -1,0 +1,144 @@
+{
+    "type": "Feature",
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    614011.46,
+                    6737711.8100000005,
+                    151.54
+                ],
+                [
+                    614010.79,
+                    6737707.71,
+                    154.09
+                ],
+                [
+                    614010.1,
+                    6737703.55,
+                    151.58
+                ],
+                [
+                    614013.41,
+                    6737703.0200000005,
+                    151.51
+                ],
+                [
+                    614013.41,
+                    6737703.0200000005,
+                    151.19
+                ],
+                [
+                    614013.13,
+                    6737701.65,
+                    151.13
+                ],
+                [
+                    614015.39,
+                    6737701.34,
+                    152.62
+                ],
+                [
+                    614017.39,
+                    6737701.07,
+                    151.19
+                ],
+                [
+                    614017.5700000001,
+                    6737702.41,
+                    151.17000000000002
+                ],
+                [
+                    614017.5700000001,
+                    6737702.41,
+                    151.64000000000001
+                ],
+                [
+                    614021.11,
+                    6737701.88,
+                    151.55
+                ],
+                [
+                    614021.73,
+                    6737706.03,
+                    154.20000000000002
+                ],
+                [
+                    614022.36,
+                    6737710.17,
+                    151.77
+                ],
+                [
+                    614011.46,
+                    6737711.8100000005,
+                    151.54
+                ]
+            ]
+        ]
+    },
+    "properties": {
+        "medium": "T",
+        "featuretype": "Bygning",
+        "informasjon": "Data hentet fra Matrikkelen 04.11.16",
+        "bygningstype": "113",
+        "kommunenummer": "3413",
+        "bygningsnummer": 152926839,
+        "bygningsstatus": "TB",
+        "datafangstdato": "2007-05-03",
+        "identifikasjon": {
+            "lokalId": "d37ee33a-1973-46e5-82e3-443a6cc803be",
+            "navnerom": "testnavnerom",
+            "versjonId": "2022-08-26 09:28:31.808942000"
+        },
+        "oppdateringsdato": "2022-12-02T10:56:48",
+        "geometry_properties": {
+            "position": [
+                614017.0,
+                6737706.0
+            ]
+        },
+        "avgrensesAvBygningsavgrensning": [
+            {
+                "idx": [
+                    0,
+                    0,
+                    0
+                ],
+                "lokalId": "bdc46cf7-bead-4442-b64a-18a839b77fab",
+                "reverse": false,
+                "featuretype": "Takkant"
+            },
+            {
+                "idx": [
+                    0,
+                    0,
+                    1
+                ],
+                "lokalId": "6d6fd7f7-235f-46f1-80ab-f3aa9d82de5d",
+                "reverse": true,
+                "featuretype": "Takkant"
+            },
+            {
+                "idx": [
+                    0,
+                    0,
+                    2
+                ],
+                "lokalId": "bc9d681f-e051-4d5c-8128-ee20d691fe03",
+                "reverse": true,
+                "featuretype": "Takkant"
+            },
+            {
+                "idx": [
+                    0,
+                    0,
+                    3
+                ],
+                "lokalId": "4b4ea445-4c38-492a-b112-7594d511ec14",
+                "reverse": true,
+                "featuretype": "Takkant"
+            }
+        ]
+    }
+}
