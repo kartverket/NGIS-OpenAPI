@@ -1,0 +1,74 @@
+{
+    "type": "FeatureCollection",
+    "crs": {
+        "type": "name",
+        "properties": {
+            "name": "EPSG:5972"
+        }
+    },
+    "features": [
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        589262.01,
+                        6626044.54
+                    ],
+                    [
+                        589262.2393453701,
+                        6626043.43099064
+                    ],
+                    [
+                        589262.4061204438,
+                        6626042.310862463
+                    ],
+                    [
+                        589262.5098000371,
+                        6626041.183142818
+                    ],
+                    [
+                        589262.51,
+                        6626041.18
+                    ],
+                    [
+                        589262.5500576568,
+                        6626040.051382956
+                    ],
+                    [
+                        589262.5267665294,
+                        6626038.919146858
+                    ],
+                    [
+                        589262.4400000001,
+                        6626037.79
+                    ]
+                ]
+            },
+            "properties": {
+                "featuretype": "RpJuridiskLinje",
+                "juridisklinje": "1221",
+                "arealplanId": {
+                    "kommunenummer": "3023",
+                    "planidentifikasjon": "20100149"
+                },
+                "vertikalnivå": "2",
+                "identifikasjon": {
+                    "lokalId": "0024ca76-da2c-4274-9892-3b0e3ebce69a",
+                    "navnerom": "nesodden",
+                    "versjonId": "2020-10-30 11:07:29.434181500"
+                },
+                "førsteDigitaliseringsdato": "2018-06-12T00:00:00",
+                "kvalitet": {
+                    "målemetode": "82"
+                },
+                "oppdateringsdato": "2022-10-25T13:45:00",
+               
+            },
+            "geometry_properties": {
+                "is_circular": true
+            }
+        }
+    ]
+}

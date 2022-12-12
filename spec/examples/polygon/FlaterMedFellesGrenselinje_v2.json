@@ -1,0 +1,1147 @@
+{
+    "type": "FeatureCollection",
+    "crs": {
+        "type": "name",
+        "properties": {
+            "name": "EPSG:25832"
+        }
+    },
+    "features": [
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        370094.95,
+                        6448116.25
+                    ],
+                    [
+                        370097.20999999996,
+                        6448114.239999999
+                    ],
+                    [
+                        370099.72,
+                        6448111.06
+                    ],
+                    [
+                        370101.57,
+                        6448109.38
+                    ],
+                    [
+                        370104.42,
+                        6448110.05
+                    ],
+                    [
+                        370109.95,
+                        6448113.569999999
+                    ],
+                    [
+                        370119.70999999996,
+                        6448122.38
+                    ],
+                    [
+                        370120.76,
+                        6448139.68
+                    ],
+                    [
+                        370116.64999999997,
+                        6448145.88
+                    ],
+                    [
+                        370111.54,
+                        6448154.89
+                    ],
+                    [
+                        370109.86,
+                        6448158.16
+                    ],
+                    [
+                        370109.19,
+                        6448162.52
+                    ],
+                    [
+                        370109.0,
+                        6448168.87
+                    ]
+                ]
+            },
+            "properties": {
+                "featuretype": "ArealressursGrense",
+                "avgrensingType": "4206",
+                "verifiseringsdato": "2014-05-29",
+                "kvalitet": {
+                    "datafangstmetode": "dig",
+                    "nøyaktighet": 200,
+                    "synbarhet": "0"
+                },
+                "identifikasjon": {
+                    "navnerom": "testnavnerom",
+                    "lokalId": "a3a7a17e-dd76-4856-96f3-c5accd1904e8",
+                    "versjonId": "2022-11-03 13:08:59.772998200"
+                },
+                "oppdateringsdato": "2022-11-03T13:08:59",
+                "datafangstdato": "2009-05-01",
+                "registreringsversjon": "2014-03-01",
+                "opphav": "nibio"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        370079.24,
+                        6448142.859999999
+                    ],
+                    [
+                        370078.06,
+                        6448142.529999999
+                    ],
+                    [
+                        370068.95999999996,
+                        6448141.319999999
+                    ],
+                    [
+                        370055.51999999996,
+                        6448138.8
+                    ],
+                    [
+                        370050.29,
+                        6448137.52
+                    ],
+                    [
+                        370045.68,
+                        6448136.069999999
+                    ],
+                    [
+                        370043.01,
+                        6448134.76
+                    ],
+                    [
+                        370041.43,
+                        6448133.4799999995
+                    ],
+                    [
+                        370039.95,
+                        6448131.819999999
+                    ],
+                    [
+                        370038.45,
+                        6448129.529999999
+                    ],
+                    [
+                        370036.66,
+                        6448125.58
+                    ],
+                    [
+                        370034.3,
+                        6448119.51
+                    ],
+                    [
+                        370032.16,
+                        6448113.6899999995
+                    ],
+                    [
+                        370030.63999999996,
+                        6448110.89
+                    ],
+                    [
+                        370028.87,
+                        6448108.42
+                    ],
+                    [
+                        370026.32999999996,
+                        6448105.59
+                    ],
+                    [
+                        370023.76,
+                        6448103.35
+                    ],
+                    [
+                        370020.72,
+                        6448101.84
+                    ],
+                    [
+                        370016.49,
+                        6448100.819999999
+                    ],
+                    [
+                        370011.85,
+                        6448099.58
+                    ],
+                    [
+                        370007.24,
+                        6448097.699999999
+                    ],
+                    [
+                        370003.88999999996,
+                        6448095.33
+                    ],
+                    [
+                        370000.42,
+                        6448092.489999999
+                    ],
+                    [
+                        369998.43,
+                        6448090.35
+                    ]
+                ]
+            },
+            "properties": {
+                "featuretype": "ArealressursGrense",
+                "avgrensingType": "7200",
+                "verifiseringsdato": "2014-04-26",
+                "kvalitet": {
+                    "datafangstmetode": "fot",
+                    "nøyaktighet": 18,
+                    "synbarhet": "0"
+                },
+                "identifikasjon": {
+                    "navnerom": "testnavnerom",
+                    "lokalId": "5d1991e0-448b-476d-b3e4-667a1243abab",
+                    "versjonId": "2022-11-03 13:08:59.772998200"
+                },
+                "oppdateringsdato": "2022-11-03T13:08:59",
+                "datafangstdato": "2014-04-26",
+                "registreringsversjon": "2014-03-01",
+                "opphav": "veg"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        370026.63999999996,
+                        6448091.529999999
+                    ],
+                    [
+                        370035.94,
+                        6448106.609999999
+                    ],
+                    [
+                        370038.12,
+                        6448110.93
+                    ],
+                    [
+                        370038.45999999996,
+                        6448116.38
+                    ],
+                    [
+                        370037.87,
+                        6448118.56
+                    ],
+                    [
+                        370037.95,
+                        6448123.33
+                    ],
+                    [
+                        370039.04,
+                        6448127.109999999
+                    ],
+                    [
+                        370041.98,
+                        6448131.72
+                    ],
+                    [
+                        370045.16,
+                        6448133.89
+                    ],
+                    [
+                        370052.37,
+                        6448134.2299999995
+                    ],
+                    [
+                        370058.99,
+                        6448133.89
+                    ],
+                    [
+                        370062.08999999997,
+                        6448131.76
+                    ],
+                    [
+                        370065.19,
+                        6448125.72
+                    ],
+                    [
+                        370074.66,
+                        6448109.21
+                    ],
+                    [
+                        370077.43,
+                        6448107.87
+                    ],
+                    [
+                        370080.11,
+                        6448110.55
+                    ],
+                    [
+                        370088.82999999996,
+                        6448115.41
+                    ],
+                    [
+                        370092.6,
+                        6448116.34
+                    ],
+                    [
+                        370094.95,
+                        6448116.25
+                    ]
+                ]
+            },
+            "properties": {
+                "featuretype": "ArealressursGrense",
+                "avgrensingType": "4206",
+                "verifiseringsdato": "2014-05-29",
+                "kvalitet": {
+                    "datafangstmetode": "dig",
+                    "nøyaktighet": 200,
+                    "synbarhet": "0"
+                },
+                "identifikasjon": {
+                    "navnerom": "testnavnerom",
+                    "lokalId": "1367a3f4-6753-466a-8541-affb9f5a3405",
+                    "versjonId": "2022-11-03 13:08:59.772998200"
+                },
+                "oppdateringsdato": "2022-11-03T13:08:59",
+                "datafangstdato": "2009-05-01",
+                "registreringsversjon": "2014-03-01",
+                "opphav": "nibio"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        370026.63999999996,
+                        6448091.529999999
+                    ],
+                    [
+                        370019.47,
+                        6448085.55
+                    ]
+                ]
+            },
+            "properties": {
+                "featuretype": "ArealressursGrense",
+                "avgrensingType": "4206",
+                "verifiseringsdato": "2014-05-29",
+                "kvalitet": {
+                    "datafangstmetode": "dig",
+                    "nøyaktighet": 200,
+                    "synbarhet": "0"
+                },
+                "identifikasjon": {
+                    "navnerom": "testnavnerom",
+                    "lokalId": "32a0be69-36f0-46bb-8ae8-827057214224",
+                    "versjonId": "2022-11-03 13:08:59.772998200"
+                },
+                "oppdateringsdato": "2022-11-03T13:08:59",
+                "datafangstdato": "2014-04-26",
+                "registreringsversjon": "2014-03-01",
+                "opphav": "nibio"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        370094.68,
+                        6448154.529999999
+                    ],
+                    [
+                        370091.75,
+                        6448151.29
+                    ],
+                    [
+                        370089.13999999996,
+                        6448148.449999999
+                    ]
+                ]
+            },
+            "properties": {
+                "featuretype": "ArealressursGrense",
+                "avgrensingType": "7200",
+                "verifiseringsdato": "2014-04-26",
+                "kvalitet": {
+                    "datafangstmetode": "fot",
+                    "nøyaktighet": 18,
+                    "synbarhet": "0"
+                },
+                "identifikasjon": {
+                    "navnerom": "testnavnerom",
+                    "lokalId": "3fa8d128-0939-4053-9faf-4b071d60fd2d",
+                    "versjonId": "2022-11-03 13:08:59.772998200"
+                },
+                "oppdateringsdato": "2022-11-03T13:08:59",
+                "datafangstdato": "2014-04-26",
+                "registreringsversjon": "2014-03-01",
+                "opphav": "veg"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        370101.72,
+                        6448163.1899999995
+                    ],
+                    [
+                        370098.63,
+                        6448159.22
+                    ],
+                    [
+                        370094.68,
+                        6448154.529999999
+                    ]
+                ]
+            },
+            "properties": {
+                "featuretype": "ArealressursGrense",
+                "avgrensingType": "7200",
+                "verifiseringsdato": "2014-04-26",
+                "kvalitet": {
+                    "datafangstmetode": "fot",
+                    "nøyaktighet": 31,
+                    "synbarhet": "0"
+                },
+                "identifikasjon": {
+                    "navnerom": "testnavnerom",
+                    "lokalId": "5892ca34-93b9-4ce4-9785-dcee5f756084",
+                    "versjonId": "2022-11-03 13:08:59.772998200"
+                },
+                "oppdateringsdato": "2022-11-03T13:08:59",
+                "datafangstdato": "2014-04-26",
+                "registreringsversjon": "2014-03-01",
+                "opphav": "veg"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        370081.45,
+                        6448143.5
+                    ],
+                    [
+                        370079.24,
+                        6448142.859999999
+                    ]
+                ]
+            },
+            "properties": {
+                "featuretype": "ArealressursGrense",
+                "avgrensingType": "7200",
+                "verifiseringsdato": "2014-04-26",
+                "kvalitet": {
+                    "datafangstmetode": "fot",
+                    "nøyaktighet": 31,
+                    "synbarhet": "0"
+                },
+                "identifikasjon": {
+                    "navnerom": "testnavnerom",
+                    "lokalId": "76023908-fff8-4439-b886-51d160314aad",
+                    "versjonId": "2022-11-03 13:08:59.772998200"
+                },
+                "oppdateringsdato": "2022-11-03T13:08:59",
+                "datafangstdato": "2014-04-26",
+                "registreringsversjon": "2014-03-01",
+                "opphav": "veg"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        370081.45,
+                        6448143.5
+                    ],
+                    [
+                        370087.27999999997,
+                        6448128.08
+                    ],
+                    [
+                        370094.95,
+                        6448116.25
+                    ]
+                ]
+            },
+            "properties": {
+                "featuretype": "ArealressursGrense",
+                "avgrensingType": "4206",
+                "verifiseringsdato": "2014-05-29",
+                "kvalitet": {
+                    "datafangstmetode": "dig",
+                    "nøyaktighet": 200,
+                    "synbarhet": "0"
+                },
+                "identifikasjon": {
+                    "navnerom": "testnavnerom",
+                    "lokalId": "775410fb-1b6d-4b94-aa41-5a971910b6f5",
+                    "versjonId": "2022-11-03 13:08:59.772998200"
+                },
+                "oppdateringsdato": "2022-11-03T13:08:59",
+                "datafangstdato": "2014-04-26",
+                "registreringsversjon": "2014-03-01",
+                "opphav": "nibio"
+            },
+            "update": {
+                "action": "Replace"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        370089.13999999996,
+                        6448148.449999999
+                    ],
+                    [
+                        370088.16,
+                        6448147.38
+                    ],
+                    [
+                        370085.68,
+                        6448145.4399999995
+                    ],
+                    [
+                        370082.37,
+                        6448143.76
+                    ],
+                    [
+                        370081.45,
+                        6448143.5
+                    ]
+                ]
+            },
+            "properties": {
+                "featuretype": "ArealressursGrense",
+                "avgrensingType": "7200",
+                "verifiseringsdato": "2014-04-26",
+                "kvalitet": {
+                    "datafangstmetode": "fot",
+                    "nøyaktighet": 31,
+                    "synbarhet": "0"
+                },
+                "identifikasjon": {
+                    "navnerom": "testnavnerom",
+                    "lokalId": "99648e98-2373-441b-9b48-91d44896d6a2",
+                    "versjonId": "2022-11-03 13:08:59.772998200"
+                },
+                "oppdateringsdato": "2022-11-03T13:08:59",
+                "datafangstdato": "2014-04-26",
+                "registreringsversjon": "2014-03-01",
+                "opphav": "veg"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        370109.0,
+                        6448168.87
+                    ],
+                    [
+                        370106.92,
+                        6448167.67
+                    ],
+                    [
+                        370104.07999999996,
+                        6448165.59
+                    ],
+                    [
+                        370101.72,
+                        6448163.1899999995
+                    ]
+                ]
+            },
+            "properties": {
+                "featuretype": "ArealressursGrense",
+                "avgrensingType": "7200",
+                "verifiseringsdato": "2014-04-26",
+                "kvalitet": {
+                    "datafangstmetode": "fot",
+                    "nøyaktighet": 18,
+                    "synbarhet": "0"
+                },
+                "identifikasjon": {
+                    "navnerom": "testnavnerom",
+                    "lokalId": "baa5037f-2c4d-42e5-a670-c5be68726591",
+                    "versjonId": "2022-11-03 13:08:59.772998200"
+                },
+                "oppdateringsdato": "2022-11-03T13:08:59",
+                "datafangstdato": "2014-04-26",
+                "registreringsversjon": "2014-03-01",
+                "opphav": "veg"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        369998.43,
+                        6448090.35
+                    ],
+                    [
+                        370002.12,
+                        6448088.38
+                    ],
+                    [
+                        370009.3,
+                        6448088.25
+                    ],
+                    [
+                        370015.16,
+                        6448087.58
+                    ],
+                    [
+                        370019.47,
+                        6448085.55
+                    ]
+                ]
+            },
+            "properties": {
+                "featuretype": "ArealressursGrense",
+                "avgrensingType": "4206",
+                "verifiseringsdato": "2014-05-29",
+                "kvalitet": {
+                    "datafangstmetode": "dig",
+                    "nøyaktighet": 200,
+                    "synbarhet": "0"
+                },
+                "identifikasjon": {
+                    "navnerom": "testnavnerom",
+                    "lokalId": "805ac7c9-4a00-4b05-9b05-7b05c6aac7a9",
+                    "versjonId": "2022-11-03 13:08:59.772998200"
+                },
+                "oppdateringsdato": "2022-11-03T13:08:59",
+                "datafangstdato": "2009-05-01",
+                "registreringsversjon": "2014-03-01",
+                "opphav": "nibio"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            370081.45,
+                            6448143.5,
+                            0.0
+                        ],
+                        [
+                            370087.27999999997,
+                            6448128.08
+                        ],
+                        [
+                            370094.95,
+                            6448116.25
+                        ],
+                        [
+                            370097.20999999996,
+                            6448114.239999999
+                        ],
+                        [
+                            370099.72,
+                            6448111.06
+                        ],
+                        [
+                            370101.57,
+                            6448109.38
+                        ],
+                        [
+                            370104.42,
+                            6448110.05
+                        ],
+                        [
+                            370109.95,
+                            6448113.569999999
+                        ],
+                        [
+                            370119.70999999996,
+                            6448122.38
+                        ],
+                        [
+                            370120.76,
+                            6448139.68
+                        ],
+                        [
+                            370116.64999999997,
+                            6448145.88
+                        ],
+                        [
+                            370111.54,
+                            6448154.89
+                        ],
+                        [
+                            370109.86,
+                            6448158.16
+                        ],
+                        [
+                            370109.19,
+                            6448162.52
+                        ],
+                        [
+                            370109.0,
+                            6448168.87
+                        ],
+                        [
+                            370106.92,
+                            6448167.67
+                        ],
+                        [
+                            370104.07999999996,
+                            6448165.59
+                        ],
+                        [
+                            370101.72,
+                            6448163.1899999995
+                        ],
+                        [
+                            370098.63,
+                            6448159.22
+                        ],
+                        [
+                            370094.68,
+                            6448154.529999999
+                        ],
+                        [
+                            370091.75,
+                            6448151.29
+                        ],
+                        [
+                            370089.13999999996,
+                            6448148.449999999
+                        ],
+                        [
+                            370088.16,
+                            6448147.38
+                        ],
+                        [
+                            370085.68,
+                            6448145.4399999995
+                        ],
+                        [
+                            370082.37,
+                            6448143.76
+                        ],
+                        [
+                            370081.45,
+                            6448143.5
+                        ]
+                    ]
+                ]
+            },
+            "properties": {
+                "featuretype": "ArealressursFlate",
+                "arealtype": "11",
+                "treslag": "98",
+                "skogbonitet": "98",
+                "grunnforhold": "98",
+                "klassifiseringsmetode": "sOrto",
+                "verifiseringsdato": "2014-05-29",
+                "identifikasjon": {
+                    "navnerom": "testnavnerom",
+                    "lokalId": "53afeb23-2131-4e06-afe9-de6a86511398",
+                    "versjonId": "2022-11-03 13:08:59.772998200"
+                },
+                "oppdateringsdato": "2022-11-03T13:08:59",
+                "datafangstdato": "2014-04-26",
+                "registreringsversjon": "2014-03-01",
+                "opphav": "nibio",
+                "avgrensesAvArealressursGrense": [
+                    {
+                        "featuretype": "ArealressursGrense",
+                        "lokalId": "775410fb-1b6d-4b94-aa41-5a971910b6f5",
+                        "reverse": false,
+                        "idx": [
+                            0,
+                            0,
+                            0
+                        ]
+                    },
+                    {
+                        "featuretype": "ArealressursGrense",
+                        "lokalId": "a3a7a17e-dd76-4856-96f3-c5accd1904e8",
+                        "reverse": false,
+                        "idx": [
+                            0,
+                            0,
+                            1
+                        ]
+                    },
+                    {
+                        "featuretype": "ArealressursGrense",
+                        "lokalId": "baa5037f-2c4d-42e5-a670-c5be68726591",
+                        "reverse": false,
+                        "idx": [
+                            0,
+                            0,
+                            2
+                        ]
+                    },
+                    {
+                        "featuretype": "ArealressursGrense",
+                        "lokalId": "5892ca34-93b9-4ce4-9785-dcee5f756084",
+                        "reverse": false,
+                        "idx": [
+                            0,
+                            0,
+                            3
+                        ]
+                    },
+                    {
+                        "featuretype": "ArealressursGrense",
+                        "lokalId": "3fa8d128-0939-4053-9faf-4b071d60fd2d",
+                        "reverse": false,
+                        "idx": [
+                            0,
+                            0,
+                            4
+                        ]
+                    },
+                    {
+                        "featuretype": "ArealressursGrense",
+                        "lokalId": "99648e98-2373-441b-9b48-91d44896d6a2",
+                        "reverse": false,
+                        "idx": [
+                            0,
+                            0,
+                            5
+                        ]
+                    }
+                ],
+                "geometry_properties": {
+                    "position": [
+                        370103.00512073445,
+                        6448136.484669697
+                    ]
+                }
+            }, 
+            "update": {
+                "action": "Replace"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            370079.24,
+                            6448142.859999999,
+                            0.0
+                        ],
+                        [
+                            370078.06,
+                            6448142.529999999
+                        ],
+                        [
+                            370068.95999999996,
+                            6448141.319999999
+                        ],
+                        [
+                            370055.51999999996,
+                            6448138.8
+                        ],
+                        [
+                            370050.29,
+                            6448137.52
+                        ],
+                        [
+                            370045.68,
+                            6448136.069999999
+                        ],
+                        [
+                            370043.01,
+                            6448134.76
+                        ],
+                        [
+                            370041.43,
+                            6448133.4799999995
+                        ],
+                        [
+                            370039.95,
+                            6448131.819999999
+                        ],
+                        [
+                            370038.45,
+                            6448129.529999999
+                        ],
+                        [
+                            370036.66,
+                            6448125.58
+                        ],
+                        [
+                            370034.3,
+                            6448119.51
+                        ],
+                        [
+                            370032.16,
+                            6448113.6899999995
+                        ],
+                        [
+                            370030.63999999996,
+                            6448110.89
+                        ],
+                        [
+                            370028.87,
+                            6448108.42
+                        ],
+                        [
+                            370026.32999999996,
+                            6448105.59
+                        ],
+                        [
+                            370023.76,
+                            6448103.35
+                        ],
+                        [
+                            370020.72,
+                            6448101.84
+                        ],
+                        [
+                            370016.49,
+                            6448100.819999999
+                        ],
+                        [
+                            370011.85,
+                            6448099.58
+                        ],
+                        [
+                            370007.24,
+                            6448097.699999999
+                        ],
+                        [
+                            370003.88999999996,
+                            6448095.33
+                        ],
+                        [
+                            370000.42,
+                            6448092.489999999
+                        ],
+                        [
+                            369998.43,
+                            6448090.35
+                        ],
+                        [
+                            370002.12,
+                            6448088.38
+                        ],
+                        [
+                            370009.3,
+                            6448088.25
+                        ],
+                        [
+                            370015.16,
+                            6448087.58
+                        ],
+                        [
+                            370019.47,
+                            6448085.55
+                        ],
+                        [
+                            370026.63999999996,
+                            6448091.529999999
+                        ],
+                        [
+                            370035.94,
+                            6448106.609999999
+                        ],
+                        [
+                            370038.12,
+                            6448110.93
+                        ],
+                        [
+                            370038.45999999996,
+                            6448116.38
+                        ],
+                        [
+                            370037.87,
+                            6448118.56
+                        ],
+                        [
+                            370037.95,
+                            6448123.33
+                        ],
+                        [
+                            370039.04,
+                            6448127.109999999
+                        ],
+                        [
+                            370041.98,
+                            6448131.72
+                        ],
+                        [
+                            370045.16,
+                            6448133.89
+                        ],
+                        [
+                            370052.37,
+                            6448134.2299999995
+                        ],
+                        [
+                            370058.99,
+                            6448133.89
+                        ],
+                        [
+                            370062.08999999997,
+                            6448131.76
+                        ],
+                        [
+                            370065.19,
+                            6448125.72
+                        ],
+                        [
+                            370074.66,
+                            6448109.21
+                        ],
+                        [
+                            370077.43,
+                            6448107.87
+                        ],
+                        [
+                            370080.11,
+                            6448110.55
+                        ],
+                        [
+                            370088.82999999996,
+                            6448115.41
+                        ],
+                        [
+                            370092.6,
+                            6448116.34
+                        ],
+                        [
+                            370094.95,
+                            6448116.25
+                        ],
+                        [
+                            370087.27999999997,
+                            6448128.08
+                        ],
+                        [
+                            370081.45,
+                            6448143.5
+                        ],
+                        [
+                            370079.24,
+                            6448142.859999999
+                        ]
+                    ]
+                ]
+            },
+            "properties": {
+                "featuretype": "ArealressursFlate",
+                "arealtype": "50",
+                "treslag": "39",
+                "skogbonitet": "11",
+                "grunnforhold": "44",
+                "klassifiseringsmetode": "sFelt",
+                "verifiseringsdato": "2000-10-31",
+                "identifikasjon": {
+                    "navnerom": "testnavnerom",
+                    "lokalId": "474d5712-fcff-4e35-a0f6-1eb4cfb767f5",
+                    "versjonId": "2022-11-03 13:08:59.772998200"
+                },
+                "oppdateringsdato": "2022-11-03T13:08:59",
+                "datafangstdato": "2000-10-31",
+                "registreringsversjon": "2014-03-01",
+                "opphav": "ok",
+                "avgrensesAvArealressursGrense": [
+                    {
+                        "featuretype": "ArealressursGrense",
+                        "lokalId": "5d1991e0-448b-476d-b3e4-667a1243abab",
+                        "reverse": false,
+                        "idx": [
+                            0,
+                            0,
+                            0
+                        ]
+                    },
+                    {
+                        "featuretype": "ArealressursGrense",
+                        "lokalId": "805ac7c9-4a00-4b05-9b05-7b05c6aac7a9",
+                        "reverse": false,
+                        "idx": [
+                            0,
+                            0,
+                            1
+                        ]
+                    },
+                    {
+                        "featuretype": "ArealressursGrense",
+                        "lokalId": "32a0be69-36f0-46bb-8ae8-827057214224",
+                        "reverse": true,
+                        "idx": [
+                            0,
+                            0,
+                            2
+                        ]
+                    },
+                    {
+                        "featuretype": "ArealressursGrense",
+                        "lokalId": "1367a3f4-6753-466a-8541-affb9f5a3405",
+                        "reverse": false,
+                        "idx": [
+                            0,
+                            0,
+                            3
+                        ]
+                    },
+                    {
+                        "featuretype": "ArealressursGrense",
+                        "lokalId": "775410fb-1b6d-4b94-aa41-5a971910b6f5",
+                        "reverse": true,
+                        "idx": [
+                            0,
+                            0,
+                            4
+                        ]
+                    },
+                    {
+                        "featuretype": "ArealressursGrense",
+                        "lokalId": "76023908-fff8-4439-b886-51d160314aad",
+                        "reverse": false,
+                        "idx": [
+                            0,
+                            0,
+                            5
+                        ]
+                    }
+                ],
+                "geometry_properties": {
+                    "position": [
+                        370082.3848810943,
+                        6448116.90645577
+                    ]
+                }
+            }, 
+            "update": {
+                "action": "Replace"
+            }
+        }
+    ]
+}
