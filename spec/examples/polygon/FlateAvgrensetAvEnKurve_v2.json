@@ -1,0 +1,60 @@
+{
+    "type": "Feature",
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    615722.9,
+                    6739898.08,
+                    0.0
+                ],
+                [
+                    615726.92,
+                    6739904.5200000005
+                ],
+                [
+                    615723.36,
+                    6739906.74
+                ],
+                [
+                    615719.34,
+                    6739900.3100000005
+                ],
+                [
+                    615722.9,
+                    6739898.08
+                ]
+            ]
+        ]
+    },
+    "properties": {
+        "medium": "T",
+        "featuretype": "AnnenBygning",
+        "datafangstdato": "2021-04-08",
+        "identifikasjon": {
+            "lokalId": "7a819ccd-40e3-4361-87db-56ffd54f44ac",
+            "navnerom": "testnavnerom",
+            "versjonId": "2022-08-26 09:28:31.808942000"
+        },
+        "oppdateringsdato": "2022-12-02T10:56:48",
+        "geometry_properties": {
+            "position": [
+                615723.14,
+                6739902.41
+            ]
+        },
+        "avgrensesAvBygningsavgrensningTiltak": [
+            {
+                "idx": [
+                    0,
+                    0,
+                    0
+                ],
+                "lokalId": "b8138e17-9ec4-4627-8cfc-93984a136872",
+                "reverse": false,
+                "featuretype": "BygningsavgrensningTiltak"
+            }
+        ]
+    }
+}

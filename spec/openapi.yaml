@@ -371,15 +371,24 @@ paths:
                 summary: |
                   Eksempel på uthentet linje
                 externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/linestring/Mønelinje.json'
-              singleArc:
-                summary: Eksempel på uthentet bue
+              singleArcv1:
+                summary: Eksempel på uthentet bue med json versjon 1
                 description: |
                   En bue beskrives av tre punkter (første, midtre og siste), men standarden GeoJSON har ingen egen type for bue.
                   
                   For å støtte enkel lesing/tegning av buer med eksisterende verktøy som støtter standard GeoJSON, ligger en bue derfor som en "vanlig" linje med `is_circular=true` i `geometry_properties` og flere punkter langs linjen som beskriver buen.
                   
                   Ved oppdatering av buen - eller dersom klienten vil tegne eksakte buer - må klienten forholde seg til første, midtre og siste punkt (og kan da fjerne/overse de andre punktene).
-                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/linestring/RpFormålGrense.json'
+                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/linestring/Bue-v1.json'
+              singleArcv2:
+                  summary: Eksempel på uthentet bue med json versjon 2
+                  description: |
+                    En bue beskrives av tre punkter (første, midtre og siste), men standarden GeoJSON har ingen egen type for bue.
+                    
+                    For å støtte enkel lesing/tegning av buer med eksisterende verktøy som støtter standard GeoJSON, ligger en bue derfor som en "vanlig" linje med `is_circular=true` i `geometry_properties` og flere punkter langs linjen som beskriver buen.
+                    
+                    Ved oppdatering av buen - eller dersom klienten vil tegne eksakte buer - må klienten forholde seg til første, midtre og siste punkt (og kan da fjerne/overse de andre punktene).
+                  externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/linestring/Bue-v2.json'
               simplePolygon:
                 summary: Eksempel på uthentet flate som refererer én enkel avgrensningslinje
                 description: |
@@ -415,6 +424,38 @@ paths:
                   Det betyr at noen av linjene som brukes må brukes i motsatt retning - dette gjøres ved å angi `-` (minus) foran linjereferansen (lokalid).
 
                 externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/polygon/ArealressursFlater.json' 
+            application/vnd.kartverket.sosi+json; version=2.0:
+             schema:
+               type: object
+             examples: 
+               singlePoint:
+                 summary: | 
+                   Eksempel på uthentet bue
+                 externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/linestring/Bue-v2.json'
+               simplePolygonAssociation:
+                  summary: | 
+                    Eksempel på uthentet flate med flatepunkt og en assosiasjon
+                  externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/polygon/FlateAvgrensetAvEnKurve_v2.json'
+               polygonFourAssociations:
+                  summary: | 
+                    Eksempel på uthentet flate med flatepunkt og flere assosiasjoner
+                  externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/polygon/FlateAvgrensetAvFireKurver_v2.json'
+               polygonWithHole:
+                    summary: | 
+                      Eksempel på uthentet flate med flatepunkt, assosiasjoner og hull i flaten
+                    externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/polygon/FlateMedHull_v2.json'
+               polygonHeleid:
+                      summary: | 
+                        Eksempel på uthentet flate med heleid geometri
+                      externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/polygon/FlateMedHeleidGeometri_v2.json' 
+               polygonHeleidWithHole:
+                      summary: | 
+                        Eksempel på uthentet flate med heleid geometri med hull
+                      externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/polygon/FlateMedHeileidGeometriMedHull_v2.json'
+               polygonWithSharedLine:
+                        summary: | 
+                          Eksempel på uthentet flater med felles grenselinje
+                        externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/polygon/FlaterMedFellesGrenselinje_v2.json'
             application/vnd.kartverket.sosi+gml; version=1.0:
              schema:
               type: object
@@ -579,7 +620,44 @@ paths:
                   Legg merke til at det kun sendes inn endring på aktuell avgrensningslinje med endring og flaten - den andre avgresningslinjen er ikke endret, men må være med som støtteobjekt.
 
                 externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/polygon/Arealressursflate_dobbel_replace.json'
-          
+              polygonDoubleLineSingleReplace:
+                summary: Eksempel på oppdatering av en av avgrensningslinjene i en flate hvor linjen som ikke oppdateres ikke tas med.
+                description: |
+                  Den eneste forskjellen fra fra uthentede objekter i innholdet er `update : { action : "Replace" }` som angir at objektet skal erstattes.
+
+                  Action kan være `Create`, `Replace` eller `Erase`. 
+                  Ved `Replace` eller `Erase` med `user_lock` må objektet være hentet ut med `user_lock` før det kan endres.
+
+                  Representasjonspunktet som ligger inne i flaten ligger i `geometry_properties` som `position`.
+
+                  Lenkene til avgrensningslinjer (bruker linjenes lokalid) ligger i `geometry_properties` under `exterior`.
+                  
+                  Lenkene til indre avgrensningslinjer ligger i `geometry_properties` under `interiors` (liste av liste av linjenes lokalid).
+
+                  Ytre avgrensningslinjer i en flate må ha retning mot klokka (CCW) og indre avgrensningslinjer må ha retning med klokka.
+                  Det betyr at noen av linjene som brukes må brukes i motsatt retning - dette gjøres ved å angi `-` (minus) foran linjereferansen (lokalid).
+
+                  Legg merke til at det kun sendes inn endring på aktuell avgrensningslinje med endring og flaten - den andre avgresningslinjen er ikke tatt med.
+
+                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/polygon/Arealressursflate_dobbel.json'
+              polygonsSharedBoundary:
+                summary: Eksempel på oppdatering av flater som deler avgrensingslinje
+                description: |
+                  Den eneste forskjellen fra fra uthentede objekter i innholdet er `update : { action : "Replace" }` som angir at objektet skal erstattes.
+
+                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/polygon/Arealressursflate_dobbel.json'
+          application/vnd.kartverket.sosi+json; version=2.0:
+            schema:
+              type: object
+            examples: 
+              polygonHeleidGeometry:
+                  summary: Eksempel på oppdatering av en heleid flate
+                  description: |
+                  externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/point/FlateMedHeleidGeometri_v2_update.json'
+              polygonHeleidGeometryWithHole:
+                summary: Eksempel på oppdatering av en heleid flate med hull
+                description: |
+                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/point/FlateMedHeileidGeometriMedHull_update_v2.json'
       responses: #TODO: valideringsfeil
         '200':
           description: OK
