@@ -76,6 +76,25 @@ info:
     
     Det er også mulig å hente ut historikken som endringer, f.eks som endringer fra et tidligere uthentet område, objekt eller helt dataset. Se etter parameteret `dataset_modified`.
     
+    ### FKB5 og QMS13
+
+    I forbindelse med FKB5 så har det blitt gjort endring i geojson formatet som kommer fra NGIS-OpenAPI.
+    Ved bruk av json versjon 2 formatet så finner man nå noden `geometry_properties` er flyttet til å være under properties.
+
+    Det er innført to nye egenskaper som kommer med assosiasjoner.
+    Den første er `reverse` og er en boolean verdi som sier om linjens retning skal snus eller ikke for å danne en sammenhengende flateavgrensing.
+    Den andre er `idx` og er en array med tre tall-verdier. Arrayet beskriver hvilken flateavgrensing linjen tilhører.
+
+    Første verdi heter `flatenummer` og brukes hvis det er multisurface og angir hvilken av flatene linja tilhører. 
+    - Skal ellers være 0
+
+    Andre verdi heter `avgrensningsnummer` og angir om dette er ytre eller indre avgrensning, og eventuelt hvilken indre avgrensning linja tilhører.
+    - Ytre avgrensning: 0
+    - Indre avgrensning/hull: 1 og oppover
+
+    Tredje verdi heter `linjenummer` og angir rekkefølgen til avgrensningslinjene.
+    - Starter på 0.
+
 servers:
   - description: Test-server Norkart
     url: https://qmsrest.westeurope.cloudapp.azure.com:8080/v1/
