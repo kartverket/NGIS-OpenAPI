@@ -76,12 +76,37 @@ info:
     
     Det er også mulig å hente ut historikken som endringer, f.eks som endringer fra et tidligere uthentet område, objekt eller helt dataset. Se etter parameteret `dataset_modified`.
     
+    ### FKB5 og QMS13
+
+    I forbindelse med FKB5 har det blitt gjort endringer i GeoJSON-formatet som benyttes i NGIS-OpenAPI. Endringene gjelder ved bruk av Versjon 2 av formatet,  som er påkrevd versjon for FKB 5.
+
+    Endringer i GeoJSON-formatet, Versjon 2:
+      - Noden `geometry_properties` er flyttet under `properties`
+      - Formatet støtter assosiasjoner mellom objekter og geometri-assosiasjoner ved flater med delt geometri
+      - Formatet støtter heleid geometri
+
+    #### Assosiasjoner mellom objekter
+    Et objekt kan ha en assosiasjon til ett eller flere andre objekter. Assosiasjonene av samme type ligger i en array med `lokalId` og `featuretype` til det assosierte objektet.
+    
+    Flater kan være modellert med krav om delt geometri for flateavgrensningen. Dette angis via geometri-assosiasjoner fra flate-objektet til linjene-objektene som avgrenser flata. 
+    I tillegg til assosiasjons-informasjonen beskrevet over, har geometri-assosiasjonene følgende egenskaper for hvert assosiert objekt:
+        
+    `reverse` er en bool som forteller om linjas retning skal snus eller ikke for å danne en sammenhengende flateavgrensing med de andre avgrensningslinjene.
+    
+    `idx` er ett array med tre indekser som gir informasjon om avgrensningslinja:
+       1. angir hvilken flate linja tilhører (aktuell ved framtidig bruk av MultiSurface), skal for enkeltflater være 0
+       2. angir om linja tilhører ytre eller en indre avgrensning (hull) og eventuelt hvilken indre avgrensning linja tilhører
+          - Ytre avgrensning: 0
+          - Indre avgrensning/hull: 1..n
+       3. angir hvilken rekkefølge linja har i avgrensningen av flata som dannes av alle avgrensninslinjene (starter på 0)
+
 servers:
   - description: Test-server Norkart
-    url: https://qmsrest.westeurope.cloudapp.azure.com:8080/v1/
+    url: https://qmsrest.westeurope.cloudapp.azure.com:8080/v1
   - description: Server hos Kartverket
-    url: https://openapi-test.kartverket.no/v1/
-    
+    url: https://openapi-test.kartverket.no/v1
+  - description: Server hos Kartverket med QMS13
+    url: https://openapi-test13.kartverket.no/v1
 
 security:
   - basicAuth: []  # <-- use the same name here
