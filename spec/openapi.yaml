@@ -78,22 +78,27 @@ info:
     
     ### FKB5 og QMS13
 
-    I forbindelse med FKB5 så har det blitt gjort endring i geojson formatet som kommer fra NGIS-OpenAPI.
-    Ved bruk av json versjon 2 formatet så finner man nå noden `geometry_properties` er flyttet til å være under properties.
+    I forbindelse med FKB5 har det blitt gjort endringer i GeoJSON-formatet som benyttes i NGIS-OpenAPI. Endringene gjelder ved bruk av Versjon 2 av formatet,  som er påkrevd versjon for FKB 5.
 
-    Det er innført to nye egenskaper som kommer med assosiasjoner.
-    Den første er `reverse` og er en boolean verdi som sier om linjens retning skal snus eller ikke for å danne en sammenhengende flateavgrensing.
-    Den andre er `idx` og er en array med tre tall-verdier. Arrayet beskriver hvilken flateavgrensing linjen tilhører.
+    Endringer i GeoJSON-formatet, Versjon 2:
+      - Noden `geometry_properties` er flyttet under `properties`
+      - Formatet støtter assosiasjoner mellom objekter og geometri-assosiasjoner ved flater med delt geometri
+      - Formatet støtter heleid geometri
 
-    Første verdi heter `flatenummer` og brukes hvis det er multisurface og angir hvilken av flatene linja tilhører. 
-    - Skal ellers være 0
-
-    Andre verdi heter `avgrensningsnummer` og angir om dette er ytre eller indre avgrensning, og eventuelt hvilken indre avgrensning linja tilhører.
-    - Ytre avgrensning: 0
-    - Indre avgrensning/hull: 1 og oppover
-
-    Tredje verdi heter `linjenummer` og angir rekkefølgen til avgrensningslinjene.
-    - Starter på 0.
+    #### Assosiasjoner mellom objekter
+    Et objekt kan ha en assosiasjon til ett eller flere andre objekter. Assosiasjonene av samme type ligger i en array med `lokalId` og `featuretype` til det assosierte objektet.
+    
+    Flater kan være modellert med krav om delt geometri for flateavgrensningen. Dette angis via geometri-assosiasjoner fra flate-objektet til linjene-objektene som avgrenser flata. 
+    I tillegg til assosiasjons-informasjonen beskrevet over, har geometri-assosiasjonene følgende egenskaper for hvert assosiert objekt:
+        
+    `reverse` er en bool som forteller om linjas retning skal snus eller ikke for å danne en sammenhengende flateavgrensing med de andre avgrensningslinjene.
+    
+    `idx` er ett array med tre indekser som gir informasjon om avgrensningslinja:
+       1. angir hvilken flate linja tilhører (aktuell ved framtidig bruk av MultiSurface), skal for enkeltflater være 0
+       2. angir om linja tilhører ytre eller en indre avgrensning (hull) og eventuelt hvilken indre avgrensning linja tilhører
+          - Ytre avgrensning: 0
+          - Indre avgrensning/hull: 1..n
+       3. angir hvilken rekkefølge linja har i avgrensningen av flata som dannes av alle avgrensninslinjene (starter på 0)
 
 servers:
   - description: Test-server Norkart
