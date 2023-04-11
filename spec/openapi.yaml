@@ -348,7 +348,7 @@ paths:
           description: |
             Angir hvilket tidspunkt (i henhold til ISO 8601, eks. `2020-01-30T12:13:14`) man ønsker å hente ut data på.
             
-            Kan kombineres med andre parametre, f.eks `bbox`, `query`, `crs_EPSG` osv.
+            Kan kombineres med andre parametre, f.eks `crs_EPSG` osv. Kan foreløpig ikke kombineres med `query`, og ved bruk av `bbox` kan ikke `references` være annet enn `none` (hvis ikke angitt blir det satt til `none`).
         - in: query
           name: dataset_modified
           schema:
@@ -358,7 +358,7 @@ paths:
             
             Må kombineres med `Accept`-header med samme dataformat som ved lagring av endringer.
             
-            Kan kombineres med andre parametre, f.eks `bbox`, `query`, `crs_EPSG` osv.
+            Kan kombineres med andre parametre, f.eks `crs_EPSG` osv. Kan foreløpig ikke kombineres med `query`, og ved bruk av `bbox` kan ikke `references` være annet enn `none` (hvis ikke angitt blir det satt til `none`).
             
             Formatet er <fra>/<til> hvor `..` er det samme som hhv. "fra og med første endring" eller "til og med siste endring".
             
@@ -368,9 +368,9 @@ paths:
             open_range:
               value: '../..'
               summary: Alle endringer i datasetet fra og med første og til og med siste.
-            all_changes_since:
-              value: '../..'
-              summary: Alle endringer i datasetet fra gitt tidspunkt. Dette kan f.eks komme fra datasetets `dataset_last_modified` eller `Dataset-Last-Modified`-headeren hvis man ønsker å hente ut alle endringer etter hvert som de blir gjort i datasetet.
+            all_changes_since_january_2020:
+              value: '2020-01-01T00:00:00/..'
+              summary: Alle endringer i datasetet fra 1. januar 2020 kl 00:00. Dette kan f.eks komme fra datasetets `dataset_last_modified` eller `Dataset-Last-Modified`-headeren hvis man ønsker å hente ut alle endringer etter hvert som de blir gjort i datasetet.
             january_2020:
               value: '2020-01-01T00:00:00/2020-01-31T23:59:59.999999'
               summary: Spørring etter alle endringer i januar 2020
@@ -1046,7 +1046,7 @@ components:
         
         Dette kan være aktuelt for å få ut alle objekter som ikke er direkte knyttet til et objekt, som f.eks mønelinje og takkant til en bygning.
         
-        Merk: I kombinasjon med `bbox` blir alltid `references` satt til `none`
+        Merk: Dersom `references` ikke er angitt blir det satt til `none` 
     crsEPSGParam:
       in: query
       name: crs_EPSG
