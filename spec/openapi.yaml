@@ -311,15 +311,18 @@ paths:
             
             Spørrespråket er basert på [RQL](https://github.com/persvr/rql).
             
-            Foreløpig støttes kun `eq` og `in` for bestemte objekttyper og egenskaper.
-            
-            Eksemplene inneholder alle støttede spørringer.
+            Man kan bruke `eq`, `lt` (less than), `le` (less than or equal), `gt` (greater than), `ge` (greater than or equal) eller `in` (lik eq, men med liste av verdier - kun støttet for spørring etter identifikasjon/lokalid).
           examples:
             bygningsnummer:
               value: 'eq(Bygning/bygningsnummer,1234)'
-              summary: Spørring etter ett bestemt bygningsnummer for objekttypen Bygning
+              summary: Bygning og bygningsnummer lik 1234
               description: |
                Spørringen henter ut alle objekter med objekttypen Bygning med egenskapen bygningsnummer = 1234.
+            bygningsnummer:
+              value: 'gt(Bygning/bygningsnummer,1234)'
+              summary: Bygning og bygningsnummer større enn 1234
+              description: |
+               Spørringen henter ut alle objekter med objekttypen Bygning med egenskapen bygningsnummer > 1234.
             lokalid:
               value: 'eq(*/identifikasjon/lokalid,000a7b9b-7088-482f-a3cf-9761b97a54b6)'
               summary: Spørring etter ett bestemt objekt med gitt lokalid
@@ -332,14 +335,14 @@ paths:
                 Når objekt(er) hentes ut med lokalid er det normalt ikke nødvendig å filtrere på objekttype, derfor er objekttypen angitt med `*`.
             feature_type:
               value: 'eq(*,Bygning)'
-              summary: Spørring etter alle objekter med en bestemt objekttype
+              summary: Spørring etter alle objekter med en bestemt objekttype, uten noen bestemt egenskapsverdi.
               description: |
-                Vi bruker `*` for å angi at vi kun filtrerer på objekttype.
+                Vi bruker `*` uten noen angitt egenskap for å angi at vi kun filtrerer på objekttype.
             feature_type_multi:
               value: 'in(*,Bygning,AnnenBygning)'
-              summary: Spørring etter flere objekter med lokalid
+              summary: Spørring etter alle objekter med flere objekttyper, uten noen bestemt egenskapsverdi.
               description: |
-                Vi bruker `*` for å angi at vi kun filtrerer på objekttype.
+                Vi bruker `*` uten noen angitt egenskap for å angi at vi kun filtrerer på objekttype.
         - in: query
           name: dataset_at
           schema:
