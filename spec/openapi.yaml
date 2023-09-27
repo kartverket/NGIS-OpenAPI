@@ -11,6 +11,7 @@ info:
     Grov oversikt over funksjonalitet:
       - Hente liste over tilgjengelige datasett 
       - Hente metadata for et bestemt datasett
+      - Hente JSON Schema tilhørende et bestemt datasett
       - Hente data fra et bestemt datasett
         - Med lesetilgang eller skrivetilgang (medfører låsing)
           - områdebegrensning
@@ -191,6 +192,44 @@ paths:
           description: Ugyldig brukernavn og/eller passord
         '404':
           description: Fant ikke angitt dataset
+        '500':
+          description: Intern feil på serveren
+        '501':
+          description: Intern feil på serveren (kallet er ikke implementert)
+        '503':
+          description: Intern feil på serveren (tjenesten er utilgjengelig)
+  
+  /datasets/{datasetId}/schema:
+    get:
+      tags:
+       - metadata
+      summary: Hent schema/objektkatalog for et bestemt dataset
+      description: |
+        Henter schema for et bestemt dataset. Den angir lovlige verdier for egenskaper, gyldige geometrier etc. for data som skrives inn til (og hentes ut fra) datasetet.
+      operationId: getDatasetSchema
+      parameters:
+        - $ref: '#/components/parameters/clientHeaderParam'
+        - $ref: '#/components/parameters/datasetIdParam'
+      responses:
+        '200':      # Response
+          description: OK
+          content:  # Response body
+            application/vnd.kartverket.ngis.typeregistry+protobuf:
+              schema:
+                type: string
+                format: binary
+            application/vnd.kartverket.ngis.dataset+json; version=1.0:
+              schema: 
+                type: string
+                format: binary
+        '401':
+          description: Gyldig autentisering av brukeren mangler eller er ugyldig
+        '406':
+          description: Formatet klienten ønsker på data er ugyldig. Klienten har f.eks en ugyldig Accept-header og kan ikke motta data på et format som serveren kan levere
+        '403':
+          description: Ugyldig brukernavn og/eller passord
+        '404':
+          description: Fant ikke angitt schema, schema/objektkatalog er ikke definert i datasetet (da kan det heller ikke inneholde data)
         '500':
           description: Intern feil på serveren
         '501':
@@ -1053,7 +1092,7 @@ components:
       schema:
         type: integer
       description: |
-        Angir EPSG-kode for koordinatsystemet til koordinatene som sendes inn i spørringen (f.eks i bbox), som sendes inn som data, og som sendes tilbake. Påkrevd dersom bbox-parameteret brukes.
+        Angir EPSG-kode for koordinatsystemet til koordinatene som sendes inn i spørringen (f.eks i bbox), som sendes inn som data, og som sendes tilbake. Påkrevd dersom bbox-parameteret brukes og har koordinater i annet koordinatsystem enn datasetet.
       examples: 
         epsg5975_NN2000:
           value: 5975
