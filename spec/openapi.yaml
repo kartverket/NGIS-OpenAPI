@@ -14,9 +14,10 @@ info:
       - Hente data fra et bestemt datasett
         - Med lesetilgang eller skrivetilgang (medfører låsing)
           - områdebegrensning
-          - egenskapsspørring (begrenset i første versjon til bygningsnummer eller lokalid)
+          - egenskapsspørring
       - Lagre data til et bestemt datasett
         - Operasjoner som håndteres: nytt objekt, endre objekt og slett objekt
+      - Metoder for å jobbe mot egenskapene til et objekt i et bestemt datasett
     
     ## Generelle prinsipper for systemet
     
@@ -59,8 +60,10 @@ info:
     ### Låsing
     
     Dette er nærmere beskrevet i de aktuelle kallene.
-
-    Foreløpig er det kun `user_lock` som er støttet. Det betyr at data må hentes ut med `user_lock` før de kan sendes inn med endringer.
+    
+    Det er to typer låser:
+    - `user_lock`, der man kun angir `locking_type=user_lock` ved henting og skriving av objekter. Hvis ikke samtlige objekter kan låses, feiler kallet. En bruker kan kun ha én lås per dataset av gangen.
+    - `id_lock`, der man angir `locking_type=id_lock` og må håndtere løsenøkkel `lock_id` selv. Hvis ikke samtlige objekter kan låses, blir kun de objektene som kan låses, låst. Resten forblir låst av andre. En bruker kan ha vilkårlig antall låser, men må holde styr på låsenøklene selv.
     
     ### Porsjonering
     
@@ -68,7 +71,9 @@ info:
     
     ### Koordinatsystemer og transformasjon
     
-    Dersom annet koordinatsystem enn det som ligger i dataset skal brukes (se `GET /datasets/{datasetId}`) må koordinatsystem angis med `crs_EPSG`-parameteret. Dette styrer data som sendes inn, data som hentes ut og koordinatsystemet i `bbox`-parameteret i kallet. For å bytte rekkefølge på aksene brukes `crs_normalized_for_visualization`-parameteret.
+    Dersom annet koordinatsystem enn det som ligger i dataset skal brukes (se `GET /datasets/{datasetId}`) må koordinatsystem angis med `crs_EPSG`-parameteret. 
+    Dette styrer data som sendes inn, data som hentes ut og koordinatsystemet i `bbox`-parameteret i kallet. 
+    For å bytte rekkefølge på aksene (gjelder kun for geodetiske koordinater lat/lon) brukes `crs_normalized_for_visualization`-parameteret.
     
     ### Historikk og historiske endringer
     
@@ -1131,16 +1136,22 @@ components:
       name: locking_type
       schema:
         type: string
-        enum: [user_lock] # future: lock_id,optimistic_locking
+        enum: [user_lock, id_lock]
       description: |
-        Angir låsetype som skal brukes (foreløpig er kun `user_lock` støttet). Krever at brukeren har skrivetilgang mot dataset'et.
+        Angir låsetype som skal brukes. Krever at brukeren har skrivetilgang mot dataset'et.
         
         *user_lock*
 
         Hver bruker har én lås per dataset. Hver gang data hentes ut med `user_lock` legges objektene til denne låsen. 
-        Alle objekter i låsen låses opp neste gang brukeren skriver data til dataset'et.
 
         Låsen vil fjernes neste gang brukeren skriver data til dataset'et med `user_lock`, eller dersom låsen slettes.
+
+        *id_lock*
+
+        Hver bruker kan lage flere låser per dataset. Låsing av objektene må håndteres med POST /datasets/:id/locks.
+        
+        Låsen vil fjernes neste gang brukeren skriver data til dataset'et med `id_lock` og angitt låsenøkkel med `locking_id`, eller dersom låsen slettes.
+        
     lokalIdParam:
       in: path
       name: lokalId
