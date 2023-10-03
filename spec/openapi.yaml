@@ -301,6 +301,7 @@ paths:
         - $ref: '#/components/parameters/clientHeaderParam'
         - $ref: '#/components/parameters/datasetIdParam'
         - $ref: '#/components/parameters/lockingParam'
+        - $ref: '#/components/parameters/lockingIdParam'
         - $ref: '#/components/parameters/bboxParam'
         - $ref: '#/components/parameters/crsEPSGParam'
         - $ref: '#/components/parameters/crsNormalizedForVisualizationParam'
@@ -548,6 +549,7 @@ paths:
         - $ref: '#/components/parameters/clientHeaderParam'
         - $ref: '#/components/parameters/datasetIdParam'
         - $ref: '#/components/parameters/lockingParam'
+        - $ref: '#/components/parameters/lockingIdParam'
         - $ref: '#/components/parameters/crsEPSGParam'
         - $ref: '#/components/parameters/crsNormalizedForVisualizationParam'
         - in: query
@@ -738,6 +740,7 @@ paths:
         - $ref: '#/components/parameters/datasetIdParam'
         - $ref: '#/components/parameters/lokalIdParam'
         - $ref: '#/components/parameters/lockingParam'
+        - $ref: '#/components/parameters/lockingIdParam'
         - $ref: '#/components/parameters/referencesParam'
         - $ref: '#/components/parameters/limitParam'
         - $ref: '#/components/parameters/crsEPSGParam'
@@ -851,6 +854,38 @@ paths:
         '503':
           description: Intern feil på serveren (tjenesten er utilgjengelig)
   /datasets/{datasetId}/locks:
+    post:
+      tags:
+       - locks
+      summary: Lås features i et dataset uten å hente ut data.
+      description: |
+        Lenke til uthenting av data ligger i response `Link`-header på samme måte som porsjonering.
+      operationId: postDatasetLocks
+      parameters:
+        - $ref: '#/components/parameters/clientHeaderParam'
+        - $ref: '#/components/parameters/datasetIdParam'
+        - $ref: '#/components/parameters/lockingParam'
+        - $ref: '#/components/parameters/bboxParam'
+        - $ref: '#/components/parameters/crsEPSGParam'
+        - $ref: '#/components/parameters/crsNormalizedForVisualizationParam'
+      responses:
+        '200':      # Response
+          description: OK
+          content:  # Response body
+            application/vnd.kartverket.ngis.locks+json:  # Media type
+             schema: 
+               $ref: '#/components/schemas/Locks'    # Reference to object definition
+            application/vnd.kartverket.ngis.all_locks+json:
+             schema: 
+               $ref: '#/components/schemas/Locks'
+        '401':
+          description: Gyldig autentisering av brukeren mangler eller er ugyldig
+        '403':
+          description: Ugyldig brukernavn og/eller passord
+        '404':
+          description: Fant ikke angitt dataset
+        '406':
+          description: Formatet klienten ønsker på data er ugyldig. Klienten har f.eks en ugyldig Accept-header og kan ikke motta data på et format som serveren kan levere
     get:
       tags:
        - locks
@@ -1148,10 +1183,19 @@ components:
 
         *id_lock*
 
-        Hver bruker kan lage flere låser per dataset. Låsing av objektene må håndteres med POST /datasets/:id/locks.
+        Hver bruker kan lage flere låser per dataset. Låsing av objektene må håndteres med POST /datasets/:id/locks eller ved å hente ut data med `id_lock`. For sistnevnte må låsenøkkel/id hentes med GET /datasets/:id/locks.
         
         Låsen vil fjernes neste gang brukeren skriver data til dataset'et med `id_lock` og angitt låsenøkkel med `locking_id`, eller dersom låsen slettes.
-        
+
+    lockingIdParam:
+      in: query
+      name: locking_id
+      schema:
+        type: integer
+        format: int32
+        minimum: 1
+      description: |
+        Brukes ved skriving av data med lås, dersom lås er hentet med `locking_type=id_lock`.      
     lokalIdParam:
       in: path
       name: lokalId
