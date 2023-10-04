@@ -244,6 +244,37 @@ paths:
           description: Intern feil på serveren (kallet er ikke implementert)
         '503':
           description: Intern feil på serveren (tjenesten er utilgjengelig)
+  /datasets/{datasetId}/log:
+    get:
+      tags:
+       - metadata
+      summary: Hent arkiv loggen for et bestemt dataset
+      description: |
+        Hent en liste med oppføringer i arkiv loggen
+      operationId: getLog
+      parameters:        
+        - $ref: '#/components/parameters/clientHeaderParam'
+        - $ref: '#/components/parameters/datasetIdParam'
+        - $ref: '#/components/parameters/bboxParam'
+        - $ref: '#/components/parameters/crsEPSGParam'
+        - $ref: '#/components/parameters/crsNormalizedForVisualizationParam'
+      responses:
+        '200':      # Response
+          description: OK
+          content:  # Response body
+            application/vnd.kartverket.ngis.dataset_changelog+json; version=1.0:  # Media type
+              schema: 
+                $ref: '#/components/schemas/Log'    # Reference to object definition
+        '401':
+          description: Gyldig autentisering av brukeren mangler eller er ugyldig
+        '406':
+          description: Formatet klienten ønsker på data er ugyldig. Klienten har f.eks en ugyldig Accept-header og kan ikke motta data på et format som serveren kan levere
+        '500':
+          description: Intern feil på serveren
+        '501':
+          description: Intern feil på serveren (kallet er ikke implementert)
+        '503':
+          description: Intern feil på serveren (tjenesten er utilgjengelig)
   /datasets/{datasetId}/job_status/{jobId}:
     get:
       tags:
@@ -993,6 +1024,88 @@ components:
           $ref: '#/components/schemas/BoundingBox'
         copy_transaction_token:
           type: string
+    Log:
+      type: array
+      items:
+        type: object
+        properties:
+            areaname:
+              type: string
+            comment:
+              type: string
+              example:
+                "antall porsjoner 6"
+            features:
+              type: object
+              properties:
+                  bbox:
+                    type: array
+                    items:
+                      type: number
+                    example:
+                      - 582455.36
+                      - 6770367.69
+                      - 582957.75
+                      - 6770780.09
+                  created:
+                    type: string
+                    example:
+                      "0"
+                  erased:
+                    type: string
+                    example:
+                      "0"
+                  replaced:
+                    type: string
+                    example:
+                      "2"
+            operations:
+              type: object
+              properties:
+                ArchiveMetadata:
+                  type: boolean
+                  example:
+                    false
+                DataWrittenWithHistory:
+                  type: boolean
+                  example:
+                    false
+                DelArchive:
+                  type: boolean
+                DelHistory:
+                  type: boolean
+                DelHistoryBeforeTimestamp:
+                  type: boolean
+                DelHorizontalRefSys:
+                  type: boolean
+                DelSpatialData:
+                  type: boolean
+                DelTypeRegistry:
+                  type: boolean
+                DelVerticalRefSys:
+                  type: boolean
+                HistoryWasRemoved:
+                  type: boolean
+                LastTransactionId:
+                  type: boolean
+                Parameters:
+                  type: boolean
+                SinglePortionWithCommit:
+                  type: boolean
+                TypeRegistry:
+                  type: boolean
+            taskname:
+              type: string
+              example:
+                "havn_22_nk"
+            timestamp:
+              type: string
+              example:
+                "2023-02-13T14:59:08"
+            username:
+              type: string
+              example:
+                "test_bruker_nk"
     Locks:
       type: array
       items:
