@@ -577,6 +577,7 @@ paths:
       operationId: updateDatasetFeatures
       parameters:
         - $ref: '#/components/parameters/clientHeaderParam'
+        - $ref: '#/components/parameters/commentHeaderParam'
         - $ref: '#/components/parameters/datasetIdParam'
         - $ref: '#/components/parameters/lockingParam'
         - $ref: '#/components/parameters/crsEPSGParam'
@@ -843,6 +844,7 @@ paths:
       operationId: updateDatasetFeatureAttributes
       parameters:
         - $ref: '#/components/parameters/clientHeaderParam'
+        - $ref: '#/components/parameters/commentHeaderParam'
         - $ref: '#/components/parameters/datasetIdParam'
         - $ref: '#/components/parameters/lokalIdParam'
       requestBody:
@@ -1052,6 +1054,14 @@ components:
       required: true
       description: Brukes for å kunne identifisere klienten som er brukt
       example: 'ExampleApp 10.0.0 (Build 54321)'
+    commentHeaderParam:
+      in: header
+      name: X-Metadata-Comment
+      schema:
+        type: string
+      required: true
+      description: Brukes for legge inn kommentar i arkiv loggen
+      example: 'Innsjekk gjort av Norkart'
     datasetIdParam:
       in: path
       name: datasetId
