@@ -248,9 +248,9 @@ paths:
     get:
       tags:
        - metadata
-      summary: Hent arkiv loggen for et bestemt dataset
+      summary: Hent endringsloggen for et bestemt dataset
       description: |
-        Hent en liste med oppføringer i arkiv loggen
+        Henter en liste med oppføringer i endringsloggen for et bestemt dataset
       operationId: getLog
       parameters:        
         - $ref: '#/components/parameters/clientHeaderParam'
@@ -355,6 +355,11 @@ paths:
               summary: Bygning og bygningsnummer lik 1234
               description: |
                Spørringen henter ut alle objekter med objekttypen Bygning med egenskapen bygningsnummer = 1234.
+            bygningsnummergt:
+              value: 'gt(Bygning/bygningsnummer,1234)'
+              summary: Bygning og bygningsnummer større enn 1234
+              description: |
+               Spørringen henter ut alle objekter med objekttypen Bygning med egenskapen bygningsnummer > 1234.
             lokalid:
               value: 'eq(*/identifikasjon/lokalid,000a7b9b-7088-482f-a3cf-9761b97a54b6)'
               summary: Spørring etter ett bestemt objekt med gitt lokalid
