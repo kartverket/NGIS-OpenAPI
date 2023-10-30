@@ -339,47 +339,7 @@ paths:
         - $ref: '#/components/parameters/referencesParam'
         - $ref: '#/components/parameters/limitParam'
         - $ref: '#/components/parameters/cursorParam'
-        - in: query
-          name: query
-          schema:
-            type: string
-          description: |
-            ### Filter på egenskaper og/eller objekttype for å begrense hvilke features som hentes ut.
-            
-            Spørrespråket er basert på [RQL](https://github.com/persvr/rql).
-            
-            Man kan bruke `eq`, `lt` (less than), `le` (less than or equal), `gt` (greater than), `ge` (greater than or equal) eller `in` (lik eq, men med liste av verdier - kun støttet for spørring etter identifikasjon/lokalid).
-          examples:
-            bygningsnummer:
-              value: 'eq(Bygning/bygningsnummer,1234)'
-              summary: Bygning og bygningsnummer lik 1234
-              description: |
-               Spørringen henter ut alle objekter med objekttypen Bygning med egenskapen bygningsnummer = 1234.
-            bygningsnummergt:
-              value: 'gt(Bygning/bygningsnummer,1234)'
-              summary: Bygning og bygningsnummer større enn 1234
-              description: |
-               Spørringen henter ut alle objekter med objekttypen Bygning med egenskapen bygningsnummer > 1234.
-            lokalid:
-              value: 'eq(*/identifikasjon/lokalid,000a7b9b-7088-482f-a3cf-9761b97a54b6)'
-              summary: Spørring etter ett bestemt objekt med gitt lokalid
-              description: |
-                Når et objekt hentes ut med lokalid er det normalt ikke nødvendig å filtrere på objekttype, derfor er objekttypen angitt med `*`.
-            lokalid_multi:
-              value: 'in(*/identifikasjon/lokalid,000a7b9b-7088-482f-a3cf-9761b97a54b6,023a7b9b-7088-482f-a3cf-9761b9700000)'
-              summary: Spørring etter flere objekter med lokalid
-              description: |
-                Når objekt(er) hentes ut med lokalid er det normalt ikke nødvendig å filtrere på objekttype, derfor er objekttypen angitt med `*`.
-            feature_type:
-              value: 'eq(*,Bygning)'
-              summary: Spørring etter alle objekter med en bestemt objekttype, uten noen bestemt egenskapsverdi.
-              description: |
-                Vi bruker `*` uten noen angitt egenskap for å angi at vi kun filtrerer på objekttype.
-            feature_type_multi:
-              value: 'in(*,Bygning,AnnenBygning)'
-              summary: Spørring etter alle objekter med flere objekttyper, uten noen bestemt egenskapsverdi.
-              description: |
-                Vi bruker `*` uten noen angitt egenskap for å angi at vi kun filtrerer på objekttype.
+        - $ref: '#/components/parameters/queryParam'
         - in: query
           name: dataset_at
           schema:
@@ -899,6 +859,10 @@ paths:
         - $ref: '#/components/parameters/bboxParam'
         - $ref: '#/components/parameters/crsEPSGParam'
         - $ref: '#/components/parameters/crsNormalizedForVisualizationParam'
+        - $ref: '#/components/parameters/referencesParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/queryParam'
+        
       responses:
         '200':      # Response
           description: OK
@@ -1317,6 +1281,48 @@ components:
         format: uuid
       required: true
       description: Identifikasjon.Lokalid til objektet
+    queryParam:
+      in: query
+      name: query
+      schema:
+        type: string
+      description: |
+        ### Filter på egenskaper og/eller objekttype for å begrense hvilke features som hentes ut.
+        
+        Spørrespråket er basert på [RQL](https://github.com/persvr/rql).
+        
+        Man kan bruke `eq`, `lt` (less than), `le` (less than or equal), `gt` (greater than), `ge` (greater than or equal) eller `in` (lik eq, men med liste av verdier - kun støttet for spørring etter identifikasjon/lokalid).
+      examples:
+        bygningsnummer:
+          value: 'eq(Bygning/bygningsnummer,1234)'
+          summary: Bygning og bygningsnummer lik 1234
+          description: |
+           Spørringen henter ut alle objekter med objekttypen Bygning med egenskapen bygningsnummer = 1234.
+        bygningsnummergt:
+          value: 'gt(Bygning/bygningsnummer,1234)'
+          summary: Bygning og bygningsnummer større enn 1234
+          description: |
+           Spørringen henter ut alle objekter med objekttypen Bygning med egenskapen bygningsnummer > 1234.
+        lokalid:
+          value: 'eq(*/identifikasjon/lokalid,000a7b9b-7088-482f-a3cf-9761b97a54b6)'
+          summary: Spørring etter ett bestemt objekt med gitt lokalid
+          description: |
+            Når et objekt hentes ut med lokalid er det normalt ikke nødvendig å filtrere på objekttype, derfor er objekttypen angitt med `*`.
+        lokalid_multi:
+          value: 'in(*/identifikasjon/lokalid,000a7b9b-7088-482f-a3cf-9761b97a54b6,023a7b9b-7088-482f-a3cf-9761b9700000)'
+          summary: Spørring etter flere objekter med lokalid
+          description: |
+            Når objekt(er) hentes ut med lokalid er det normalt ikke nødvendig å filtrere på objekttype, derfor er objekttypen angitt med `*`.
+        feature_type:
+          value: 'eq(*,Bygning)'
+          summary: Spørring etter alle objekter med en bestemt objekttype, uten noen bestemt egenskapsverdi.
+          description: |
+            Vi bruker `*` uten noen angitt egenskap for å angi at vi kun filtrerer på objekttype.
+        feature_type_multi:
+          value: 'in(*,Bygning,AnnenBygning)'
+          summary: Spørring etter alle objekter med flere objekttyper, uten noen bestemt egenskapsverdi.
+          description: |
+            Vi bruker `*` uten noen angitt egenskap for å angi at vi kun filtrerer på objekttype.
     limitParam:
       in: query
       name: limit
