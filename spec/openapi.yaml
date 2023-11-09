@@ -932,17 +932,26 @@ paths:
           description: Ugyldig brukernavn og/eller passord
         '404':
           description: Fant ikke angitt dataset
-  /datasets/{datasetId}/locks/{lockId}:    
+  /datasets/{datasetId}/locks/{lockId}: 
     delete:
       tags:
         - locks
       summary: Fjerne en enkelt lås
       description: |
         Fjerne låsen angitt med id.
-      operationId: deleteDatasetLocks        
+      operationId: deleteDatasetLock      
       parameters:
         - $ref: '#/components/parameters/clientHeaderParam'
         - $ref: '#/components/parameters/datasetIdParam'
+        - in: path
+          name: lockId
+          schema:
+            type: integer
+            format: int32
+            minimum: 1
+          required: true
+          example: 123
+          description: Låsenøkkel fås fra GET /datasets/{datasetId}/locks eller `Unlock-Key`-headeren ved henting av data med `locking_type`-parameter
       responses:
         '204': # Success
           description: No Content
