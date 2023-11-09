@@ -923,7 +923,26 @@ paths:
       parameters:
         - $ref: '#/components/parameters/clientHeaderParam'
         - $ref: '#/components/parameters/datasetIdParam'
-        - $ref: '#/components/parameters/lockingParam'
+      responses:
+        '204': # Success
+          description: No Content
+        '401':
+          description: Gyldig autentisering av brukeren mangler eller er ugyldig
+        '403':
+          description: Ugyldig brukernavn og/eller passord
+        '404':
+          description: Fant ikke angitt dataset
+  /datasets/{datasetId}/locks/{lockId}:    
+    delete:
+      tags:
+        - locks
+      summary: Fjerne en enkelt lås
+      description: |
+        Fjerne låsen angitt med id.
+      operationId: deleteDatasetLocks        
+      parameters:
+        - $ref: '#/components/parameters/clientHeaderParam'
+        - $ref: '#/components/parameters/datasetIdParam'
       responses:
         '204': # Success
           description: No Content
