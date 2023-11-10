@@ -884,14 +884,15 @@ paths:
     get:
       tags:
        - locks
-      summary: Hent informasjon om brukerens låste features i et bestemt dataset. Bruk `application/vnd.kartverket.ngis.locks+json` for kun å se egne låser, og `application/vnd.kartverket.ngis.all_locks+json` for også å se andres låser.
+      summary: Hent informasjon om låste features i et bestemt dataset. 
       description: |
-        Henter bl.a. informasjon om hvilke objekter brukeren har låst i et bestemt dataset.
+        Bruk `application/vnd.kartverket.ngis.locks+json` i `Accept`-headeren for kun å se egne låser, og `application/vnd.kartverket.ngis.all_locks+json` i `Accept`-headeren for også å se andres låser.
       operationId: getDatasetLocks
       parameters:
         - $ref: '#/components/parameters/clientHeaderParam'
         - $ref: '#/components/parameters/datasetIdParam'
         - $ref: '#/components/parameters/lockingParam'
+        - $ref: '#/components/parameters/lockingIdParam'
         - $ref: '#/components/parameters/bboxParam'
         - $ref: '#/components/parameters/crsEPSGParam'
         - $ref: '#/components/parameters/crsNormalizedForVisualizationParam'
@@ -916,9 +917,9 @@ paths:
     delete:
       tags:
         - locks
-      summary: Fjerne alle låser brukeren har i et bestemt dataset
+      summary: Fjerne brukerlåsen i et bestemt dataset
       description: |
-        Fjerne alle låser brukeren har i et bestemt dataset
+        Merk at det KUN er brukerlåsen (locking_type=user_lock) som fjernesFjerne alle låser brukeren har i et bestemt dataset
       operationId: deleteDatasetLocks        
       parameters:
         - $ref: '#/components/parameters/clientHeaderParam'
@@ -1300,7 +1301,8 @@ components:
         format: int32
         minimum: 1
       description: |
-        Brukes ved skriving av data med lås, dersom lås er hentet med `locking_type=id_lock`.      
+        Angir låsenøkkel dersom `locking_type=id_lock` er brukt.   
+      example: 123
     lokalIdParam:
       in: path
       name: lokalId
