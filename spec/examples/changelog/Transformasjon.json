@@ -1,0 +1,342 @@
+[
+    {
+        "areaname": "",
+        "comment": "Antall porsjoner: 6",
+        "features": {
+            "bbox": [
+                60.58485059468328,
+                10.396726321012716,
+                61.36788441323802,
+                11.260310308754049
+            ],
+            "created": "55769",
+            "erased": "0",
+            "replaced": "0"
+        },
+        "operations": {
+            "ArchiveMetadata": false,
+            "DataWrittenWithHistory": true,
+            "DelArchive": false,
+            "DelHistory": false,
+            "DelHistoryBeforeTimestamp": false,
+            "DelHorizontalRefSys": false,
+            "DelSpatialData": false,
+            "DelTypeRegistry": false,
+            "DelVerticalRefSys": false,
+            "HistoryWasRemoved": true,
+            "LastTransactionId": false,
+            "Parameters": false,
+            "SinglePortionWithCommit": false,
+            "TypeRegistry": false
+        },
+        "taskname": "",
+        "timestamp": "2023-02-13T14:59:08",
+        "username": ""
+    },
+    {
+        "areaname": "",
+        "comment": "(GISLINE 9.0.3.0)\n\nAntall porsjoner: 1",
+        "features": {
+            "bbox": [
+                61.05941912302402,
+                10.527477858869762,
+                61.063014709335384,
+                10.536959969381932
+            ],
+            "created": "0",
+            "erased": "0",
+            "replaced": "2"
+        },
+        "operations": {
+            "ArchiveMetadata": false,
+            "DataWrittenWithHistory": true,
+            "DelArchive": false,
+            "DelHistory": false,
+            "DelHistoryBeforeTimestamp": false,
+            "DelHorizontalRefSys": false,
+            "DelSpatialData": false,
+            "DelTypeRegistry": false,
+            "DelVerticalRefSys": false,
+            "HistoryWasRemoved": true,
+            "LastTransactionId": false,
+            "Parameters": false,
+            "SinglePortionWithCommit": false,
+            "TypeRegistry": false
+        },
+        "taskname": "3411VANN_2019_pg",
+        "timestamp": "2023-07-21T11:25:46",
+        "username": "zf"
+    },
+    {
+        "areaname": "",
+        "comment": "(GISLINE 9.0.4.0)\n\nAntall porsjoner: 1",
+        "features": {
+            "bbox": [
+                61.295134194561676,
+                10.896603021671948,
+                61.295358006900756,
+                10.897263258745554
+            ],
+            "created": "2",
+            "erased": "0",
+            "replaced": "0"
+        },
+        "operations": {
+            "ArchiveMetadata": false,
+            "DataWrittenWithHistory": true,
+            "DelArchive": false,
+            "DelHistory": false,
+            "DelHistoryBeforeTimestamp": false,
+            "DelHorizontalRefSys": false,
+            "DelSpatialData": false,
+            "DelTypeRegistry": false,
+            "DelVerticalRefSys": false,
+            "HistoryWasRemoved": true,
+            "LastTransactionId": false,
+            "Parameters": false,
+            "SinglePortionWithCommit": false,
+            "TypeRegistry": false
+        },
+        "taskname": "3411VANN_2019_pg",
+        "timestamp": "2023-10-25T12:52:26",
+        "username": "zf"
+    },
+    {
+        "areaname": "",
+        "comment": "(GISLINE 9.0.4.0)\n\nAntall porsjoner: 1",
+        "features": {
+            "bbox": [
+                61.295134194561676,
+                10.896603021671948,
+                61.295358006900756,
+                10.897263258745554
+            ],
+            "created": "1",
+            "erased": "0",
+            "replaced": "2"
+        },
+        "operations": {
+            "ArchiveMetadata": false,
+            "DataWrittenWithHistory": true,
+            "DelArchive": false,
+            "DelHistory": false,
+            "DelHistoryBeforeTimestamp": false,
+            "DelHorizontalRefSys": false,
+            "DelSpatialData": false,
+            "DelTypeRegistry": false,
+            "DelVerticalRefSys": false,
+            "HistoryWasRemoved": false,
+            "LastTransactionId": false,
+            "Parameters": false,
+            "SinglePortionWithCommit": false,
+            "TypeRegistry": false
+        },
+        "taskname": "3411VANN_2019_pg",
+        "timestamp": "2023-10-26T10:33:51",
+        "username": "zf"
+    },
+    {
+        "areaname": "",
+        "comment": "(GISLINE 9.0.4.0)\n\nAntall porsjoner: 1",
+        "features": {
+            "bbox": [
+                61.295134194561676,
+                10.896603021671948,
+                61.295358006900756,
+                10.897263258745554
+            ],
+            "created": "0",
+            "erased": "1",
+            "replaced": "2"
+        },
+        "operations": {
+            "ArchiveMetadata": false,
+            "DataWrittenWithHistory": true,
+            "DelArchive": false,
+            "DelHistory": false,
+            "DelHistoryBeforeTimestamp": false,
+            "DelHorizontalRefSys": false,
+            "DelSpatialData": false,
+            "DelTypeRegistry": false,
+            "DelVerticalRefSys": false,
+            "HistoryWasRemoved": false,
+            "LastTransactionId": false,
+            "Parameters": false,
+            "SinglePortionWithCommit": false,
+            "TypeRegistry": false
+        },
+        "taskname": "3411VANN_2019_pg",
+        "timestamp": "2023-10-26T10:54:52",
+        "username": "zf"
+    },
+    {
+        "areaname": "",
+        "comment": "(GISLINE 9.0.4.0)\n\nAntall porsjoner: 1",
+        "features": {
+            "bbox": [
+                61.295096153384755,
+                10.896560153066735,
+                61.295358006900756,
+                10.897263258745554
+            ],
+            "created": "4",
+            "erased": "3",
+            "replaced": "2"
+        },
+        "operations": {
+            "ArchiveMetadata": false,
+            "DataWrittenWithHistory": true,
+            "DelArchive": false,
+            "DelHistory": false,
+            "DelHistoryBeforeTimestamp": false,
+            "DelHorizontalRefSys": false,
+            "DelSpatialData": false,
+            "DelTypeRegistry": false,
+            "DelVerticalRefSys": false,
+            "HistoryWasRemoved": false,
+            "LastTransactionId": false,
+            "Parameters": false,
+            "SinglePortionWithCommit": false,
+            "TypeRegistry": false
+        },
+        "taskname": "3411VANN_2019_pg",
+        "timestamp": "2023-10-26T12:49:51",
+        "username": "zf"
+    },
+    {
+        "areaname": "",
+        "comment": "(GISLINE 9.0.4.0)\n\nAntall porsjoner: 1",
+        "features": {
+            "bbox": [
+                61.295134194561676,
+                10.896603021671948,
+                61.295320828421964,
+                10.897246401821624
+            ],
+            "created": "0",
+            "erased": "0",
+            "replaced": "2"
+        },
+        "operations": {
+            "ArchiveMetadata": false,
+            "DataWrittenWithHistory": true,
+            "DelArchive": false,
+            "DelHistory": false,
+            "DelHistoryBeforeTimestamp": false,
+            "DelHorizontalRefSys": false,
+            "DelSpatialData": false,
+            "DelTypeRegistry": false,
+            "DelVerticalRefSys": false,
+            "HistoryWasRemoved": false,
+            "LastTransactionId": false,
+            "Parameters": false,
+            "SinglePortionWithCommit": false,
+            "TypeRegistry": false
+        },
+        "taskname": "3411VANN_2019_pg",
+        "timestamp": "2023-10-26T13:12:56",
+        "username": "zf"
+    },
+    {
+        "areaname": "",
+        "comment": "(GISLINE 9.0.4.0)\n\nAntall porsjoner: 1",
+        "features": {
+            "bbox": [
+                61.295134194561676,
+                10.896603021671948,
+                61.295320828421964,
+                10.897246401821624
+            ],
+            "created": "2",
+            "erased": "0",
+            "replaced": "2"
+        },
+        "operations": {
+            "ArchiveMetadata": false,
+            "DataWrittenWithHistory": true,
+            "DelArchive": false,
+            "DelHistory": false,
+            "DelHistoryBeforeTimestamp": false,
+            "DelHorizontalRefSys": false,
+            "DelSpatialData": false,
+            "DelTypeRegistry": false,
+            "DelVerticalRefSys": false,
+            "HistoryWasRemoved": false,
+            "LastTransactionId": false,
+            "Parameters": false,
+            "SinglePortionWithCommit": false,
+            "TypeRegistry": false
+        },
+        "taskname": "3411VANN_2019_pg",
+        "timestamp": "2023-10-26T13:23:10",
+        "username": "zf"
+    },
+    {
+        "areaname": "",
+        "comment": "(GISLINE 9.0.4.0)\n\nAntall porsjoner: 1",
+        "features": {
+            "bbox": [
+                61.295134194561676,
+                10.896603021671948,
+                61.295320828421964,
+                10.897246401821624
+            ],
+            "created": "0",
+            "erased": "0",
+            "replaced": "2"
+        },
+        "operations": {
+            "ArchiveMetadata": false,
+            "DataWrittenWithHistory": true,
+            "DelArchive": false,
+            "DelHistory": false,
+            "DelHistoryBeforeTimestamp": false,
+            "DelHorizontalRefSys": false,
+            "DelSpatialData": false,
+            "DelTypeRegistry": false,
+            "DelVerticalRefSys": false,
+            "HistoryWasRemoved": false,
+            "LastTransactionId": false,
+            "Parameters": false,
+            "SinglePortionWithCommit": false,
+            "TypeRegistry": false
+        },
+        "taskname": "3411VANN_2019_pg",
+        "timestamp": "2023-10-26T13:34:48",
+        "username": "zf"
+    },
+    {
+        "areaname": "",
+        "comment": "(GISLINE 9.0.4.0)\n\nAntall porsjoner: 1",
+        "features": {
+            "bbox": [
+                60.976451706359285,
+                10.645848487539352,
+                61.031441162888626,
+                10.790101431598302
+            ],
+            "created": "0",
+            "erased": "0",
+            "replaced": "1"
+        },
+        "operations": {
+            "ArchiveMetadata": false,
+            "DataWrittenWithHistory": true,
+            "DelArchive": false,
+            "DelHistory": false,
+            "DelHistoryBeforeTimestamp": false,
+            "DelHorizontalRefSys": false,
+            "DelSpatialData": false,
+            "DelTypeRegistry": false,
+            "DelVerticalRefSys": false,
+            "HistoryWasRemoved": false,
+            "LastTransactionId": false,
+            "Parameters": false,
+            "SinglePortionWithCommit": false,
+            "TypeRegistry": false
+        },
+        "taskname": "3411VANN_2019_pg",
+        "timestamp": "2023-10-26T15:49:05",
+        "username": "rw"
+    }
+]

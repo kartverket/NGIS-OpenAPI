@@ -265,6 +265,19 @@ paths:
             application/vnd.kartverket.ngis.dataset_changelog+json; version=1.0:  # Media type
               schema: 
                 $ref: '#/components/schemas/Log'    # Reference to object definition
+              examples:
+                Bbox:
+                  summary: |
+                    Eksempel på uthentet endringslogg med bbox
+                  externalValue: "https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/changelog/Bbox.json"
+                Transformation:
+                  summary: |
+                    Eksempel på uthentet endringslogg med transformasjon
+                  externalValue: "https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/changelog/Transformasjon.json"
+                TransformationBboxNormalization:
+                  summary: |
+                    Eksempel på uthentet endringslogg med transformasjon, bbox og normalisering
+                  externalValue: "https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/changelog/BboxTransformasjonNomralisering.json"
         '401':
           description: Gyldig autentisering av brukeren mangler eller er ugyldig
         '406':
