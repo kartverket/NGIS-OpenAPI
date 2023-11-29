@@ -69,7 +69,7 @@ info:
     
     ### Koordinatsystemer og transformasjon
     
-    Dersom annet koordinatsystem enn det som ligger i dataset skal brukes (se `GET /datasets/{datasetId}`) må koordinatsystem angis med `crs_EPSG`-parameteret. Dette styrer data som sendes inn, data som hentes ut og koordinatsystemet i `bbox`-parameteret i kallet. For å bytte rekkefølge på aksene brukes `crs_normalized_for_visualization`-parameteret.
+    Dersom annet koordinatsystem enn det som ligger i dataset skal brukes (se `GET /datasets/{datasetId}`) må koordinatsystem angis med `crs_EPSG`-parameteret. Dette styrer data som sendes inn, data som hentes ut og koordinatsystemet i `bbox`-parameteret i kallet. For å bytte rekkefølge på aksene brukes `crs_normalized_for_visualization`-parameteret (men dette har kun innvirkning på noen geodetiske koordinatsystemer - se [i proj-dokumentasjonen her](https://proj.org/en/stable/development/reference/functions.html#c.proj_normalize_for_visualization)).
     
     ### Historikk og historiske endringer
     
@@ -1146,7 +1146,7 @@ components:
       schema:
         type: boolean
       description: |
-        Angir at rekkefølgen på x- og y-aksen skal være snudd mot det som er spesifisert i EPSG-koden.
+        Angir at rekkefølgen på x- og y-aksen skal være snudd mot det som er spesifisert i EPSG-koden. Dette har kun innvirkning på noen geodetiske koordinatsystemer - se [i proj-dokumentasjonen her](https://proj.org/en/stable/development/reference/functions.html#c.proj_normalize_for_visualization).
     referencesParam:  
       in: query
       name: references
