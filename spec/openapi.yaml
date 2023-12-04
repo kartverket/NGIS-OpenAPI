@@ -1102,7 +1102,7 @@ components:
       schema:
         type: integer
       description: |
-        Angir EPSG-kode for koordinatsystemet til koordinatene som sendes inn i spørringen (f.eks i bbox), som sendes inn som data, og som sendes tilbake. Påkrevd dersom bbox-parameteret brukes og har koordinater i annet koordinatsystem enn datasetet.
+        Angir EPSG-kode for koordinatsystemet til koordinatene som sendes inn i spørringen (f.eks i bbox), som sendes inn som data, og som sendes tilbake. Dersom ikke crs_EPSG er angitt, skal koordinatene være i datasettets koordinatsystem.
       examples: 
         epsg5975_NN2000:
           value: 5975
