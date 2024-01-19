@@ -184,6 +184,9 @@ paths:
                     bbox:
                       ll: [322361.85, 6424859.18]
                       ur: [637396.44, 7296440.28]
+                    data_bbox:
+                      ll: [322361.85, 6424859.18]
+                      ur: [637396.44, 7296440.28]
         '401':
           description: Gyldig autentisering av brukeren mangler eller er ugyldig
         '406':
@@ -992,7 +995,12 @@ components:
         access:
           type: string
           enum: [read_only, read_write]
+        polygon:
+          type: string
+          description: evt. polygon-avgrensning på WKT-format
         bbox: 
+          $ref: '#/components/schemas/BoundingBox'
+        data_bbox: 
           $ref: '#/components/schemas/BoundingBox'
         copy_transaction_token:
           type: string
