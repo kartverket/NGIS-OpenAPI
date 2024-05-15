@@ -1097,6 +1097,7 @@ components:
         smallbbox:
           summary: Et 10x10m vindu
           description: |
+            Rekkefølgen (om det er x,y eller y,x) er angitt i EPSG-spesifikasjonen, men skal uansett være minx, miny, maxx, maxy (eller miny, minx, maxy, maxx hvis rekkefølgen er y, x).
             NB! Koordinatene må være i dataset'ets koordinatsystem eller angi crs_EPSG-parameteret
           value: [10.0, 100.0, 20.0, 200.0] # ?bbox=10.0,100.0,20.0,200.0
       description: |
