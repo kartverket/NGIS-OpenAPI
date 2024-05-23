@@ -1003,6 +1003,12 @@ components:
           $ref: '#/components/schemas/BoundingBox'
         copy_transaction_token:
           type: string
+        unknown_attributes_allowed:
+          type: boolean
+        minimum_allowed_height:
+          type: integer
+        maximum_allowed_height:
+          type: integer
     Locks:
       type: array
       items:
@@ -1011,6 +1017,8 @@ components:
           id:
             type: integer # TODO: Denne brukes ikke for brukerlåser, men trengs for andre låser i fremtiden.
           username:
+            type: string
+          timestamp:
             type: string
           features:
             type: array
