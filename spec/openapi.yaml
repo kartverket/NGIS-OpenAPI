@@ -934,7 +934,7 @@ paths:
         - locks
       summary: Fjerne brukerlåsen i et bestemt dataset
       description: |
-        Merk at det KUN er brukerlåsen (locking_type=user_lock) som fjernesFjerne alle låser brukeren har i et bestemt dataset
+        Merk at det KUN er brukerlåsen (locking_type=user_lock) som fjernes
       operationId: deleteDatasetLocks        
       parameters:
         - $ref: '#/components/parameters/clientHeaderParam'
