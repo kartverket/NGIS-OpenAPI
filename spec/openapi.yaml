@@ -347,6 +347,7 @@ paths:
         - $ref: '#/components/parameters/lockingParam'
         - $ref: '#/components/parameters/lockingIdParam'
         - $ref: '#/components/parameters/bboxParam'
+        - $ref: '#/components/parameters/polygonParam'
         - $ref: '#/components/parameters/crsEPSGParam'
         - $ref: '#/components/parameters/crsNormalizedForVisualizationParam'
         - $ref: '#/components/parameters/referencesParam'
@@ -872,6 +873,7 @@ paths:
         - $ref: '#/components/parameters/datasetIdParam'
         - $ref: '#/components/parameters/lockingParam'
         - $ref: '#/components/parameters/bboxParam'
+        - $ref: '#/components/parameters/polygonParam'
         - $ref: '#/components/parameters/crsEPSGParam'
         - $ref: '#/components/parameters/crsNormalizedForVisualizationParam'
         - $ref: '#/components/parameters/referencesParam'
@@ -909,6 +911,7 @@ paths:
         - $ref: '#/components/parameters/lockingParam'
         - $ref: '#/components/parameters/lockingIdParam'
         - $ref: '#/components/parameters/bboxParam'
+        - $ref: '#/components/parameters/polygonParam'
         - $ref: '#/components/parameters/crsEPSGParam'
         - $ref: '#/components/parameters/crsNormalizedForVisualizationParam'
       responses:
@@ -1218,7 +1221,25 @@ components:
         
         Dette kan være aktuelt for å få ut alle objekter som ikke er direkte knyttet til et objekt, som f.eks mønelinje og takkant til en bygning.
         
-        Merk: Dersom `references` ikke er angitt blir det satt til `none` 
+        Merk: Kan ikke kombineres med `polygon`. Dersom `references` ikke er angitt blir det satt til `none` 
+    polygonParam:
+      in: query
+      name: polygon
+      schema:
+        type: string
+      examples:
+        smallbbox:
+          summary: Et eksempelpolygon
+          description: |
+            Med WKT: POLYGON ((6.218262 60.06484, 6.218262 61.721118, 11.315918 61.721118, 11.315918 60.06484, 6.218262 60.06484))
+            blir WKB: 0103000000010000000500000095D6DF1280DF18407FBC57AD4C084E4095D6DF1280DF1840494739984DDC4E407A6F0C01C0A12640494739984DDC4E407A6F0C01C0A126407FBC57AD4C084E4095D6DF1280DF18407FBC57AD4C084E40
+          value: 0103000000010000000500000095D6DF1280DF18407FBC57AD4C084E4095D6DF1280DF1840494739984DDC4E407A6F0C01C0A12640494739984DDC4E407A6F0C01C0A126407FBC57AD4C084E4095D6DF1280DF18407FBC57AD4C084E40
+      description: |
+        Henter ut objekter i et bestemt område (angitt med et polygon)
+        
+        Dette kan være aktuelt for å få ut alle objekter som ikke er direkte knyttet til et objekt, som f.eks mønelinje og takkant til en bygning.
+        
+        Merk: Kan ikke kombineres med `bbox`. Dersom `references` ikke er angitt blir det satt til `none` 
     crsEPSGParam:
       in: query
       name: crs_EPSG
