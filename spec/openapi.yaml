@@ -15,9 +15,10 @@ info:
       - Hente data fra et bestemt datasett
         - Med lesetilgang eller skrivetilgang (medfører låsing)
           - områdebegrensning
-          - egenskapsspørring (begrenset i første versjon til bygningsnummer eller lokalid)
+          - egenskapsspørring
       - Lagre data til et bestemt datasett
         - Operasjoner som håndteres: nytt objekt, endre objekt og slett objekt
+      - Metoder for å jobbe mot egenskapene til et objekt i et bestemt datasett
     
     ## Generelle prinsipper for systemet
     
@@ -60,8 +61,10 @@ info:
     ### Låsing
     
     Dette er nærmere beskrevet i de aktuelle kallene.
-
-    Foreløpig er det kun `user_lock` som er støttet. Det betyr at data må hentes ut med `user_lock` før de kan sendes inn med endringer.
+    
+    Det er to typer låser:
+    - `user_lock`, der man kun angir `locking_type=user_lock` ved henting og skriving av objekter. Hvis ikke samtlige objekter kan låses, feiler kallet. En bruker kan kun ha én lås per dataset av gangen.
+    - `id_lock`, der man angir `locking_type=id_lock` og må håndtere løsenøkkel `lock_id` selv. Hvis ikke samtlige objekter kan låses, blir kun de objektene som kan låses, låst. Resten forblir låst av andre. En bruker kan ha vilkårlig antall låser, men må holde styr på låsenøklene selv.
     
     ### Porsjonering
     
@@ -69,7 +72,9 @@ info:
     
     ### Koordinatsystemer og transformasjon
     
-    Dersom annet koordinatsystem enn det som ligger i dataset skal brukes (se `GET /datasets/{datasetId}`) må koordinatsystem angis med `crs_EPSG`-parameteret. Dette styrer data som sendes inn, data som hentes ut og koordinatsystemet i `bbox`-parameteret i kallet. For å bytte rekkefølge på aksene brukes `crs_normalized_for_visualization`-parameteret (men dette har kun innvirkning på noen geodetiske koordinatsystemer - se [i proj-dokumentasjonen her](https://proj.org/en/stable/development/reference/functions.html#c.proj_normalize_for_visualization)).
+    Dersom annet koordinatsystem enn det som ligger i dataset skal brukes (se `GET /datasets/{datasetId}`) må koordinatsystem angis med `crs_EPSG`-parameteret. 
+    Dette styrer data som sendes inn, data som hentes ut og koordinatsystemet i `bbox`-parameteret i kallet. 
+    For å være sikker på at rekkefølgen på koordinatene er Nord/Øst (gjelder kun for geodetiske koordinater lat/lon) brukes `crs_normalized_for_visualization`-parameteret.
     
     ### Historikk og historiske endringer
     
@@ -282,6 +287,50 @@ paths:
           description: Intern feil på serveren (kallet er ikke implementert)
         '503':
           description: Intern feil på serveren (tjenesten er utilgjengelig)
+  /datasets/{datasetId}/log:
+    get:
+      tags:
+       - metadata
+      summary: Hent endringsloggen for et bestemt dataset
+      description: |
+        Henter en liste med oppføringer i endringsloggen for et bestemt dataset
+      operationId: getLog
+      parameters:        
+        - $ref: '#/components/parameters/clientHeaderParam'
+        - $ref: '#/components/parameters/datasetIdParam'
+        - $ref: '#/components/parameters/bboxParam'
+        - $ref: '#/components/parameters/crsEPSGParam'
+        - $ref: '#/components/parameters/crsNormalizedForVisualizationParam'
+      responses:
+        '200':      # Response
+          description: OK
+          content:  # Response body
+            application/vnd.kartverket.ngis.dataset_changelog+json; version=1.0:  # Media type
+              schema: 
+                $ref: '#/components/schemas/Log'    # Reference to object definition
+              examples:
+                Bbox:
+                  summary: |
+                    Eksempel på uthentet endringslogg med bbox
+                  externalValue: "https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/changelog/Bbox.json"
+                Transformation:
+                  summary: |
+                    Eksempel på uthentet endringslogg med transformasjon
+                  externalValue: "https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/changelog/Transformasjon.json"
+                TransformationBboxNormalization:
+                  summary: |
+                    Eksempel på uthentet endringslogg med transformasjon, bbox og normalisering
+                  externalValue: "https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/changelog/BboxTransformasjonNomralisering.json"
+        '401':
+          description: Gyldig autentisering av brukeren mangler eller er ugyldig
+        '406':
+          description: Formatet klienten ønsker på data er ugyldig. Klienten har f.eks en ugyldig Accept-header og kan ikke motta data på et format som serveren kan levere
+        '500':
+          description: Intern feil på serveren
+        '501':
+          description: Intern feil på serveren (kallet er ikke implementert)
+        '503':
+          description: Intern feil på serveren (tjenesten er utilgjengelig)
   /datasets/{datasetId}/job_status/{jobId}:
     get:
       tags:
@@ -339,50 +388,15 @@ paths:
         - $ref: '#/components/parameters/clientHeaderParam'
         - $ref: '#/components/parameters/datasetIdParam'
         - $ref: '#/components/parameters/lockingParam'
+        - $ref: '#/components/parameters/lockingIdParam'
         - $ref: '#/components/parameters/bboxParam'
+        - $ref: '#/components/parameters/polygonParam'
         - $ref: '#/components/parameters/crsEPSGParam'
         - $ref: '#/components/parameters/crsNormalizedForVisualizationParam'
         - $ref: '#/components/parameters/referencesParam'
         - $ref: '#/components/parameters/limitParam'
         - $ref: '#/components/parameters/cursorParam'
-        - in: query
-          name: query
-          schema:
-            type: string
-          description: |
-            ### Filter på egenskaper og/eller objekttype for å begrense hvilke features som hentes ut.
-            
-            Spørrespråket er basert på [RQL](https://github.com/persvr/rql).
-            
-            Foreløpig støttes kun `eq` og `in` for bestemte objekttyper og egenskaper.
-            
-            Eksemplene inneholder alle støttede spørringer.
-          examples:
-            bygningsnummer:
-              value: 'eq(Bygning/bygningsnummer,1234)'
-              summary: Spørring etter ett bestemt bygningsnummer for objekttypen Bygning
-              description: |
-               Spørringen henter ut alle objekter med objekttypen Bygning med egenskapen bygningsnummer = 1234.
-            lokalid:
-              value: 'eq(*/identifikasjon/lokalid,000a7b9b-7088-482f-a3cf-9761b97a54b6)'
-              summary: Spørring etter ett bestemt objekt med gitt lokalid
-              description: |
-                Når et objekt hentes ut med lokalid er det normalt ikke nødvendig å filtrere på objekttype, derfor er objekttypen angitt med `*`.
-            lokalid_multi:
-              value: 'in(*/identifikasjon/lokalid,000a7b9b-7088-482f-a3cf-9761b97a54b6,023a7b9b-7088-482f-a3cf-9761b9700000)'
-              summary: Spørring etter flere objekter med lokalid
-              description: |
-                Når objekt(er) hentes ut med lokalid er det normalt ikke nødvendig å filtrere på objekttype, derfor er objekttypen angitt med `*`.
-            feature_type:
-              value: 'eq(*,Bygning)'
-              summary: Spørring etter alle objekter med en bestemt objekttype
-              description: |
-                Vi bruker `*` for å angi at vi kun filtrerer på objekttype.
-            feature_type_multi:
-              value: 'in(*,Bygning,AnnenBygning)'
-              summary: Spørring etter flere objekter med lokalid
-              description: |
-                Vi bruker `*` for å angi at vi kun filtrerer på objekttype.
+        - $ref: '#/components/parameters/queryParam'
         - in: query
           name: dataset_at
           schema:
@@ -581,8 +595,10 @@ paths:
       operationId: updateDatasetFeatures
       parameters:
         - $ref: '#/components/parameters/clientHeaderParam'
+        - $ref: '#/components/parameters/commentHeaderParam'
         - $ref: '#/components/parameters/datasetIdParam'
         - $ref: '#/components/parameters/lockingParam'
+        - $ref: '#/components/parameters/lockingIdParam'
         - $ref: '#/components/parameters/crsEPSGParam'
         - $ref: '#/components/parameters/crsNormalizedForVisualizationParam'
         - in: query
@@ -773,6 +789,7 @@ paths:
         - $ref: '#/components/parameters/datasetIdParam'
         - $ref: '#/components/parameters/lokalIdParam'
         - $ref: '#/components/parameters/lockingParam'
+        - $ref: '#/components/parameters/lockingIdParam'
         - $ref: '#/components/parameters/referencesParam'
         - $ref: '#/components/parameters/limitParam'
         - $ref: '#/components/parameters/crsEPSGParam'
@@ -847,6 +864,7 @@ paths:
       operationId: updateDatasetFeatureAttributes
       parameters:
         - $ref: '#/components/parameters/clientHeaderParam'
+        - $ref: '#/components/parameters/commentHeaderParam'
         - $ref: '#/components/parameters/datasetIdParam'
         - $ref: '#/components/parameters/lokalIdParam'
       requestBody:
@@ -886,18 +904,57 @@ paths:
         '503':
           description: Intern feil på serveren (tjenesten er utilgjengelig)
   /datasets/{datasetId}/locks:
-    get:
+    post:
       tags:
        - locks
-      summary: Hent informasjon om brukerens låste features i et bestemt dataset. Bruk `application/vnd.kartverket.ngis.locks+json` for kun å se egne låser, og `application/vnd.kartverket.ngis.all_locks+json` for også å se andres låser.
+      summary: Lås features i et dataset uten å hente ut data.
       description: |
-        Henter bl.a. informasjon om hvilke objekter brukeren har låst i et bestemt dataset.
-      operationId: getDatasetLocks
+        Lenke til uthenting av data ligger i response `Link`-header på samme måte som porsjonering.
+      operationId: postDatasetLocks
       parameters:
         - $ref: '#/components/parameters/clientHeaderParam'
         - $ref: '#/components/parameters/datasetIdParam'
         - $ref: '#/components/parameters/lockingParam'
         - $ref: '#/components/parameters/bboxParam'
+        - $ref: '#/components/parameters/polygonParam'
+        - $ref: '#/components/parameters/crsEPSGParam'
+        - $ref: '#/components/parameters/crsNormalizedForVisualizationParam'
+        - $ref: '#/components/parameters/referencesParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/queryParam'
+        
+      responses:
+        '200':      # Response
+          description: OK
+          content:  # Response body
+            application/vnd.kartverket.ngis.locks+json:  # Media type
+             schema: 
+               $ref: '#/components/schemas/Locks'    # Reference to object definition
+            application/vnd.kartverket.ngis.all_locks+json:
+             schema: 
+               $ref: '#/components/schemas/Locks'
+        '401':
+          description: Gyldig autentisering av brukeren mangler eller er ugyldig
+        '403':
+          description: Ugyldig brukernavn og/eller passord
+        '404':
+          description: Fant ikke angitt dataset
+        '406':
+          description: Formatet klienten ønsker på data er ugyldig. Klienten har f.eks en ugyldig Accept-header og kan ikke motta data på et format som serveren kan levere
+    get:
+      tags:
+       - locks
+      summary: Hent informasjon om låste features i et bestemt dataset. 
+      description: |
+        Bruk `application/vnd.kartverket.ngis.locks+json` i `Accept`-headeren for kun å se egne låser, og `application/vnd.kartverket.ngis.all_locks+json` i `Accept`-headeren for også å se andres låser.
+      operationId: getDatasetLocks
+      parameters:
+        - $ref: '#/components/parameters/clientHeaderParam'
+        - $ref: '#/components/parameters/datasetIdParam'
+        - $ref: '#/components/parameters/lockingParam'
+        - $ref: '#/components/parameters/lockingIdParam'
+        - $ref: '#/components/parameters/bboxParam'
+        - $ref: '#/components/parameters/polygonParam'
         - $ref: '#/components/parameters/crsEPSGParam'
         - $ref: '#/components/parameters/crsNormalizedForVisualizationParam'
       responses:
@@ -921,14 +978,42 @@ paths:
     delete:
       tags:
         - locks
-      summary: Fjerne alle låser brukeren har i et bestemt dataset
+      summary: Fjerne brukerlåsen i et bestemt dataset
       description: |
-        Fjerne alle låser brukeren har i et bestemt dataset
+        Merk at det KUN er brukerlåsen (locking_type=user_lock) som fjernes
       operationId: deleteDatasetLocks        
       parameters:
         - $ref: '#/components/parameters/clientHeaderParam'
         - $ref: '#/components/parameters/datasetIdParam'
-        - $ref: '#/components/parameters/lockingParam'
+      responses:
+        '204': # Success
+          description: No Content
+        '401':
+          description: Gyldig autentisering av brukeren mangler eller er ugyldig
+        '403':
+          description: Ugyldig brukernavn og/eller passord
+        '404':
+          description: Fant ikke angitt dataset
+  /datasets/{datasetId}/locks/{lockId}: 
+    delete:
+      tags:
+        - locks
+      summary: Fjerne en enkelt lås
+      description: |
+        Fjerne låsen angitt med id.
+      operationId: deleteDatasetLock      
+      parameters:
+        - $ref: '#/components/parameters/clientHeaderParam'
+        - $ref: '#/components/parameters/datasetIdParam'
+        - in: path
+          name: lockId
+          schema:
+            type: integer
+            format: int32
+            minimum: 1
+          required: true
+          example: 123
+          description: Låsenøkkel fås fra GET /datasets/{datasetId}/locks eller `Unlock-Key`-headeren ved henting av data med `locking_type`-parameter
       responses:
         '204': # Success
           description: No Content
@@ -1009,6 +1094,88 @@ components:
           type: integer
         maximum_allowed_height:
           type: integer
+    Log:
+      type: array
+      items:
+        type: object
+        properties:
+            areaname:
+              type: string
+            comment:
+              type: string
+              example:
+                "antall porsjoner 6"
+            features:
+              type: object
+              properties:
+                  bbox:
+                    type: array
+                    items:
+                      type: number
+                    example:
+                      - 582455.36
+                      - 6770367.69
+                      - 582957.75
+                      - 6770780.09
+                  created:
+                    type: string
+                    example:
+                      "0"
+                  erased:
+                    type: string
+                    example:
+                      "0"
+                  replaced:
+                    type: string
+                    example:
+                      "2"
+            operations:
+              type: object
+              properties:
+                ArchiveMetadata:
+                  type: boolean
+                  example:
+                    false
+                DataWrittenWithHistory:
+                  type: boolean
+                  example:
+                    false
+                DelArchive:
+                  type: boolean
+                DelHistory:
+                  type: boolean
+                DelHistoryBeforeTimestamp:
+                  type: boolean
+                DelHorizontalRefSys:
+                  type: boolean
+                DelSpatialData:
+                  type: boolean
+                DelTypeRegistry:
+                  type: boolean
+                DelVerticalRefSys:
+                  type: boolean
+                HistoryWasRemoved:
+                  type: boolean
+                LastTransactionId:
+                  type: boolean
+                Parameters:
+                  type: boolean
+                SinglePortionWithCommit:
+                  type: boolean
+                TypeRegistry:
+                  type: boolean
+            taskname:
+              type: string
+              example:
+                "havn_22_nk"
+            timestamp:
+              type: string
+              example:
+                "2023-02-13T14:59:08"
+            username:
+              type: string
+              example:
+                "test_bruker_nk"
     Locks:
       type: array
       items:
@@ -1069,6 +1236,14 @@ components:
       required: true
       description: Brukes for å kunne identifisere klienten som er brukt
       example: 'ExampleApp 10.0.0 (Build 54321)'
+    commentHeaderParam:
+      in: header
+      name: X-Metadata-Comment
+      schema:
+        type: string
+      required: true
+      description: Brukes for legge inn kommentar i arkiv loggen
+      example: 'Innsjekk gjort av Norkart'
     datasetIdParam:
       in: path
       name: datasetId
@@ -1103,7 +1278,25 @@ components:
         
         Dette kan være aktuelt for å få ut alle objekter som ikke er direkte knyttet til et objekt, som f.eks mønelinje og takkant til en bygning.
         
-        Merk: Dersom `references` ikke er angitt blir det satt til `none` 
+        Merk: Kan ikke kombineres med `polygon`. Dersom `references` ikke er angitt blir det satt til `none` 
+    polygonParam:
+      in: query
+      name: polygon
+      schema:
+        type: string
+      examples:
+        smallbbox:
+          summary: Et eksempelpolygon
+          description: |
+            Med WKT: POLYGON ((6.218262 60.06484, 6.218262 61.721118, 11.315918 61.721118, 11.315918 60.06484, 6.218262 60.06484))
+            blir WKB: 0103000000010000000500000095D6DF1280DF18407FBC57AD4C084E4095D6DF1280DF1840494739984DDC4E407A6F0C01C0A12640494739984DDC4E407A6F0C01C0A126407FBC57AD4C084E4095D6DF1280DF18407FBC57AD4C084E40
+          value: 0103000000010000000500000095D6DF1280DF18407FBC57AD4C084E4095D6DF1280DF1840494739984DDC4E407A6F0C01C0A12640494739984DDC4E407A6F0C01C0A126407FBC57AD4C084E4095D6DF1280DF18407FBC57AD4C084E40
+      description: |
+        Henter ut objekter i et bestemt område (angitt med et polygon)
+        
+        Dette kan være aktuelt for å få ut alle objekter som ikke er direkte knyttet til et objekt, som f.eks mønelinje og takkant til en bygning.
+        
+        Merk: Kan ikke kombineres med `bbox`. Dersom `references` ikke er angitt blir det satt til `none` 
     crsEPSGParam:
       in: query
       name: crs_EPSG
@@ -1185,16 +1378,32 @@ components:
       name: locking_type
       schema:
         type: string
-        enum: [user_lock] # future: lock_id,optimistic_locking
+        enum: [user_lock, id_lock]
       description: |
-        Angir låsetype som skal brukes (foreløpig er kun `user_lock` støttet). Krever at brukeren har skrivetilgang mot dataset'et.
+        Angir låsetype som skal brukes. Krever at brukeren har skrivetilgang mot dataset'et.
         
         *user_lock*
 
         Hver bruker har én lås per dataset. Hver gang data hentes ut med `user_lock` legges objektene til denne låsen. 
-        Alle objekter i låsen låses opp neste gang brukeren skriver data til dataset'et.
 
         Låsen vil fjernes neste gang brukeren skriver data til dataset'et med `user_lock`, eller dersom låsen slettes.
+
+        *id_lock*
+
+        Hver bruker kan lage flere låser per dataset. Låsing av objektene må håndteres med POST /datasets/:id/locks eller ved å hente ut data med `id_lock`. For sistnevnte må låsenøkkel/id hentes med GET /datasets/:id/locks.
+        
+        Låsen vil fjernes neste gang brukeren skriver data til dataset'et med `id_lock` og angitt låsenøkkel med `locking_id`, eller dersom låsen slettes.
+
+    lockingIdParam:
+      in: query
+      name: locking_id
+      schema:
+        type: integer
+        format: int32
+        minimum: 1
+      description: |
+        Angir låsenøkkel dersom `locking_type=id_lock` er brukt.   
+      example: 123
     lokalIdParam:
       in: path
       name: lokalId
@@ -1203,6 +1412,48 @@ components:
         format: uuid
       required: true
       description: Identifikasjon.Lokalid til objektet
+    queryParam:
+      in: query
+      name: query
+      schema:
+        type: string
+      description: |
+        ### Filter på egenskaper og/eller objekttype for å begrense hvilke features som hentes ut.
+        
+        Spørrespråket er basert på [RQL](https://github.com/persvr/rql).
+        
+        Man kan bruke `eq`, `lt` (less than), `le` (less than or equal), `gt` (greater than), `ge` (greater than or equal) eller `in` (lik eq, men med liste av verdier - kun støttet for spørring etter identifikasjon/lokalid).
+      examples:
+        bygningsnummer:
+          value: 'eq(Bygning/bygningsnummer,1234)'
+          summary: Bygning og bygningsnummer lik 1234
+          description: |
+           Spørringen henter ut alle objekter med objekttypen Bygning med egenskapen bygningsnummer = 1234.
+        bygningsnummergt:
+          value: 'gt(Bygning/bygningsnummer,1234)'
+          summary: Bygning og bygningsnummer større enn 1234
+          description: |
+           Spørringen henter ut alle objekter med objekttypen Bygning med egenskapen bygningsnummer > 1234.
+        lokalid:
+          value: 'eq(*/identifikasjon/lokalid,000a7b9b-7088-482f-a3cf-9761b97a54b6)'
+          summary: Spørring etter ett bestemt objekt med gitt lokalid
+          description: |
+            Når et objekt hentes ut med lokalid er det normalt ikke nødvendig å filtrere på objekttype, derfor er objekttypen angitt med `*`.
+        lokalid_multi:
+          value: 'in(*/identifikasjon/lokalid,000a7b9b-7088-482f-a3cf-9761b97a54b6,023a7b9b-7088-482f-a3cf-9761b9700000)'
+          summary: Spørring etter flere objekter med lokalid
+          description: |
+            Når objekt(er) hentes ut med lokalid er det normalt ikke nødvendig å filtrere på objekttype, derfor er objekttypen angitt med `*`.
+        feature_type:
+          value: 'eq(*,Bygning)'
+          summary: Spørring etter alle objekter med en bestemt objekttype, uten noen bestemt egenskapsverdi.
+          description: |
+            Vi bruker `*` uten noen angitt egenskap for å angi at vi kun filtrerer på objekttype.
+        feature_type_multi:
+          value: 'in(*,Bygning,AnnenBygning)'
+          summary: Spørring etter alle objekter med flere objekttyper, uten noen bestemt egenskapsverdi.
+          description: |
+            Vi bruker `*` uten noen angitt egenskap for å angi at vi kun filtrerer på objekttype.
     limitParam:
       in: query
       name: limit
