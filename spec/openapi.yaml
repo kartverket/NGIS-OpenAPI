@@ -11,6 +11,7 @@ info:
     Grov oversikt over funksjonalitet:
       - Hente liste over tilgjengelige datasett 
       - Hente metadata for et bestemt datasett
+      - Hente JSON Schema tilhørende et bestemt datasett
       - Hente data fra et bestemt datasett
         - Med lesetilgang eller skrivetilgang (medfører låsing)
           - områdebegrensning
@@ -73,7 +74,7 @@ info:
     
     Dersom annet koordinatsystem enn det som ligger i dataset skal brukes (se `GET /datasets/{datasetId}`) må koordinatsystem angis med `crs_EPSG`-parameteret. 
     Dette styrer data som sendes inn, data som hentes ut og koordinatsystemet i `bbox`-parameteret i kallet. 
-    For å bytte rekkefølge på aksene (gjelder kun for geodetiske koordinater lat/lon) brukes `crs_normalized_for_visualization`-parameteret.
+    For å være sikker på at rekkefølgen på koordinatene er Nord/Øst (gjelder kun for geodetiske koordinater lat/lon) brukes `crs_normalized_for_visualization`-parameteret.
     
     ### Historikk og historiske endringer
     
@@ -185,7 +186,11 @@ paths:
                     crs_EPSG: 5972
                     access: read_write
                     dataset_last_modified: '2021-03-15T09:57:41.915094000Z'
+                    polygon: 'POLYGON((322361.85 6424859.18, 637396.44 6424859.18, 637396.44 7296440.28, 322361.85 7296440.28, 322361.85 6424859.18))'
                     bbox:
+                      ll: [322361.85, 6424859.18]
+                      ur: [637396.44, 7296440.28]
+                    data_bbox:
                       ll: [322361.85, 6424859.18]
                       ur: [637396.44, 7296440.28]
         '401':
@@ -196,6 +201,44 @@ paths:
           description: Ugyldig brukernavn og/eller passord
         '404':
           description: Fant ikke angitt dataset
+        '500':
+          description: Intern feil på serveren
+        '501':
+          description: Intern feil på serveren (kallet er ikke implementert)
+        '503':
+          description: Intern feil på serveren (tjenesten er utilgjengelig)
+  
+  /datasets/{datasetId}/schema:
+    get:
+      tags:
+       - metadata
+      summary: Hent schema/objektkatalog for et bestemt dataset
+      description: |
+        Henter schema for et bestemt dataset. Den angir lovlige verdier for egenskaper, gyldige geometrier etc. for data som skrives inn til (og hentes ut fra) datasetet.
+      operationId: getDatasetSchema
+      parameters:
+        - $ref: '#/components/parameters/clientHeaderParam'
+        - $ref: '#/components/parameters/datasetIdParam'
+      responses:
+        '200':      # Response
+          description: OK
+          content:  # Response body
+            application/vnd.kartverket.ngis.typeregistry+protobuf:
+              schema:
+                type: string
+                format: binary
+            application/vnd.kartverket.ngis.dataset+json; version=1.0:
+              schema: 
+                type: string
+                format: binary
+        '401':
+          description: Gyldig autentisering av brukeren mangler eller er ugyldig
+        '406':
+          description: Formatet klienten ønsker på data er ugyldig. Klienten har f.eks en ugyldig Accept-header og kan ikke motta data på et format som serveren kan levere
+        '403':
+          description: Ugyldig brukernavn og/eller passord
+        '404':
+          description: Fant ikke angitt schema, schema/objektkatalog er ikke definert i datasetet (da kan det heller ikke inneholde data)
         '500':
           description: Intern feil på serveren
         '501':
@@ -1036,10 +1079,21 @@ components:
         access:
           type: string
           enum: [read_only, read_write]
+        polygon:
+          type: string
+          description: evt. polygon-avgrensning på WKT-format
         bbox: 
+          $ref: '#/components/schemas/BoundingBox'
+        data_bbox: 
           $ref: '#/components/schemas/BoundingBox'
         copy_transaction_token:
           type: string
+        unknown_attributes_allowed:
+          type: boolean
+        minimum_allowed_height:
+          type: integer
+        maximum_allowed_height:
+          type: integer
     Log:
       type: array
       items:
@@ -1131,6 +1185,8 @@ components:
             type: integer # TODO: Denne brukes ikke for brukerlåser, men trengs for andre låser i fremtiden.
           username:
             type: string
+          timestamp:
+            type: string
           features:
             type: array
             items:
@@ -1214,6 +1270,7 @@ components:
         smallbbox:
           summary: Et 10x10m vindu
           description: |
+            Rekkefølgen (om det er x,y eller y,x) er angitt i EPSG-spesifikasjonen, men skal uansett være minx, miny, maxx, maxy (eller miny, minx, maxy, maxx hvis rekkefølgen er y, x).
             NB! Koordinatene må være i dataset'ets koordinatsystem eller angi crs_EPSG-parameteret
           value: [10.0, 100.0, 20.0, 200.0] # ?bbox=10.0,100.0,20.0,200.0
       description: |
@@ -1246,7 +1303,7 @@ components:
       schema:
         type: integer
       description: |
-        Angir EPSG-kode for koordinatsystemet til koordinatene som sendes inn i spørringen (f.eks i bbox), som sendes inn som data, og som sendes tilbake. Påkrevd dersom bbox-parameteret brukes.
+        Angir EPSG-kode for koordinatsystemet til koordinatene som sendes inn i spørringen (f.eks i bbox), som sendes inn som data, og som sendes tilbake. Dersom ikke crs_EPSG er angitt, skal koordinatene være i datasettets koordinatsystem.
       examples: 
         epsg5975_NN2000:
           value: 5975
@@ -1290,7 +1347,7 @@ components:
       schema:
         type: boolean
       description: |
-        Angir at rekkefølgen på x- og y-aksen skal være snudd mot det som er spesifisert i EPSG-koden.
+        Angir at rekkefølgen på x- og y-aksen skal være snudd mot det som er spesifisert i EPSG-koden. Dette har kun innvirkning på noen geodetiske koordinatsystemer - se [i proj-dokumentasjonen her](https://proj.org/en/stable/development/reference/functions.html#c.proj_normalize_for_visualization).
     referencesParam:  
       in: query
       name: references
