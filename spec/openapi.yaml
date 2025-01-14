@@ -63,8 +63,10 @@ info:
     Dette er nærmere beskrevet i de aktuelle kallene.
     
     Det er to typer låser:
-    - `user_lock`, der man kun angir `locking_type=user_lock` ved henting og skriving av objekter. Hvis ikke samtlige objekter kan låses, feiler kallet. En bruker kan kun ha én lås per dataset av gangen.
-    - `id_lock`, der man angir `locking_type=id_lock` og må håndtere løsenøkkel `lock_id` selv. Hvis ikke samtlige objekter kan låses, blir kun de objektene som kan låses, låst. Resten forblir låst av andre. En bruker kan ha vilkårlig antall låser, men må holde styr på låsenøklene selv.
+    - `user_lock`, der man kun angir `locking_type=user_lock` ved henting og skriving av objekter. En bruker kan kun ha én lås per dataset av gangen.
+    - `id_lock`, der man angir `locking_type=id_lock` og må håndtere løsenøkkel `lock_id` selv. En bruker kan ha vilkårlig antall låser, men må holde styr på låsenøklene selv.
+    
+    Parameteret `locking_fail_if_locked` styrer om kallet skal feile eller ikke dersom man forsøker å låse objekter som allerede er låst av andre. Hvis ikke parameteret er angitt, vil kallet feile dersom man forsøker å låse objekter som allerede er låst av andre.
     
     ### Porsjonering
     
@@ -388,6 +390,7 @@ paths:
         - $ref: '#/components/parameters/clientHeaderParam'
         - $ref: '#/components/parameters/datasetIdParam'
         - $ref: '#/components/parameters/lockingParam'
+        - $ref: '#/components/parameters/lockingFailIfLockedParam'
         - $ref: '#/components/parameters/lockingIdParam'
         - $ref: '#/components/parameters/bboxParam'
         - $ref: '#/components/parameters/polygonParam'
@@ -789,6 +792,7 @@ paths:
         - $ref: '#/components/parameters/datasetIdParam'
         - $ref: '#/components/parameters/lokalIdParam'
         - $ref: '#/components/parameters/lockingParam'
+        - $ref: '#/components/parameters/lockingFailIfLockedParam'
         - $ref: '#/components/parameters/lockingIdParam'
         - $ref: '#/components/parameters/referencesParam'
         - $ref: '#/components/parameters/limitParam'
@@ -915,6 +919,7 @@ paths:
         - $ref: '#/components/parameters/clientHeaderParam'
         - $ref: '#/components/parameters/datasetIdParam'
         - $ref: '#/components/parameters/lockingParam'
+        - $ref: '#/components/parameters/lockingFailIfLockedParam'
         - $ref: '#/components/parameters/bboxParam'
         - $ref: '#/components/parameters/polygonParam'
         - $ref: '#/components/parameters/crsEPSGParam'
@@ -1394,6 +1399,14 @@ components:
         
         Låsen vil fjernes neste gang brukeren skriver data til dataset'et med `id_lock` og angitt låsenøkkel med `locking_id`, eller dersom låsen slettes.
 
+    lockingFailIfLockedParam:
+      in: query
+      name: locking_fail_if_locked
+      schema:
+        type: boolean
+      description: |
+        Dersom verdi er `false` vil kun objekter som ikke er låst av andre, låses. Med verdi `true` (som er default) vil operasjonen feile dersom man forsøker å låse objekter som er låst av andre.    
+      example: 123
     lockingIdParam:
       in: query
       name: locking_id
