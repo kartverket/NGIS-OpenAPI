@@ -595,6 +595,9 @@ paths:
       summary: Endre features i et dataset
       description: >-
         Lagrer endringer i features i et dataset. Endringene kan være en kombinasjon av create, replace og delete.
+        
+        
+        For å få ut selve dataene etter endring (eks. `application/vnd.kartverket.sosi+json`) i stedet for en oppsummering (eks. `application/vnd.kartverket.ngis.edit_features_summary+json`, som er default), bruk `Accept`-headeren (typisk vil den da settes lik innholdet i `Content-Type`-headeren)
       operationId: updateDatasetFeatures
       parameters:
         - $ref: '#/components/parameters/clientHeaderParam'
@@ -745,7 +748,7 @@ paths:
                 summary: Eksempel på oppdatering av en heleid flate med hull
                 description: |
                 externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/point/FlateMedHeileidGeometriMedHull_update_v2.json'
-      responses: #TODO: valideringsfeil
+      responses:
         '200':
           description: OK
           content:
@@ -762,6 +765,15 @@ paths:
                   features_erased:
                     type: integer
                     example: 5
+            application/vnd.kartverket.sosi+json; version=1.0:
+             schema:
+              type: object
+            application/vnd.kartverket.sosi+json; version=2.0:
+             schema:
+               type: object
+            application/vnd.kartverket.sosi+gml; version=1.0:
+             schema:
+              type: object 
         '202':
           description: Serveren bearbeider innsjekken asynkront. Svaret inneholder Location-header som peker til endepunktet der fremdriftsstatus kan hentes.
         '401':
