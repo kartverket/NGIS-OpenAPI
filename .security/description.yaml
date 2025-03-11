@@ -1,2 +1,5 @@
 version: 1.0
-organisasjon: Land
+organization: Land
+product: NGIS
+repo_types: [Documentation]
+platforms: []
