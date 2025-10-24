@@ -614,7 +614,7 @@ paths:
         For å få ut selve dataene etter endring (eks. `application/vnd.kartverket.sosi+json`) i stedet for en oppsummering (eks. `application/vnd.kartverket.ngis.edit_features_summary+json`, som er default), bruk `Accept`-headeren (typisk vil den da settes lik innholdet i `Content-Type`-headeren)
 
           
-        Ved bruk av `with_dummy_z_values=true` i media type så godtas -99999 som en spesielt tolket z-verdi på koordinater.
+        Ved bruk av `with_dummy_z_values=true` i media type så godtas -99999 som en spesielt tolket z-verdi.
       operationId: updateDatasetFeatures
       parameters:
         - $ref: '#/components/parameters/clientHeaderParam'
