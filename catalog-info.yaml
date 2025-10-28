@@ -8,5 +8,5 @@ metadata:
 spec:
   type: "documentation"
   lifecycle: "production"
-  owner: "nasjonalt_geografisk_informasjonssystem_qms"
+  owner: "ngis"
   system: "ngis"
