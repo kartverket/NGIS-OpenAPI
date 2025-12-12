@@ -1258,7 +1258,7 @@ components:
       name: X-Metadata-Comment
       schema:
         type: string
-      required: true
+      required: false
       description: Brukes for legge inn kommentar i arkiv loggen
       example: 'Innsjekk gjort av Norkart'
     datasetIdParam:
