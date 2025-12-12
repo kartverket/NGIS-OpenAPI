@@ -384,7 +384,10 @@ paths:
        - features
       summary: Hent ut features fra et dataset
       description: >-
-        Henter en liste over alle dataset som brukeren har lese- eller skrivetilgang til.
+        Henter ut features fra et dataset.
+
+
+        Når dataene inneholder en blanding av 2D og 3D geometri, kan parameteret `with_dummy_z_values=true` brukes i media type for å legge til z-verdien -99999.
       operationId: getDatasetFeatures
       parameters:
         - $ref: '#/components/parameters/clientHeaderParam'
@@ -541,6 +544,17 @@ paths:
                         summary: | 
                           Eksempel på uthentet flater med felles grenselinje
                         externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/polygon/FlaterMedFellesGrenselinje_v2.json'
+            application/vnd.kartverket.sosi+json; version=2.0; with_dummy_z_values=true:
+             schema:
+              type: object
+             examples: 
+              PolygonWithDummyZ:
+                summary: |
+                  Eksempel på uthentet flate med dummy z-verdier
+                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/polygon/FlateMedDummyZ_v2.json'
+            application/vnd.kartverket.sosi+json; version=1.0; with_dummy_z_values=true:
+             schema:
+              type: object
             application/vnd.kartverket.sosi+gml; version=1.0:
              schema:
               type: object
@@ -598,6 +612,9 @@ paths:
         
         
         For å få ut selve dataene etter endring (eks. `application/vnd.kartverket.sosi+json`) i stedet for en oppsummering (eks. `application/vnd.kartverket.ngis.edit_features_summary+json`, som er default), bruk `Accept`-headeren (typisk vil den da settes lik innholdet i `Content-Type`-headeren)
+
+          
+        Ved bruk av `with_dummy_z_values=true` i media type så godtas -99999 som en spesielt tolket z-verdi.
       operationId: updateDatasetFeatures
       parameters:
         - $ref: '#/components/parameters/clientHeaderParam'
@@ -626,6 +643,16 @@ paths:
         required: true
         content:
           application/vnd.kartverket.sosi+wfs-t; version=1.0:
+            schema:
+              type: object
+          application/vnd.kartverket.sosi+json; version=2.0; with_dummy_z_values=true:
+            schema:
+              type: object
+            examples: 
+              FlateMedDummyZ::
+                summary: Eksempel på oppdatering av flate med dummy z-verdier
+                externalValue: 'https://raw.githubusercontent.com/kartverket/SFKB-API/master/spec/examples/polygon/FlateMedDummyZ_v2.json'
+          application/vnd.kartverket.sosi+json; version=1.0; with_dummy_z_values=true:
             schema:
               type: object
           application/vnd.kartverket.geosynkronisering+zip; version=1.0:
@@ -766,6 +793,12 @@ paths:
                     type: integer
                     example: 5
             application/vnd.kartverket.sosi+json; version=1.0:
+             schema:
+              type: object
+            application/vnd.kartverket.sosi+json; version=2.0; with_dummy_z_values=true:
+             schema:
+              type: object
+            application/vnd.kartverket.sosi+json; version=1.0; with_dummy_z_values=true:
              schema:
               type: object
             application/vnd.kartverket.sosi+json; version=2.0:
