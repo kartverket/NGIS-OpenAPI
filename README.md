@@ -3,10 +3,6 @@ NGIS-OpenAPI er et tjenestebasert grensesnitt basert på OpenAPI og REST. Dette 
 
 NGIS-OpenAPI brukes bl.a. for tilgang til Sentral FKB. Se mer om [NGIS-plattformen på Kartverket.no](https://www.kartverket.no/geodataarbeid/ngis)
 
-## Kartverkets driftsmiljøer
-
-Kartverket bruker programvaren QMS for sine NGIS-OpenAPI tjenester. Se informasjon om hvilke versjoner av QMS som brukes i de ulike driftsmiljøene/tjeneste på repoet https://github.com/kartverket/qmsrelease 
-
 ## Dokumentasjonsverktøy
 
 ### Swagger
