@@ -1393,7 +1393,7 @@ components:
           summary: ETRS89 (EUREF89) i geografiske koordinater uten høyde
     crsNormalizedForVisualizationParam:
       in: query
-      name: normalized_for_visualization
+      name: crs_normalized_for_visualization
       schema:
         type: boolean
       description: |
