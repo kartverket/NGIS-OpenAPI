@@ -976,6 +976,12 @@ paths:
       responses:
         '200':      # Response
           description: OK
+          headers:
+            Unlock-Key:
+              schema:
+                type: integer
+              example: 123
+              description: Id til låsen som ble opprettet. Brukes som `lockId` ved DELETE /datasets/{datasetId}/locks/{lockId}.
           content:  # Response body
             application/vnd.kartverket.ngis.locks+json:  # Media type
              schema: 
